@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remote Control</title>
+    <script defer src="script.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      .connectionPasswordInput:hover {
+        background-color: #0b8acd !important;
+      }
+
+      .deviceContainerConnectButton:hover {
+        background-color: #0b8acd !important;
+      }
+    </style>
+  </head>
+  <body style="margin: 0;">
+    <div style="display: flex; flex-direction: row; width: 100vw; height: 60px">
+      <p
+        style="
+          font-family: system-ui;
+          font-size: 17.5px;
+          font-weight: 700;
+          margin: auto 0;
+          margin-left: 40px;
+          color: #000000a6;
+          margin-right: 50px;
+        "
+      >
+        Connect
+      </p>
+      <input
+        id="searchInput"
+        class="searchInput"
+        style="
+          width: 100%;
+          height: 35px;
+          border-radius: 7.5px;
+          border: 1px solid #00000087;
+          margin: auto 0;
+          margin-right: 50px;
+          font-family: system-ui;
+          text-align: center;
+        "
+        placeholder="Search and Connect"
+        list="keyboardShortcuts"
+      />
+      <datalist id="keyboardShortcuts">
+        <option value="/home"></option>
+        <option value="/monitor"></option>
+        <option value="/scripts"></option>
+        <option value="/feedback"></option>
+        <option value="/settings"></option>
+        <option value="/help"></option>
+        <option value="/reload"></option>
+        <option value="/set-connection {id} {password}"></option>
+        <option value="/regenerate-connection"></option>
+        <option value="/copy-connection"></option>
+        <option value="/close" disabled></option>
+        <option value="/exit"></option>
+      </datalist>
+    </div>
+    <div
+      style="
+        width: 100%;
+        height: 1px;
+        background-color: #bfbfbfd9;
+        margin-top: 2.5px;
+        opacity: 0.75;
+      "
+    ></div>
+    <div style="display: flex; flex-direction: row">
+      <div
+        style="
+          width: calc(65% - 37.5px);
+          border-radius: 12.5px;
+          margin-top: 30px;
+          margin-left: 25px;
+          background-color: #f5f7f9;
+          padding-top: 0.25px;
+          padding-bottom: 0.25px;
+        "
+      >
+        <p
+          style="
+            font-family: system-ui;
+            font-weight: 600;
+            margin-left: 20px;
+            font-size: 16.5px;
+          "
+        >
+          Connect with ID
+        </p>
+        <div style="margin-top: 17.5px">
+          <p
+            style="
+              font-family: system-ui;
+              font-weight: 600;
+              margin-left: 20px;
+              font-size: 15.25px;
+            "
+          >
+            Your login details
+          </p>
+          <p
+            style="
+              font-family: system-ui;
+              font-weight: 400;
+              margin-left: 20px;
+              font-size: 12.5px;
+              line-height: 14.5px;
+              margin-top: -8.5px;
+            "
+          >
+            Your ID and password which you need to remotely control your pc
+          </p>
+          <div
+            id="connectionDetailContainer"
+            style="
+              width: calc(100% - 35px);
+              height: 62.5px;
+              background-color: white;
+              margin-left: 17.5px;
+              border-radius: 15px;
+              display: flex;
+              flex-direction: row;
+              border: 1px solid #bfbfbf5c;
+            "
+          >
+            <div style="margin-left: 20px">
+              <p
+                style="
+                  font-family: system-ui;
+                  font-weight: 400;
+                  font-size: 12.25px;
+                  color: #545353;
+                  margin-top: 10.75px;
+                "
+              >
+                Your ID
+              </p>
+              <h3
+                style="
+                  font-family: system-ui;
+                  font-weight: 400;
+                  margin-top: -12.5px;
+                "
+              ></h3>
+            </div>
+            <div
+              style="
+                width: 1px;
+                height: 40px;
+                background-color: #bfbfbf8f;
+                margin-left: 25px;
+                opacity: 0.75;
+                margin-top: 11.25px;
+              "
+            ></div>
+            <div style="margin-left: 15px">
+              <p
+                style="
+                  font-family: system-ui;
+                  font-weight: 400;
+                  font-size: 12.25px;
+                  color: #545353;
+                  margin-top: 10.75px;
+                "
+              >
+                Your password
+              </p>
+              <h3
+                style="
+                  font-family: system-ui;
+                  font-weight: 400;
+                  margin-top: -11.25px;
+                  font-size: 17.5px;
+                "
+              ></h3>
+            </div>
+            <div
+              style="
+                position: absolute;
+                right: calc(35% + 50px);
+                margin-top: 20px;
+                color: #00000096;
+                font-size: 20px;
+              "
+            >
+              <i
+                id="regenerateConnectionIcon"
+                class="fa fa-repeat"
+                aria-hidden="true"
+                style="cursor: pointer;"
+              ></i>
+              <i
+                id="copyConnectionIcon"
+                class="fa fa-clipboard"
+                aria-hidden="true"
+                style="margin-left: 12.5px; cursor: pointer;"
+              ></i>
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            width: calc(100% - 40px);
+            height: 1px;
+            background-color: #bfbfbf5c;
+            margin-left: 20px;
+            margin-top: 27.5px;
+            opacity: 0.75;
+          "
+        ></div>
+        <div
+          id="connectionActionContainer"
+          style="margin-top: 32.5px; margin-bottom: 20px"
+        >
+          <p
+            style="
+              font-family: system-ui;
+              font-weight: 400;
+              margin-left: 20px;
+              font-size: 12.5px;
+              line-height: 14.5px;
+              margin-top: -8.5px;
+            "
+          >
+            Connect to your device remotely with its Remote Control ID and
+            password
+          </p>
+          <input
+            placeholder="Participant ID"
+            style="
+              border: 1px solid #6a6868;
+              border-top-left-radius: 7.5px;
+              border-top-right-radius: 7.5px;
+              width: calc(100% - 45px);
+              height: 25px;
+              margin-left: 20px;
+              text-align: center;
+              font-size: 12.5px;
+              font-family: system-ui;
+            "
+            oninput="event.target.value = event.target.value.split('').filter((character) => Number(character) || (character === '0')).join('');"
+          />
+          <input
+            placeholder="Password"
+            style="
+              border: 1px solid #6a6868;
+              border-top: none;
+              width: calc(100% - 45px);
+              height: 25px;
+              margin-left: 20px;
+              text-align: center;
+              font-size: 12.5px;
+              font-family: system-ui;
+            "
+          />
+          <button
+            class="connectionPasswordInput"
+            placeholder="Password"
+            style="
+              cursor: pointer;
+              border: 1px solid #6a6868;
+              border-top: none;
+              border-bottom-left-radius: 7.5px;
+              border-bottom-right-radius: 7.5px;
+              width: calc(100% - 39px);
+              height: 25px;
+              margin-left: 20px;
+              text-align: center;
+              font-size: 12.25px;
+              font-family: system-ui;
+              color: white;
+              background-color: #159be1;
+            "
+          >
+            Connect
+          </button>
+        </div>
+      </div>
+      <div
+        style="
+          width: 1px;
+          background-color: #bfbfbf;
+          margin-left: 10px;
+          opacity: 0.75;
+          height: calc(100% - 62.5px);
+          position: absolute;
+          bottom: 0;
+          left: 65%;
+        "
+      ></div>
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          right: 0;
+          width: calc(100% - (65% - 37.5px) - 45px);
+          height: calc(100% - 65px);
+        "
+      >
+        <div>
+          <h3
+            style="
+              font-family: system-ui;
+              font-size: 20px;
+              font-weight: 600;
+              margin-left: 22.5px;
+              margin-bottom: 6.25px;
+            "
+          >
+            History
+          </h3>
+          <p
+            style="
+              font-family: system-ui;
+              font-size: 15px;
+              font-weight: 400;
+              line-height: 19px;
+              margin-left: 22.5px;
+              margin-top: 0;
+            "
+          >
+            Fast reconnecting and easy access to your devices
+          </p>
+        </div>
+        <div
+          id="historyContainer"
+          style="
+            width: calc(100% - 45px);
+            height: calc(100% - 300px);
+            background-color: #f5f7f9;
+            margin-left: 22.5px;
+            margin-top: 10px;
+            border-radius: 12.5px;
+          "
+        >
+          <div
+            class="historyIcon"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100%;
+            "
+          >
+            <div
+              style="
+                width: 30%;
+                background-color: #1de19e;
+                border-radius: 15px;
+                display: flex;
+                justify-content: center;
+                aspect-ratio: 1/1;
+              "
+            >
+              <i
+                class="fa fa-history"
+                aria-hidden="true"
+                style="margin: auto 0; color: white; font-size: 4vw"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

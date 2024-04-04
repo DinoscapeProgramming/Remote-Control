@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remote Control</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="script.js"></script>
+  <style>
+    .collapsible {
+      background-color: #787676;
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .collapsible:hover {
+      background-color: #656565;
+    }
+
+    .collapsible:after {
+      content: '\002B';
+      color: white;
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+    }
+
+    .openedCollapsible::after {
+      content: "\2212";
+    }
+
+    .collapsibleContent {
+      padding: 0 18px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+      background-color: #f1f1f1;
+    }
+
+    .collapsibleContainer:last-child .collapsible:not(.openedCollapsible) {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    .collapsibleContainer:last-child .collapsibleContent {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  </style>
+</head>
+<body style="margin: 0;">
+  <div style="display: flex; flex-direction: row; width: 100vw; height: 60px">
+    <p
+      style="
+        font-family: system-ui;
+        font-size: 17.5px;
+        font-weight: 700;
+        margin: auto 0;
+        margin-left: 40px;
+        color: #000000a6;
+        margin-right: 50px;
+      "
+    >
+      Monitor
+    </p>
+    <input
+      id="searchInput"
+      class="searchInput"
+      style="
+        width: 100%;
+        height: 35px;
+        border-radius: 7.5px;
+        border: 1px solid #00000087;
+        margin: auto 0;
+        margin-right: 50px;
+        font-family: system-ui;
+        text-align: center;
+      "
+      placeholder="Search and Connect"
+      list="keyboardShortcuts"
+    />
+    <datalist id="keyboardShortcuts">
+      <option value="/home"></option>
+      <option value="/connect"></option>
+      <option value="/scripts"></option>
+      <option value="/feedback"></option>
+      <option value="/settings"></option>
+      <option value="/help"></option>
+      <option value="/reload"></option>
+      <option value="/close" disabled></option>
+      <option value="/exit"></option>
+    </datalist>
+  </div>
+  <div
+    style="
+      width: 100%;
+      height: 1px;
+      background-color: #bfbfbfd9;
+      margin-top: 2.5px;
+      opacity: 0.75;
+    "
+  ></div>
+  <div id="collapsibleContainer" class="collapsibleContainer" style="display: flex; flex-direction: column; padding: 30px 27.5px;">
+    <div class="monitorDeviceSearchPlaceholder" style="
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      background-color: #f5f7f9;
+      border-radius: 12.5px;
+      padding-bottom: 30.75px;
+    ">
+      <div style="margin-top: 10px;">
+        <img src="../../assets/monitorDeviceSearchIcon.png" style="
+          margin-left: 9%;
+        ">
+        <p style="
+          font-size: 15px;
+          font-family: system-ui;
+          color: #343333;
+          margin-top: 2.5px;
+        ">You are currently not connected to any devices</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

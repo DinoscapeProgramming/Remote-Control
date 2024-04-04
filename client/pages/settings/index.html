@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remote Control</title>
+    <script defer src="script.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      .switch {
+        display: inline-block;
+        position: absolute;
+        right: 40px;
+        width: 40px;
+        height: 20px;
+        margin-top: 7.5px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 4px;
+        bottom: 3px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      .switch input:checked + .slider {
+        background-color: #2196f3;
+      }
+
+      .switch input:focus + .slider {
+        box-shadow: 0 0 1px #2196f3;
+      }
+
+      .switch input:checked + .slider:before {
+        -webkit-transform: translateX(18.25px);
+        -ms-transform: translateX(18.25px);
+        transform: translateX(18.25px);
+      }
+    </style>
+  </head>
+  <body style="margin: 0;">
+    <div style="display: flex; flex-direction: row; width: 100vw; height: 60px">
+      <p
+        style="
+          font-family: system-ui;
+          font-size: 17.5px;
+          font-weight: 700;
+          margin: auto 0;
+          margin-left: 40px;
+          color: #000000a6;
+          margin-right: 50px;
+        "
+      >
+        Settings
+      </p>
+      <input
+        id="searchInput"
+        class="searchInput"
+        style="
+          width: 100%;
+          height: 35px;
+          border-radius: 7.5px;
+          border: 1px solid #00000087;
+          margin: auto 0;
+          margin-right: 50px;
+          font-family: system-ui;
+          text-align: center;
+        "
+        placeholder="Search and Connect"
+        list="keyboardShortcuts"
+      />
+      <datalist id="keyboardShortcuts">
+        <option value="/home"></option>
+        <option value="/connect"></option>
+        <option value="/monitor"></option>
+        <option value="/scripts"></option>
+        <option value="/feedback"></option>
+        <option value="/help"></option>
+        <option value="/reload"></option>
+        <option value="/dark-mode"></option>
+        <option value="/auto-launch"></option>
+        <option value="/auto-update"></option>
+        <option value="/custom-server"></option>
+        <option value="/close" disabled></option>
+        <option value="/exit"></option>
+      </datalist>
+    </div>
+    <div
+      style="
+        width: 100%;
+        height: 1px;
+        background-color: #bfbfbfd9;
+        margin-top: 2.5px;
+        opacity: 0.75;
+      "
+    ></div>
+    <div style="display: flex; flex-direction: column; margin-top: 25px">
+      <div style="display: flex; flex-direction: row; margin-left: 42.5px">
+        <i
+          class="fa fa-moon-o"
+          aria-hidden="true"
+          style="
+            height: 100%;
+            font-size: 22px;
+            margin-top: 3.5px;
+            margin-right: 12.5px;
+          "
+        ></i>
+        <div style="display: flex; flex-direction: column">
+          <h4
+            style="
+              font-size: 15px;
+              font-weight: 600;
+              font-family: system-ui;
+              margin-top: 0;
+              margin-bottom: 0;
+            "
+          >
+            Dark Mode
+          </h4>
+          <p
+            style="
+              font-size: 13.25px;
+              font-family: system-ui;
+              margin-top: 0.25px;
+            "
+          >
+            Switch to Dark Mode for easier-on-eye use of the app at night
+          </p>
+        </div>
+        <label class="switch" data-type="darkMode">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div
+        style="
+          width: calc(100% - 50px);
+          height: 1px;
+          background-color: #bfbfbf78;
+          margin-top: 2.5px;
+          margin-bottom: 10.5px;
+          margin-left: 25px;
+          opacity: 0.75;
+        "
+      ></div>
+      <div style="display: flex; flex-direction: row; margin-left: 42.5px">
+        <i
+          class="fa fa-rocket"
+          aria-hidden="true"
+          style="
+            height: 100%;
+            font-size: 22px;
+            margin-top: 3.5px;
+            margin-right: 12.5px;
+          "
+        ></i>
+        <div style="display: flex; flex-direction: column">
+          <h4
+            style="
+              font-size: 15px;
+              font-weight: 600;
+              font-family: system-ui;
+              margin-top: 0;
+              margin-bottom: 0;
+            "
+          >
+            Auto Launch
+          </h4>
+          <p
+            style="
+              font-size: 13.25px;
+              font-family: system-ui;
+              margin-top: 0.25px;
+            "
+          >
+            Remote Control launches automatically after you start your device
+          </p>
+        </div>
+        <label class="switch" data-type="autoLaunch">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div
+        style="
+          width: calc(100% - 50px);
+          height: 1px;
+          background-color: #bfbfbf78;
+          margin-top: 2.5px;
+          margin-bottom: 10.5px;
+          margin-left: 25px;
+          opacity: 0.75;
+        "
+      ></div>
+      <div style="display: flex; flex-direction: row; margin-left: 42.5px">
+        <i
+          class="fa fa-wrench"
+          aria-hidden="true"
+          style="
+            height: 100%;
+            font-size: 22px;
+            margin-top: 3.5px;
+            margin-right: 12.5px;
+          "
+        ></i>
+        <div style="display: flex; flex-direction: column">
+          <h4
+            style="
+              font-size: 15px;
+              font-weight: 600;
+              font-family: system-ui;
+              margin-top: 0;
+              margin-bottom: 0;
+            "
+          >
+            Auto Update
+          </h4>
+          <p
+            style="
+              font-size: 13.25px;
+              font-family: system-ui;
+              margin-top: 0.25px;
+            "
+          >
+            Remote Control automatically updates when new updates are released
+          </p>
+        </div>
+        <label class="switch" data-type="autoUpdate">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div
+        style="
+          width: calc(100% - 50px);
+          height: 1px;
+          background-color: #bfbfbf78;
+          margin-top: 2.5px;
+          margin-bottom: 10.5px;
+          margin-left: 25px;
+          opacity: 0.75;
+        "
+      ></div>
+      <div style="display: flex; flex-direction: row; margin-left: 42.5px">
+        <i
+          class="fa fa-sliders"
+          aria-hidden="true"
+          style="
+            height: 100%;
+            font-size: 22px;
+            margin-top: 3.5px;
+            margin-right: 12.5px;
+          "
+        ></i>
+        <div style="display: flex; flex-direction: column">
+          <h4
+            style="
+              font-size: 15px;
+              font-weight: 600;
+              font-family: system-ui;
+              margin-top: 0;
+              margin-bottom: 0;
+            "
+          >
+            Custom WebRTC Server
+          </h4>
+          <p
+            style="
+              font-size: 13.25px;
+              font-family: system-ui;
+              margin-top: 0.25px;
+            "
+          >
+            Configure Remote Control in order to use your custom WebRTC server
+          </p>
+        </div>
+        <label class="switch" data-type="customServer">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div
+        style="
+          width: calc(100% - 50px);
+          height: 1px;
+          background-color: #bfbfbf78;
+          margin-top: 2.5px;
+          margin-bottom: 10.5px;
+          margin-left: 25px;
+          opacity: 0.75;
+        "
+      ></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remote Control</title>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/ace-builds@1.12.5/src/ace.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/ace-builds@1.12.5/src/theme-monokai.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/ace-builds@1.12.5/src/mode-javascript.min.js"
+    ></script>
+    <script defer src="script.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      .createScriptButton:hover, .openStoreButton:hover {
+        background-color: #155ce1f2 !important;
+      }
+
+      .scriptContainerButton:hover {
+        background-color: #1c9addf3 !important;
+      }
+
+      .scriptEditorContainerBackButton:hover {
+        background-color: #5451511c !important;
+      }
+    </style>
+  </head>
+  <body style="margin: 0;">
+    <div style="display: flex; flex-direction: row; width: 100vw; height: 60px">
+      <p
+        style="
+          font-family: system-ui;
+          font-size: 17.5px;
+          font-weight: 700;
+          margin: auto 0;
+          margin-left: 40px;
+          color: #000000a6;
+          margin-right: 50px;
+        "
+      >
+        Scripts
+      </p>
+      <input
+        id="searchInput"
+        class="searchInput"
+        style="
+          width: 100%;
+          height: 35px;
+          border-radius: 7.5px;
+          border: 1px solid #00000087;
+          margin: auto 0;
+          margin-right: 50px;
+          font-family: system-ui;
+          text-align: center;
+        "
+        placeholder="Search and Connect"
+        list="keyboardShortcuts"
+      />
+      <datalist id="keyboardShortcuts">
+        <option value="/home"></option>
+        <option value="/connect"></option>
+        <option value="/monitor"></option>
+        <option value="/feedback"></option>
+        <option value="/settings"></option>
+        <option value="/help"></option>
+        <option value="/reload"></option>
+        <option value="/create-script {name}"></option>
+        <option value="/open-store"></option>
+        <option value="/close" disabled></option>
+        <option value="/exit"></option>
+      </datalist>
+    </div>
+    <div
+      style="
+        width: 100%;
+        height: 1px;
+        background-color: #bfbfbfd9;
+        margin-top: 2.5px;
+        opacity: 0.75;
+      "
+    ></div>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        margin-top: 12.5px;
+        margin-left: 37.5px;
+      "
+    >
+      <div>
+        <h3
+          style="
+            font-size: 18.75px;
+            font-family: system-ui;
+            font-weight: 600;
+            margin-bottom: 0;
+          "
+        >
+          Workflow &amp; Automation
+        </h3>
+        <p
+          style="
+            font-family: system-ui;
+            font-size: 14px;
+            color: #000000c7;
+            margin-top: 3px;
+          "
+        >
+          A list with scripts which can be used to automate tasks on your
+          devices
+        </p>
+      </div>
+      <div>
+        <button
+          id="createScriptButton"
+          class="createScriptButton"
+          style="
+            height: 27.5px;
+            font-family: system-ui;
+            border: none;
+            border-radius: 7.5px;
+            background-color: #155de1;
+            color: white;
+            padding: 15px;
+            padding-top: 7.5px;
+            padding-bottom: 25px;
+            margin-top: 35px;
+            margin-right: 27.5px;
+            position: absolute;
+            right: 120px;
+            cursor: pointer;
+          "
+        >
+          <i class="fa fa-plus" aria-hidden="true" style="margin-right: 2px"></i>
+          Create Script
+        </button>
+        <button
+          id="openStoreButton"
+          class="openStoreButton"
+          style="
+            height: 27.5px;
+            font-family: system-ui;
+            border: none;
+            border-radius: 7.5px;
+            background-color: #155de1;
+            color: white;
+            padding: 15px;
+            padding-top: 7.5px;
+            padding-bottom: 25px;
+            margin-top: 35px;
+            margin-right: 27.5px;
+            position: absolute;
+            right: 0;
+            cursor: pointer;
+          "
+        >
+          <i class="fa fa-download" aria-hidden="true" style="margin-right: 2px"></i>
+          Open Store
+        </button>
+      </div>
+    </div>
+    <div
+      style="
+        width: calc(100% - 64px);
+        background-color: #f5f7f9;
+        margin-left: 35.25px;
+        border-radius: 12.5px;
+        margin-top: 1.25px;
+        border: 0.5px solid #bfbfbf1c;
+      "
+    >
+      <div id="scriptViewContainer" style="display: block; padding-bottom: 12.5px;">
+        <div class="scriptIcon" style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 37.5px;
+          margin-bottom: 25px;
+        ">
+          <div style="
+            display: flex;
+            justify-content: center;
+            width: 8.75%;
+            aspect-ratio: 1/1;
+            border-radius: 15px;
+            background-color: #1de19e;
+          ">
+            <i class="fa fa-file-code-o" aria-hidden="true" style="
+              font-size: 3.675vw;
+              color: white;
+              margin: auto 0;
+            "></i>
+          </div>
+        </div>
+      </div>
+      <div id="scriptEditorContainer" style="display: none;">
+        <div style="
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        ">
+          <div id="scriptEditorContainerBackButton" class="scriptEditorContainerBackButton" style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 22.5px;
+            margin-left: 12.5px;
+            border-radius: 5px;
+            background-color: #8d8d8d1c;
+            border: 0.25px solid transparent;
+            cursor: pointer;
+          ">
+            <i class="fa fa-arrow-left" aria-hidden="true" style="color: #000000a6; margin-bottom: 1px; margin-right: 0.5px; -webkit-text-stroke: 0.5px white;"></i>
+          </div>
+          <h3 id="scriptEditorContainerName" style="
+            font-family: system-ui;
+            font-size: 20px;
+            font-weight: 600;
+            color: #000000cc;
+            margin: 12.25px 10px 14.5px;
+          "></h3>
+        </div>
+        <div id="scriptEditor" style="
+          width: calc(100% - 0px);
+          height: 346px;
+          resize: vertical;
+          border-radius: 7.5px;
+        "></div>
+      </div>
+      <div id="scriptStoreContainer" style="
+        display: none;
+        flex-direction: column;
+        padding-bottom: 12.5px;
+      "></div>
+    </div>
+  </body>
+</html>

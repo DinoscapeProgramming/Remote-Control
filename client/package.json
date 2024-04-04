@@ -1,0 +1,40 @@
+{
+  "name": "remote-control-client",
+  "productName": "Remote Control",
+  "version": "1.0.0",
+  "description": "An advanced, but easy-to-use Remote Desktop Application Program which has cross-platform support",
+  "main": "index.js",
+  "scripts": {
+    "build": "electron-builder"
+  },
+  "repository": "",
+  "keywords": [],
+  "author": "Dinoscape",
+  "license": "ISC",
+  "dependencies": {
+    "@jitsi/robotjs": "^0.6.13",
+    "dotenv": "^16.4.5",
+    "socket.io-client": "^4.7.4",
+    "update-electron-app": "^3.0.0"
+  },
+  "devDependencies": {
+    "electron": "^28.2.3",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "remote-control",
+    "productName": "Remote Control",
+    "target": "NSIS",
+    "directories": {
+      "output": "build"
+    },
+    "icon": "assets/favicon.ico",
+    "nsis": {
+      "installerIcon": "assets/favicon.ico",
+      "installerHeaderIcon": "assets/favicon.ico",
+      "deleteAppDataOnUninstall": true,
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
+    }
+  }
+}
