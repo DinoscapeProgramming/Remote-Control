@@ -58,39 +58,44 @@
 
 ## How To Use
 
-To install this package, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+### Building your own installable
+
+To clone and install this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
 ```bash
 # Clone this repository
-$ npm install electron-remote-control
-```
+$ git clone https://github.com/DinoscapeProgramming/Remote-Control
 
-### Building your own installable
+# Go into the repository
+$ cd Remote-Control/client
 
-```js
-const { buildInstallable, openInstallable } = require("electron-remote-control");
+# Install dependencies
+$ npm install
 
-buildInstallable().then((err, stdout, stderr) => {
-  if (err) throw err;
-  openInstallable().then((err, stdout, stderr) => {
-    if (err) throw err;
-    console.log("Successfully built and opened installable");
-  });
-});
+# Build the app
+$ npm run build
+
+# Install the app
+$ ./build/*.exe
 ```
 
 ### Hosting your own server
 
-```js
-const { hostServer } = require("electron-remote-control");
+To clone and host this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
-hostServer(); // logs "Server is now ready on port {PORT}"
+```bash
+# Clone this repository
+$ git clone https://github.com/DinoscapeProgramming/Remote-Control
 
+# Go into the repository
+$ cd Remote-Control/server
+
+# Start server
+$ node . 
 ```
 
 > **Note**
 > If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
-> If you're not using Windows, change the ```./node_modules/electron-remote-control/client/package.json``` file accordingly to [this guide](https://www.electron.build/index.html/).
 
 
 ## Download

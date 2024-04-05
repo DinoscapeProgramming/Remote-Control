@@ -40,7 +40,7 @@ const createWindow = () => {
         roomId
       });
     });
-
+    
     ipcMain.on("validPassword", (_, roomId) => {
       socket.emit("validPassword", {
         deviceName: os.hostname(),

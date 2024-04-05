@@ -1,6 +1,6 @@
 {
-  "name": "remote-control-server",
-  "productName": "Remote Control Server",
+  "name": "electron-remote-control",
+  "productName": "Remote Control Package",
   "version": "1.0.0",
   "description": "An advanced, but easy-to-use Remote Desktop Application Program which has cross-platform support",
   "main": "index.js",
@@ -9,14 +9,6 @@
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
   "keywords": [],
-  "author": "",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "crossnote": "^0.9.9",
-    "express": "^4.19.2",
-    "express-rate-limit": "^7.2.0",
-    "peer": "^0.6.1",
-    "socket.io": "^4.7.4"
-  }
+  "author": "DinoscapeProgramming",
+  "license": "Apache-2.0"
 }
