@@ -6,14 +6,14 @@
     </picture>
   </a>
   <br>
+  <a href="https://www.npmjs.com/package/electron-remote-control">
+    <img src="https://badge.fury.io/js/electron-remote-control.svg">
+  </a>
   <a href="https://opensource.org/license/apache-2-0">
     <img src="https://img.shields.io/badge/License-Apache%202.0-brightgreen.svg">
   </a>
   <a href="https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0">
     <img src="https://img.shields.io/badge/Release-1.0.0-brightgreen.svg">
-  </a>
-  <a href="https://www.npmjs.com/package/electron-remote-control">
-    <img src="https://badge.fury.io/js/electron-remote-control.svg">
   </a>
 </p>
 <p align="center">
@@ -71,13 +71,16 @@ $ npm install electron-remote-control
 ### Building your own installable
 
 ```js
-const { buildInstallable, openInstallable } = require("electron-remote-control");
+const moveProject = { buildInstallable, openInstallable } = require("electron-remote-control");
 
-buildInstallable().then((err, stdout, stderr) => {
+moveProject.then((err, stdout, stderr) => {
   if (err) throw err;
-  openInstallable().then((err, stdout, stderr) => {
+  buildInstallable().then((err, stdout, stderr) => {
     if (err) throw err;
-    console.log("Successfully built and opened installable");
+    openInstallable().then((err, stdout, stderr) => {
+      if (err) throw err;
+      console.log("Successfully built and opened installable");
+    });
   });
 });
 ```
@@ -85,9 +88,14 @@ buildInstallable().then((err, stdout, stderr) => {
 ### Hosting your own server
 
 ```js
-const { hostServer } = require("electron-remote-control");
+const moveProject = { hostServer } = require("electron-remote-control");
 
-hostServer(); // logs "Server is now ready on port {PORT}"
+moveProject.then((err, stdout, stderr) => {
+  if (err) throw err;
+  hostServer().then((err, stdout, stderr) => { // logs "Server is now ready on port {PORT}"
+    if (err) throw err;
+  });
+});
 
 ```
 
