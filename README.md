@@ -12,6 +12,9 @@
   <a href="https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0">
     <img src="https://img.shields.io/badge/Release-1.0.0-brightgreen.svg">
   </a>
+  <a href="https://www.npmjs.com/package/electron-remote-control">
+    <img src="https://badge.fury.io/js/electron-remote-control.svg">
+  </a>
 </p>
 <p align="center">
   <em><b>Remote Control</b> is a minimal <b>remote desktop app</b> built on top of <a href="http://electron.atom.io" target="_blank">Electron</a>. Designed to <b>ease</b> things up for <b>better and faster</b> technical support with low effort in mind.</em>
@@ -90,6 +93,7 @@ hostServer(); // logs "Server is now ready on port {PORT}"
 
 > **Note**
 > If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+>
 > If you're not using Windows, change the ```./node_modules/electron-remote-control/client/package.json``` file accordingly to [this guide](https://www.electron.build/index.html/).
 
 
