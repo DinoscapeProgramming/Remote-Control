@@ -75,7 +75,9 @@ const moveProject = { buildInstallable, openInstallable } = require("electron-re
 
 moveProject().then((err, stdout, stderr) => { // moves the project from the node_modules folder to the project folder -- required
   buildInstallable().then((err, stdout, stderr) => { // may take a while -- uses electron-builder
+    if (err) throw err;
     openInstallable().then((err, stdout, stderr) => {
+      if (err) throw err;
       console.log("Successfully built and opened installable");
     });
   });
@@ -88,7 +90,6 @@ moveProject().then((err, stdout, stderr) => { // moves the project from the node
 const moveProject = { hostServer } = require("electron-remote-control");
 
 moveProject().then((err, stdout, stderr) => { // moves the project from the node_modules folder to the project folder -- required
-  if (err) throw err;
   hostServer().then((err, stdout, stderr) => { // logs "Server is now ready on port {PORT}"
     if (err) throw err;
   });
