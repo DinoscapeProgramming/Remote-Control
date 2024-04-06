@@ -74,11 +74,8 @@ $ npm install electron-remote-control
 const moveProject = { buildInstallable, openInstallable } = require("electron-remote-control");
 
 moveProject().then((err, stdout, stderr) => { // moves the project from the node_modules folder to the project folder -- required
-  if (err) throw err;
   buildInstallable().then((err, stdout, stderr) => { // may take a while -- uses electron-builder
-    if (err) throw err;
     openInstallable().then((err, stdout, stderr) => {
-      if (err) throw err;
       console.log("Successfully built and opened installable");
     });
   });
