@@ -73,7 +73,7 @@ $ npm install electron-remote-control
 ```js
 const moveProject = { buildInstallable, openInstallable } = require("electron-remote-control");
 
-moveProject.then((err, stdout, stderr) => { // moves the project from the node_modules folder to the project folder -- required
+moveProject().then((err, stdout, stderr) => { // moves the project from the node_modules folder to the project folder -- required
   if (err) throw err;
   buildInstallable().then((err, stdout, stderr) => { // may take a while -- uses electron-builder
     if (err) throw err;
@@ -90,13 +90,12 @@ moveProject.then((err, stdout, stderr) => { // moves the project from the node_m
 ```js
 const moveProject = { hostServer } = require("electron-remote-control");
 
-moveProject.then((err, stdout, stderr) => { // moves the project from the node_modules folder to the project folder -- required
+moveProject().then((err, stdout, stderr) => { // moves the project from the node_modules folder to the project folder -- required
   if (err) throw err;
   hostServer().then((err, stdout, stderr) => { // logs "Server is now ready on port {PORT}"
     if (err) throw err;
   });
 });
-
 ```
 
 > **Note**
