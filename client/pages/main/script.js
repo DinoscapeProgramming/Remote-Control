@@ -173,10 +173,10 @@ ipcRenderer.on("peerId", (_, peerId) => {
       mandatory: {
         chromeMediaSource: "desktop",
         chromeMediaSourceId: "screen:0:0",
-        minWidth: 1536 - 52,//1280,
-        maxWidth: 1536 - 52,//1280,
-        minHeight: 976,//720,
-        maxHeight: 976//720
+        minWidth: screenWidth,
+        maxWidth: screenWidth,
+        minHeight: screenHeight,
+        maxHeight: screenHeight
       }
     }
   }).then((videoStream) => {

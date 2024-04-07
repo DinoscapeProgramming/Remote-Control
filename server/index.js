@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
       });
 
       socket.on("keyTap", (key) => {
-        if (!(new RegExp(/^[a-zA-Z0-9]$/)).test(key) && !keys.includes(key)) return;
+        if (!(new RegExp(/^[a-zA-Z0-9]$/)).test(key) && !keys.includes(key.toLowerCase())) return;
         socket.to(roomId).emit("keyTap", key);
       });
     };
@@ -82,7 +82,7 @@ if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Work
 
 app.use(bodyParser.json());
 app.use("/api/v1/feedback/send", rateLimit({
-  windowMs: 15 * 60 * 1000,
+  windowMs: Infinity,
   limit: 1,
   standardHeaders: 'draft-7',
   legacyHeaders: false
