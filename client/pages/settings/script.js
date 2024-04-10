@@ -88,7 +88,7 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
                         resourceHostname: new URL(customResourceServerURL.toString().substring(6)).hostname,
                         resourcePort: new URL(customResourceServerURL.toString().substring(6)).port,
                         socketProtocol: new URL(customSocketServerURL.toString().substring(6)).protocol,
-                        socketPostname: new URL(customSocketServerURL.toString().substring(6)).hostname,
+                        socketHostname: new URL(customSocketServerURL.toString().substring(6)).hostname,
                         socketPort: new URL(customSocketServerURL.toString().substring(6)).port,
                         peerProtocol: new URL(customPeerServerURL.toString().substring(6)).protocol,
                         peerHostname: new URL(customPeerServerURL.toString().substring(6)).hostname,

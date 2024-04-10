@@ -44,18 +44,8 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       .addEventListener("mousemove", ({ target }) => {
         return console.log(target.getBoundingClientRect());
         socket.emit("mouseMove", {
-          x:
-            ((screenWidth/* + 244*/) / 100) *
-              (((clientX - document.getElementById("screenVideo").offsetLeft) /
-                /*document.getElementById("screenVideo").videoWidth*/ 1280) *
-                100)/* -
-            167.5*/,
-          y:
-            (screenHeight / 100) *
-              (((clientY - document.getElementById("screenVideo").offsetTop) /
-                /*document.getElementById("screenVideo").videoHeight*/720) *
-                100)/* +
-            21,*/
+          x: target.getBoundingClientRect(),
+          y: target.getBoundingClientRect()
         });
       });
 
