@@ -13,7 +13,7 @@ scriptEditor.on("change", () => {
 
 if (!fs.readdirSync(parent.process.resourcesPath).includes("scripts")) fs.mkdirSync(path.join(parent.process.resourcesPath, "scripts"));
 
-if ((JSON.parse(localStorage.getItem("settings")) || {}).darkMode) document.getElementById("scriptEditor").style.filter = "invert(95%) hue-rotate(180deg) brightness(1.275)";
+document.styleSheets[1].media.appendMedium("(prefers-color-scheme: " + (((JSON.parse(localStorage.getItem("settings")) || {}).darkMode) ? "dark" : "white") + ")");
 
 (JSON.parse(localStorage.getItem("scripts")) || []).forEach(([scriptId, scriptName]) => {
   if (document.getElementById("scriptViewContainer").children[0].className === "scriptIcon") document.getElementById("scriptViewContainer").innerHTML = "";

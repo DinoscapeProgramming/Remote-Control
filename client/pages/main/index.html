@@ -57,12 +57,6 @@
         }
       }
 
-      @media (prefers-color-scheme: dark) {
-        #pageEmbed, #feedbackModal, #scriptEditor {
-          filter: invert(95%) hue-rotate(180deg);
-        }
-      }
-
       @-webkit-keyframes animatefade {
         from {
           opacity: 0;
@@ -83,7 +77,7 @@
     </style>
     <style>
       @media (prefers-color-scheme: dark) {
-        #pageEmbed, #feedbackModal, #scriptEditor {
+        .pageEmbed, .feedbackModal {
           filter: invert(95%) hue-rotate(180deg);
         }
       }
@@ -334,6 +328,7 @@
     </div>
     <iframe
       id="pageEmbed"
+      class="pageEmbed"
       style="
         width: calc(100vw - 200px);
         height: 100vh;
@@ -346,6 +341,7 @@
     ></iframe>
     <div
       id="feedbackModal"
+      class="feedbackModal"
       style="
         display: none;
         align-items: center;

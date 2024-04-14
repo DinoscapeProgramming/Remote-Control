@@ -33,6 +33,16 @@
       .scriptEditorContainerBackButton:hover {
         background-color: #5451511c !important;
       }
+
+      @media (prefers-color-scheme: dark) {
+        img {
+          filter: invert(95%) hue-rotate(180deg);
+        }
+
+        .scriptEditor {
+          filter: invert(95%) hue-rotate(180deg) brightness(1.275);
+        }
+      }
     </style>
   </head>
   <body style="margin: 0;">
@@ -231,7 +241,7 @@
             margin: 12.25px 10px 14.5px;
           "></h3>
         </div>
-        <div id="scriptEditor" style="
+        <div id="scriptEditor" class="scriptEditor" style="
           width: calc(100% - 0px);
           height: 346px;
           resize: vertical;

@@ -1,6 +1,9 @@
 <p align="center">
   <a href="https://DinoscapeProgramming.github.io/Remote-Control">
-    <img height="125" alt="Remote Control" src="https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/master/docs/static/logo.svg">
+    <picture>
+      <source height="125" media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/master/docs/static/logo-dark.svg">
+      <img height="125" alt="Remote Control" src="https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/master/docs/static/logo.svg">
+    </picture>
   </a>
   <br>
   <a href="https://opensource.org/license/apache-2-0">

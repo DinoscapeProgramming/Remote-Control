@@ -82,9 +82,8 @@ if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Work
 
 app.use(bodyParser.json());
 app.use("/api/v1/feedback/send", rateLimit({
-  windowMs: Infinity,
   limit: 1,
-  standardHeaders: 'draft-7',
+  standardHeaders: "draft-7",
   legacyHeaders: false
 }));
 app.use("/peer", peerServer);
