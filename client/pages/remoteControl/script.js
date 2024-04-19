@@ -41,10 +41,10 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
 
     document
       .getElementById("screenVideo")
-      .addEventListener("mousemove", ({ pageX, pageY, target: { offsetLeft, offsetTop } }) => {
+      .addEventListener("mousemove", ({ pageX, pageY, target }) => {
         socket.emit("mouseMove", {
-          x: pageX - offsetLeft,
-          y: pageY - offsetTop
+          x: ((pageX - target.offsetLeft) / target.getBoundingClientRect().width) * screenWidth,
+          y: ((pageY - target.offsetTop) / target.getBoundingClientRect().height) * (screenHeight + 40)
         });
       });
 

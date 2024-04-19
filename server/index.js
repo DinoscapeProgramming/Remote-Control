@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
       });
 
       socket.on("keyTap", (key) => {
-        if (!(new RegExp(/^[a-zA-Z0-9]$/)).test(key) && !keys.includes(key.toLowerCase())) return;
+        if (!(new RegExp(/xxx[\x00-\x7F]+xxx/)).test(key) && !keys.includes(key.toLowerCase())) return;
         socket.to(roomId).emit("keyTap", key);
       });
     };

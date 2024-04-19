@@ -166,15 +166,15 @@ ipcRenderer.on("executeScript", (_, { roomId, password, scriptContent } = {}) =>
   };
 });
 
-ipcRenderer.on("peerId", (_, peerId) => {
+ipcRenderer.on("peerId", (_, { peerId, screenWidth, screenHeight }) => {
   navigator.mediaDevices.getUserMedia({
     audio: false,
     video: {
       mandatory: {
         chromeMediaSource: "desktop",
         chromeMediaSourceId: "screen:0:0",
-        minWidth: 1920,
-        maxWidth: 1920,
+        minWidth: (screenWidth / (screenHeight + 40)) * 1080,
+        maxWidth: (screenWidth / (screenHeight + 40)) * 1080,
         minHeight: 1080,
         maxHeight: 1080
       }

@@ -49,7 +49,11 @@ const createWindow = () => {
       });
 
       socket.on("peerId", (peerId) => {
-        window.webContents.send("peerId", peerId);
+        window.webContents.send("peerId", {
+          peerId,
+          screenWidth: screen.getPrimaryDisplay().workAreaSize.width,
+          screenHeight: screen.getPrimaryDisplay().workAreaSize.height
+        });
       });
 
       socket.on("mouseMove", ({ x, y }) => {

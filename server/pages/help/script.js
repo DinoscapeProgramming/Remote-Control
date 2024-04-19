@@ -8,4 +8,14 @@ document.getElementById("markdownEmbed").addEventListener("load", () => {
   document.getElementById("markdownEmbed").contentWindow.document.head.appendChild(markdownMediaStylesheet);
   document.getElementById("markdownEmbed").contentWindow.document.styleSheets[3].media.appendMedium("(prefers-color-scheme: " + ((location.search.split("?darkMode=")[1] === "true") ? "dark" : "white") + ")");
   document.getElementById("markdownEmbed").contentWindow.document.getElementsByTagName("source")[0].media = "(prefers-color-scheme: " + ((location.search.split("?darkMode=")[1] === "true") ? "dark" : "white") + ")";
+  Array.from(document.getElementsByTagName("a")).forEach((anchor) => {
+    anchor.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (confirm("Are you sure you want to open this page possibly corrupting your computer?")) {
+        let link = document.createElement("a");
+        link.href = anchor.href;
+        link.click();
+      };
+    });
+  });
 });

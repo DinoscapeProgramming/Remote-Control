@@ -6,6 +6,9 @@
     </picture>
   </a>
   <br>
+  <a href="https://www.npmjs.com/package/electron-remote-control">
+    <img src="https://badge.fury.io/js/electron-remote-control.svg">
+  </a>
   <a href="https://opensource.org/license/apache-2-0">
     <img src="https://img.shields.io/badge/License-Apache%202.0-brightgreen.svg">
   </a>
