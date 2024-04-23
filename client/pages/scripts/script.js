@@ -372,6 +372,7 @@ fetch(((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resource
     appDataContainerIcon.style.width = "90px";
     appDataContainerIcon.style.padding = "20px";
     appDataContainerIcon.src = ((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourceProtocol + "//" + JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourceHostname + ((JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourcePort) ? (":" + JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourcePort) : "")) : (parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PROTOCOL + "//" + parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_HOSTNAME + ((parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PORT) ? (":" + parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PORT) : ""))) + "/apps/icons/" + appId + "." + iconExtension;
+    appDataContainerIcon.alt = "App Icon";
     let appDataTextContainer = document.createElement("div");
     appDataTextContainer.style.display = "flex";
     appDataTextContainer.style.flexDirection = "column";
