@@ -2,6 +2,7 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
   const fs = require("fs");
   const path = require("path");
   const crypto = require("crypto");
+  const { ipcRenderer } = require("electron");
   const socket = io((Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketProtocol + "//" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketHostname + ((JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) ? (":" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) : "")) : (process.env.DEFAULT_SOCKET_SERVER_PROTOCOL + "//" + process.env.DEFAULT_SOCKET_SERVER_HOSTNAME + ((process.env.DEFAULT_SOCKET_SERVER_PORT) ? (":" + process.env.DEFAULT_SOCKET_SERVER_PORT) : "")));
   const peer = new Peer(null, {
     host: (Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).peerHostname : process.env.DEFAULT_PEER_SERVER_HOSTNAME,
@@ -104,6 +105,28 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
           sent + received
         ]
       });
+    });
+
+    socket.on("writeClipboard", ([type, data]) => {
+      ipcRenderer.send("writeClipboard", [type, data]);
+    });
+
+    document.getElementById("copyClipboardButton").addEventListener("click", () => {
+      socket.emit("copyClipboard");
+    });
+
+    document.getElementById("copyClipboardTextButton").addEventListener("click", () => {
+      socket.emit("copyClipboardText");
+    });
+
+    document.getElementById("shareFileButton").addEventListener("click", () => {
+      
+    });
+
+    document.getElementById("screenshotButton").addEventListener("click", () => {
+      let canvas = document.createElement("canvas");
+      canvas.getContext('2d').drawImage(document.getElementById("screenVideo"), 0, 0, (screenWidth / (screenHeight + 40)) * 1080, 1080);
+      ipcRenderer.send("downloadScreenshot", canvas.toDataURL());
     });
   });
 });

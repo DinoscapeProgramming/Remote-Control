@@ -38,6 +38,10 @@ io.on("connection", (socket) => {
             received
           });
         });
+
+        socket.on("writeClipboard", ([type, data]) => {
+          socket.to(roomId).emit("writeClipboard", [type, data]);
+        });
       });
     } else if (type === "server") {
       if (!password) return;
@@ -64,6 +68,10 @@ io.on("connection", (socket) => {
       socket.on("keyTap", (key) => {
         if (!(new RegExp(/xxx[\x00-\x7F]+xxx/)).test(key) && !keys.includes(key.toLowerCase())) return;
         socket.to(roomId).emit("keyTap", key);
+      });
+
+      socket.on("copyClipboard", (type) => {
+        socket.to(roomId).emit("copyClipboard", type);
       });
     };
   });

@@ -7,7 +7,7 @@ if (!require("fs").readdirSync(process.resourcesPath).includes("prompt.vbs")) {
     require("fs").writeFileSync(require("path").join(process.resourcesPath, "nativePrompts/linux.sh"), `zenity --entry --title="$1" --text="$2" --entry-text="$3" ""`, "utf8");
   });
 };
-const { app, BrowserWindow, ipcMain, screen, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, screen, dialog, clipboard, nativeImage } = require("electron");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
@@ -139,6 +139,14 @@ const createWindow = () => {
       window.webContents.send("disconnected", deviceId);
     });
 
+    ipcMain.on("downloadScreenshot", (_, screenshotDataURL) => {
+      dialog.showSaveDialog({
+        defaultPath: "Screenshot-" + Date.now() + ".png"
+      }).then(({ filePath }) => {
+        fs.writeFileSync(filePath, screenshotDataURL);
+      });
+    });
+
     ipcMain.on("executeScript", (_, { roomId, password, scriptContent } = {}) => {
       socket.emit("executeScript", {
         roomId,
@@ -152,6 +160,25 @@ const createWindow = () => {
         roomId,
         password,
         scriptContent
+      });
+    });
+
+    socket.on("copyClipboard", (type) => {
+      socket.emit("writeClipboard", [
+        type,
+        ({
+          text: () => clipboard.readText(),
+          html: () => clipboard.readHTML(),
+          image: () => clipboard.image().toDataURL(),
+          rtf: () => clipboard.readRTF(),
+          bookmark: () => clipboard.readBookmark()
+        })[type]()
+      ]);
+    });
+
+    ipcMain.on("writeClipboard", (_, [type, data]) => {
+      clipboard.write({
+        [type]: (type !== "image") ? data : nativeImage.createFromDataURL(data)
       });
     });
 

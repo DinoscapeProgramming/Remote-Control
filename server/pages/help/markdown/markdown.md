@@ -121,7 +121,7 @@ This software uses the following open source packages:
 
 ## License
 
-[Apache-2.0](https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/master/LICENSE)
+[Apache-2.0](/pages/help/LICENSE.txt)
 
 ---
 
