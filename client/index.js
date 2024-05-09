@@ -169,7 +169,7 @@ const createWindow = () => {
         ({
           text: () => clipboard.readText(),
           html: () => clipboard.readHTML(),
-          image: () => clipboard.image().toDataURL(),
+          image: () => clipboard.readImage().toDataURL(),
           rtf: () => clipboard.readRTF(),
           bookmark: () => clipboard.readBookmark()
         })[type]()

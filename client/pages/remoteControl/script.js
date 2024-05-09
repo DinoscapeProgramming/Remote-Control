@@ -112,11 +112,12 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
     });
 
     document.getElementById("copyClipboardButton").addEventListener("click", () => {
-      socket.emit("copyClipboard");
+      if (document.getElementById("copyClipboardButtonSelect").matches(":hover")) return;
+      socket.emit("copyClipboard", document.getElementById("copyClipboardButtonSelect").value);
     });
 
-    document.getElementById("copyClipboardTextButton").addEventListener("click", () => {
-      socket.emit("copyClipboardText");
+    document.getElementById("copyClipboardButtonSelect").addEventListener("change", ({ target }) => {
+      document.getElementById("copyClipboardButtonSelect").style.width = Array.from(document.getElementById("copyClipboardButtonSelect").children).find((option) => option.value === target.value).dataset.width;
     });
 
     document.getElementById("shareFileButton").addEventListener("click", () => {
