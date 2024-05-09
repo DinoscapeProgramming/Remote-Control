@@ -15,6 +15,7 @@ const childProcess = require("child_process");
 const { io } = require("socket.io-client");
 const socket = io((Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketProtocol + "//" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketHostname + ((JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) ? (":" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).port) : "")) : (process.env.DEFAULT_SOCKET_SERVER_PROTOCOL + "//" + process.env.DEFAULT_SOCKET_SERVER_HOSTNAME + ((process.env.DEFAULT_SOCKET_SERVER_PORT) ? (":" + process.env.DEFAULT_SOCKET_SERVER_PORT) : "")));
 const robot = require("@jitsi/robotjs");
+const imageDataURI = require("image-data-uri");
 let systemUsageDataIntervals = {};
 
 const createWindow = () => {
@@ -143,7 +144,7 @@ const createWindow = () => {
       dialog.showSaveDialog({
         defaultPath: "Screenshot-" + Date.now() + ".png"
       }).then(({ filePath }) => {
-        fs.writeFileSync(filePath, screenshotDataURL);
+        imageDataURI.outputFile(screenshotDataURL, filePath);
       });
     });
 

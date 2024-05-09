@@ -15,6 +15,7 @@
   "dependencies": {
     "@jitsi/robotjs": "^0.6.13",
     "dotenv": "^16.4.5",
+    "image-data-uri": "^2.0.1",
     "socket.io-client": "^4.7.4",
     "update-electron-app": "^3.0.0"
   },
