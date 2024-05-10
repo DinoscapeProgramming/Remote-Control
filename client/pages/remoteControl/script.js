@@ -126,7 +126,9 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
 
     document.getElementById("screenshotButton").addEventListener("click", () => {
       let canvas = document.createElement("canvas");
-      canvas.getContext('2d').drawImage(document.getElementById("screenVideo"), 0, 0, (screenWidth / (screenHeight + 40)) * 1080, 1080);
+      canvas.width = (screenWidth / (screenHeight + 40)) * 1080;
+      canvas.height = 1080;
+      canvas.getContext('2d').drawImage(document.getElementById("screenVideo"), 0, 0, canvas.width, canvas.height);
       ipcRenderer.send("downloadScreenshot", canvas.toDataURL());
     });
   });
