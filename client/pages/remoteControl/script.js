@@ -9,6 +9,7 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
     port: (Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).peerPort : process.env.DEFAULT_PEER_SERVER_PORT,
     path: (Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).peerPath : process.env.DEFAULT_PEER_SERVER_PATH
   });
+  let recorder;
 
   peer.on("open", (peerId) => {
     socket.emit("peerId", peerId);
@@ -141,13 +142,12 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       let link = document.createElement("a");
       link.href = canvas.toDataURL();
       link.download = "Screenshot-" + Date.now() + ".png";
-      linkc.click();
+      link.click();
     });
 
     document.getElementById("recordButton").addEventListener("click", () => {
-      let recorder;
       let recordedChunks = [];
-      if (document.getElementById("recordButton").children[0].className === "fa fa-circle-play") {
+      if (document.getElementById("recordButton").children[0].className === "fa fa-play-circle") {
         document.getElementById("recordButton").children[0].className = "fa fa-stop-circle";
         recorder = new MediaRecorder(document.getElementById("screenVideo").srcObject);
         recorder.addEventListener("dataavailable", ({ data }) => {
@@ -155,7 +155,7 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
           recordedChunks.push(data);
         });
         recorder.addEventListener("stop", () => {
-          document.getElementById("recordButton").children[0].className = "fa fa-circle-play";
+          document.getElementById("recordButton").children[0].className = "fa fa-play-circle";
           let blob = new Blob(recordedChunks, {
             type: "video/webm"
           });
@@ -169,7 +169,7 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
         document.getElementById("screenVideo").srcObject.getVideoTracks()[0].addEventListener("ended", () => {
           if (recorder.state === "inactive") return;
           recorder.stop();
-          document.getElementById("recordButton").children[0].className = "fa fa-circle-play";
+          document.getElementById("recordButton").children[0].className = "fa fa-play-circle";
           let blob = new Blob(recordedChunks, {
             type: "video/webm"
           });
