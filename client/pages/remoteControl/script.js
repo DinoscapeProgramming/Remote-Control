@@ -121,7 +121,15 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
     });
 
     document.getElementById("shareFileButton").addEventListener("click", () => {
-      
+      if (document.getElementById("shareFileButtonSelect").value === "send") {
+        
+      } else if (document.getElementById("shareFileButtonSelect").value === "receive") {
+
+      };
+    });
+
+    document.getElementById("shareFileButtonSelect").addEventListener("change", ({ target }) => {
+      document.getElementById("shareFileButtonSelect").style.width = Array.from(document.getElementById("shareFileButtonSelect").children).find((option) => option.value === target.value).dataset.width;
     });
 
     document.getElementById("screenshotButton").addEventListener("click", () => {
@@ -129,7 +137,53 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       canvas.width = (screenWidth / (screenHeight + 40)) * 1080;
       canvas.height = 1080;
       canvas.getContext('2d').drawImage(document.getElementById("screenVideo"), 0, 0, canvas.width, canvas.height);
-      ipcRenderer.send("downloadScreenshot", canvas.toDataURL());
+      //ipcRenderer.send("downloadScreenshot", canvas.toDataURL());
+      let link = document.createElement("a");
+      link.href = canvas.toDataURL();
+      link.download = "Screenshot-" + Date.now() + ".png";
+      linkc.click();
+    });
+
+    document.getElementById("recordButton").addEventListener("click", () => {
+      let recorder;
+      let recordedChunks = [];
+      if (document.getElementById("recordButton").children[0].className === "fa fa-circle-play") {
+        document.getElementById("recordButton").children[0].className = "fa fa-stop-circle";
+        recorder = new MediaRecorder(document.getElementById("screenVideo").srcObject);
+        recorder.addEventListener("dataavailable", ({ data }) => {
+          if (!data.size) return;
+          recordedChunks.push(data);
+        });
+        recorder.addEventListener("stop", () => {
+          document.getElementById("recordButton").children[0].className = "fa fa-circle-play";
+          let blob = new Blob(recordedChunks, {
+            type: "video/webm"
+          });
+          recordedChunks = [];
+          let link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "Recording-" + Date.now() + ".webm";
+          link.click();
+          URL.revokeObjectURL(blob);
+        });
+        document.getElementById("screenVideo").srcObject.getVideoTracks()[0].addEventListener("ended", () => {
+          if (recorder.state === "inactive") return;
+          recorder.stop();
+          document.getElementById("recordButton").children[0].className = "fa fa-circle-play";
+          let blob = new Blob(recordedChunks, {
+            type: "video/webm"
+          });
+          recordedChunks = [];
+          let link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "Recording-" + Date.now() + ".webm";
+          link.click();
+          URL.revokeObjectURL(blob);
+        });
+        recorder.start();
+      } else {
+        recorder.stop();
+      };
     });
   });
 });
