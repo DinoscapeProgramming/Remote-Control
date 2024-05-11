@@ -15,6 +15,7 @@ const childProcess = require("child_process");
 const { io } = require("socket.io-client");
 const socket = io((Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketProtocol + "//" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketHostname + ((JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) ? (":" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).port) : "")) : (process.env.DEFAULT_SOCKET_SERVER_PROTOCOL + "//" + process.env.DEFAULT_SOCKET_SERVER_HOSTNAME + ((process.env.DEFAULT_SOCKET_SERVER_PORT) ? (":" + process.env.DEFAULT_SOCKET_SERVER_PORT) : "")));
 const robot = require("@jitsi/robotjs");
+const { updateElectronApp } = require("update-electron-app");
 let systemUsageDataIntervals = {};
 
 const createWindow = () => {
@@ -31,7 +32,8 @@ const createWindow = () => {
   window.maximize();
   window.show();
   window.loadFile("pages/main/index.html");
-
+  
+  ipcMain.on("updateElectronApp", () => updateElectronApp());
   setTimeout(() => {
     window.webContents.send("roomId");
     ipcMain.on("roomId", (_, roomId) => {
