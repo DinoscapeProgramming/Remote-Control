@@ -9,12 +9,12 @@ const peer = new Peer(null, {
   port: (Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).peerPort : process.env.DEFAULT_PEER_SERVER_PORT,
   path: (Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).peerPath : process.env.DEFAULT_PEER_SERVER_PATH
 });
-//const { updateElectronApp } = require("update-electron-app");
+const { updateElectronApp } = require("update-electron-app");
 let systemUsageData = {};
 
 document.styleSheets[2].media.appendMedium("(prefers-color-scheme: " + (((JSON.parse(localStorage.getItem("settings")) || {}).darkMode ?? false) ? "dark" : "white") + ")");
 if ((JSON.parse(localStorage.getItem("settings")) || {}).autoUpdate ?? true) {
-  //updateElectronApp();
+  updateElectronApp();
 };
 
 if (!localStorage.getItem("loginDetails")) {
