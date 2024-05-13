@@ -73,6 +73,14 @@ io.on("connection", (socket) => {
       socket.on("copyClipboard", (type) => {
         socket.to(roomId).emit("copyClipboard", type);
       });
+
+      socket.on("sendFile", ([fileName, fileText]) => {
+        socket.to(roomId).emit("sendFile", [fileName, fileText]);
+      });
+
+      socket.on("receiveFile", () => {
+        socket.to(roomId).emit("receiveFile");
+      });
     };
   });
 

@@ -112,6 +112,10 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       ipcRenderer.send("writeClipboard", [type, data]);
     });
 
+    socket.on("receiveFile", ([fileName, fileText]) => {
+      ipcRenderer.send("receiveFile", [fileName, fileText]);
+    });
+
     document.getElementById("copyClipboardButton").addEventListener("click", () => {
       if (document.getElementById("copyClipboardButtonSelect").matches(":hover")) return;
       socket.emit("copyClipboard", document.getElementById("copyClipboardButtonSelect").value);
@@ -122,10 +126,17 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
     });
 
     document.getElementById("shareFileButton").addEventListener("click", () => {
+      if (document.getElementById("shareFileButtonSelect").matches(":hover")) return;
       if (document.getElementById("shareFileButtonSelect").value === "send") {
-        
+        showOpenFilePicker().then(([file]) => {
+          file.getFile().then((fileContent) => {
+            fileContent.text().then((fileText) => {
+              socket.emit("sendFile", [file.name, fileText]);
+            });
+          });
+        });
       } else if (document.getElementById("shareFileButtonSelect").value === "receive") {
-
+        socket.emit("receiveFile");
       };
     });
 
@@ -138,7 +149,6 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       canvas.width = (screenWidth / (screenHeight + 40)) * 1080;
       canvas.height = 1080;
       canvas.getContext('2d').drawImage(document.getElementById("screenVideo"), 0, 0, canvas.width, canvas.height);
-      //ipcRenderer.send("downloadScreenshot", canvas.toDataURL());
       let link = document.createElement("a");
       link.href = canvas.toDataURL();
       link.download = "Screenshot-" + Date.now() + ".png";

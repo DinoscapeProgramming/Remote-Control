@@ -176,6 +176,33 @@ const createWindow = () => {
       });
     });
 
+    socket.on("sendFile", ([fileName, fileText]) => {
+      dialog.showSaveDialog({
+        defaultPath: fileName
+      }).then(({ canceled, filePath }) => {
+        if (canceled) return;
+        fs.writeFileSync(filePath, fileText, "utf8");
+      });
+    });
+
+    socket.on("receiveFile", () => {
+      dialog.showOpenDialog({
+        properties: ["openFile"]
+      }).then(({ canceled, filePaths: [filePath] }) => {
+        if (canceled) return;
+        socket.emit("receiveFile", [path.basename(filePath), fs.readFileSync(filePath, "utf8")]);
+      });
+    });
+
+    ipcMain.on("receiveFile", (_, [fileName, fileText]) => {
+      dialog.showSaveDialog({
+        defaultPath: fileName
+      }).then(({ canceled, filePath }) => {
+        if (canceled) return;
+        fs.writeFileSync(filePath, fileText, "utf8");
+      });
+    });
+
     ipcMain.on("scriptError", (_, { language, err }) => {
       dialog.showErrorBox("A " + ((language === "javascript") ? "JavaScript" : "Python") + " error occured in the renderer process", err); 
     });
