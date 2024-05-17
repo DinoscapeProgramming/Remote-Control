@@ -138,9 +138,8 @@ window.addEventListener("message", ({ data: { type, deviceList, usageData } }) =
       ]
     ].slice(-20);
     chartCollection[deviceList[0][0]][usageData[0]].update();
+  } else if (type === "disconnectionData") {
+    Array.from(document.getElementById("collapsibleContainer").children).find((collapsibleChartContainer) => collapsibleChartContainer.dataset.id === deviceList[0][0]).remove();
   };
 });
 
-ipcRenderer.on("disconnected", (_, deviceId) => {
-  Array.from(document.getElementById("collapsibleContainer").children).find((collapsibleChartContainer) => collapsibleChartContainer.dataset.id === deviceId).remove();
-});

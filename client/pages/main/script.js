@@ -295,3 +295,20 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
     });
   };
 });
+
+ipcRenderer.on("disconnected", (_, deviceId) => {
+  systemUsageData = Array.from(systemUsageData).filter((device) => device[0] !== deviceId).reduce((data, accumulator) => ({
+    ...data,
+    ...{
+      [accumulator[0]]: accumulator[1]
+    }
+  }), {});
+  document.getElementById("pageEmbed").contentWindow.postMessage({
+    type: "disconnectionData",
+    deviceList: [
+      [
+        deviceId
+      ]
+    ]
+  });
+});
