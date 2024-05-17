@@ -1,3 +1,3 @@
-cd ../../client
+cd client
 npm install
 npm run build

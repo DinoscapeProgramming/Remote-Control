@@ -1,2 +1,3 @@
-cd ../../server
+cd server
+npm install
 node . 
