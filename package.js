@@ -7,38 +7,38 @@ module.exports.buildInstallable = () => new Promise((resolve, reject) => childPr
   win32: "cscript",
   darwin: "osascript",
   linux: "bash"
-})[parent.process.platform], [
+})[process.platform], [
   [
     path.join(__dirname, "scripts/buildInstallable/" + ({
       win32: "win32.vbs",
       darwin: "darwin.scpt",
       linux: "linux.sh"
-    })[parent.process.platform])
+    })[process.platform])
   ]
 ]).stdout.on('data', resolve));
 module.exports.openInstallable = () => new Promise((resolve, reject) => childProcess.spawn(({
   win32: "cscript",
   darwin: "osascript",
   linux: "bash"
-})[parent.process.platform], [
+})[process.platform], [
   [
     path.join(__dirname, "scripts/openInstallable/" + ({
       win32: "win32.vbs",
       darwin: "darwin.scpt",
       linux: "linux.sh"
-    })[parent.process.platform])
+    })[process.platform])
   ]
 ]).stdout.on('data', resolve));
 module.exports.hostServer = () => new Promise((resolve, reject) => childProcess.spawn(({
   win32: "cscript",
   darwin: "osascript",
   linux: "bash"
-})[parent.process.platform], [
+})[process.platform], [
   [
     path.join(__dirname, "scripts/hostServer/" + ({
       win32: "win32.vbs",
       darwin: "darwin.scpt",
       linux: "linux.sh"
-    })[parent.process.platform])
+    })[process.platform])
   ]
 ]).stdout.on('data', resolve));
