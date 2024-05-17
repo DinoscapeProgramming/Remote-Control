@@ -9,7 +9,7 @@ module.exports.buildInstallable = () => new Promise((resolve, reject) => childPr
   linux: "bash"
 })[process.platform], [
   [
-    path.join(__dirname, "scripts/buildInstallable/" + ({
+    path.join(process.cwd(), "scripts/buildInstallable/" + ({
       win32: "win32.vbs",
       darwin: "darwin.scpt",
       linux: "linux.sh"
@@ -22,7 +22,7 @@ module.exports.openInstallable = () => new Promise((resolve, reject) => childPro
   linux: "bash"
 })[process.platform], [
   [
-    path.join(__dirname, "scripts/openInstallable/" + ({
+    path.join(process.cwd(), "scripts/openInstallable/" + ({
       win32: "win32.vbs",
       darwin: "darwin.scpt",
       linux: "linux.sh"
@@ -35,7 +35,7 @@ module.exports.hostServer = () => new Promise((resolve, reject) => childProcess.
   linux: "bash"
 })[process.platform], [
   [
-    path.join(__dirname, "scripts/hostServer/" + ({
+    path.join(process.cwd(), "scripts/hostServer/" + ({
       win32: "win32.vbs",
       darwin: "darwin.scpt",
       linux: "linux.sh"
