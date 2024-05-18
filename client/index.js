@@ -32,16 +32,18 @@ const createWindow = () => {
   window.maximize();
   window.show();
   window.loadFile("pages/main/index.html");
-  
-  setTimeout(() => window.webContents.send("debugLog", "App started"), 5000);
+
   ipcMain.on("updateElectronApp", () => updateElectronApp());
   setTimeout(() => {
+    window.webContents.send("debugLog", "Started App");
+
     window.webContents.send("roomId");
     ipcMain.on("roomId", (_, roomId) => {
       socket.emit("joinRoom", {
         type: "client",
         roomId
       });
+      window.webContents.send("debugLog", "Joined Room");
     });
     
     ipcMain.on("validPassword", (_, roomId) => {
@@ -190,6 +192,7 @@ const createWindow = () => {
       dialog.showOpenDialog({
         properties: ["openFile"]
       }).then(({ canceled, filePaths: [filePath] }) => {
+        window.webContents("debugLog", "Received File");
         if (canceled) return;
         socket.emit("receiveFile", [path.basename(filePath), fs.readFileSync(filePath, "utf8")]);
       });
