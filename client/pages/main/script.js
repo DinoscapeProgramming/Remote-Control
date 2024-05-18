@@ -10,6 +10,11 @@ const peer = new Peer(null, {
   path: (Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).peerPath : process.env.DEFAULT_PEER_SERVER_PATH
 });
 let systemUsageData = {};
+let debugLogs = [];
+
+if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) {
+  document.getElementById("debugMenuBarItem").style.display = "block";
+}
 
 document.styleSheets[2].media.appendMedium("(prefers-color-scheme: " + (((JSON.parse(localStorage.getItem("settings")) || {}).darkMode ?? false) ? "dark" : "white") + ")");
 if ((JSON.parse(localStorage.getItem("settings")) || {}).autoUpdate ?? true) {
@@ -293,6 +298,11 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
       type: "connectionData",
       deviceList: Object.keys(systemUsageData).map((deviceId) => [deviceId, systemUsageData[deviceId]])
     });
+  } else if (type === "requestDebugLogs") {
+    document.getElementById("pageEmbed").contentWindow.postMessage({
+      type: "debugLogs",
+      debugLogs
+    });
   };
 });
 
@@ -310,5 +320,15 @@ ipcRenderer.on("disconnected", (_, deviceId) => {
         deviceId
       ]
     ]
+  });
+});
+
+ipcRenderer.on("debugLog", (_, debugLog) => {
+  debugLogs.push(debugLog);
+  document.getElementById("pageEmbed").contentWindow.postMessage({
+    type: "debugLog",
+    debugLogs: [
+      debugLog
+    ]  
   });
 });

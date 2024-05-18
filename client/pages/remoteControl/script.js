@@ -112,7 +112,7 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       ipcRenderer.send("writeClipboard", [type, data]);
     });
 
-    socket.on("sendFile", ([fileName, fileText]) => {
+    socket.on("receiveFile", ([fileName, fileText]) => {
       ipcRenderer.send("receiveFile", [fileName, fileText]);
     });
 

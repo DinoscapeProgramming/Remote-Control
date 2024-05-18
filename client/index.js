@@ -33,6 +33,7 @@ const createWindow = () => {
   window.show();
   window.loadFile("pages/main/index.html");
   
+  setTimeout(() => window.webContents.send("debugLog", "App started"), 5000);
   ipcMain.on("updateElectronApp", () => updateElectronApp());
   setTimeout(() => {
     window.webContents.send("roomId");
@@ -190,7 +191,7 @@ const createWindow = () => {
         properties: ["openFile"]
       }).then(({ canceled, filePaths: [filePath] }) => {
         if (canceled) return;
-        socket.emit("sendFile", [path.basename(filePath), fs.readFileSync(filePath, "utf8")]);
+        socket.emit("receiveFile", [path.basename(filePath), fs.readFileSync(filePath, "utf8")]);
       });
     });
 

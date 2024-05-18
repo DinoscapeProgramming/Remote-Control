@@ -129,6 +129,14 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
           }
         }));
       };
+    } else if (slider.parentElement.dataset.type === "debugMode") {
+      localStorage.setItem("settings", JSON.stringify({
+        ...JSON.parse(localStorage.getItem("settings")) || {},
+        ...{
+          debugMode: !slider.previousElementSibling.checked
+        }
+      }));
+      parent.document.getElementById("debugMenuBarItem").style.display = (slider.previousElementSiblingChecked) ? "none" : "block";
     };
   });
 });

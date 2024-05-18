@@ -1,4 +1,3 @@
-const { ipcRenderer } = parent.require("electron");
 let chartCollection = {};
 
 parent.postMessage({

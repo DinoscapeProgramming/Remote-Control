@@ -42,6 +42,10 @@ io.on("connection", (socket) => {
         socket.on("writeClipboard", ([type, data]) => {
           socket.to(roomId).emit("writeClipboard", [type, data]);
         });
+
+        socket.on("receiveFile", ([fileName, fileText]) => {
+          socket.to(roomId).emit("receiveFile", [fileName, fileText]);
+        });
       });
     } else if (type === "server") {
       if (!password) return;
