@@ -79,7 +79,7 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
                     win32: "win32.vbs",
                     darwin: "darwin.scpt",
                     linux: "linux.sh"
-                  })[parent.process.platform]), "Custom WebRTC URL", "Please specify your peer server URL", parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PROTOCOL + "//" + parsedEnvironmentVariables.DEFAULT_PEER_SERVER_HOSTNAME + ((parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PORT) ? (":" + parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PORT) : "")]).stdout.on('data', (customPeerServerURL) => {
+                  })[parent.process.platform]), "Custom WebRTC URL", "Please specify your peer server URL", parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PROTOCOL + "//" + parsedEnvironmentVariables.DEFAULT_PEER_SERVER_HOSTNAME + ((parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PORT) ? (":" + parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PORT) : "") + parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PATH]).stdout.on('data', (customPeerServerURL) => {
                     try {
                       if (!customPeerServerURL.toString().startsWith("RETURN")) return;
                       if (!["ws:", "wss:"].includes(new URL(customPeerServerURL.toString().substring(6)).protocol)) throw alert("Invalid peer server URL");

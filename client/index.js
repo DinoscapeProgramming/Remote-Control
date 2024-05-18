@@ -190,7 +190,7 @@ const createWindow = () => {
         properties: ["openFile"]
       }).then(({ canceled, filePaths: [filePath] }) => {
         if (canceled) return;
-        socket.emit("receiveFile", [path.basename(filePath), fs.readFileSync(filePath, "utf8")]);
+        socket.emit("sendFile", [path.basename(filePath), fs.readFileSync(filePath, "utf8")]);
       });
     });
 
