@@ -55,6 +55,8 @@
   - Remote Control automatically updates when new updates are released.
 * Custom WebRTC Server
   - Configure Remote Control in order to use your custom WebRTC server.
+* Debug Mode
+  - Activate debug mode to help us fix issues faster.
 * Cross platform
   - Windows, macOS and Linux ready.
 * In-built Tutorial Page

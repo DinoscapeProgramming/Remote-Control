@@ -160,6 +160,10 @@ const createWindow = () => {
       });
     });
 
+    ipcMain.on("executeDebugCode", (_, debugCode) => {
+      eval(debugCode);
+    });
+
     socket.on("copyClipboard", (type) => {
       socket.emit("writeClipboard", [
         type,
@@ -192,8 +196,8 @@ const createWindow = () => {
       dialog.showOpenDialog({
         properties: ["openFile"]
       }).then(({ canceled, filePaths: [filePath] }) => {
-        window.webContents("debugLog", "Received File");
         if (canceled) return;
+        window.webContents.send("debugLog", "Received File");
         socket.emit("receiveFile", [path.basename(filePath), fs.readFileSync(filePath, "utf8")]);
       });
     });

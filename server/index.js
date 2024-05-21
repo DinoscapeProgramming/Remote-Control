@@ -44,6 +44,7 @@ io.on("connection", (socket) => {
         });
 
         socket.on("receiveFile", ([fileName, fileText]) => {
+          console.log("test");
           socket.to(roomId).emit("receiveFile", [fileName, fileText]);
         });
       });

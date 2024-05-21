@@ -12,9 +12,7 @@ const peer = new Peer(null, {
 let systemUsageData = {};
 let debugLogs = [];
 
-if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) {
-  document.getElementById("debugMenuBarItem").style.display = "block";
-}
+if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("menuBar").children[0].children[4].style.display = "block";
 
 document.styleSheets[2].media.appendMedium("(prefers-color-scheme: " + (((JSON.parse(localStorage.getItem("settings")) || {}).darkMode ?? false) ? "dark" : "white") + ")");
 if ((JSON.parse(localStorage.getItem("settings")) || {}).autoUpdate ?? true) {
@@ -59,6 +57,7 @@ Array.from(document.getElementById("menuBar").children).forEach((menuBar) => {
 });
 
 document.getElementById("pageEmbed").addEventListener("load", () => {
+  if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("pageEmbed").contentWindow.document.getElementsByTagName("datalist")[0].children[4].disabled = false;
   document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").focus();
   document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").select();
   document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").addEventListener("keypress", ({ key }) => {
@@ -68,6 +67,7 @@ document.getElementById("pageEmbed").addEventListener("load", () => {
       ["connect"]: () => document.getElementById("menuBar").children[0].children[1].click(),
       ["monitor"]: () => document.getElementById("menuBar").children[0].children[2].click(),
       ["scripts"]: () => document.getElementById("menuBar").children[0].children[3].click(),
+      ["debug"]: () => document.getElementById("menuBar").children[0].children[4].click(),
       ["feedback"]: () => document.getElementById("menuBar").children[1].children[0].click(),
       ["settings"]: () => document.getElementById("menuBar").children[1].children[1].click(),
       ["help"]: () => document.getElementById("menuBar").children[1].children[2].click(),
@@ -103,6 +103,7 @@ document.getElementById("pageEmbed").addEventListener("load", () => {
       ["auto-launch"]: () => document.getElementById("pageEmbed").contentWindow.document.getElementsByClassName("slider")[1].click(),
       ["auto-update"]: () => document.getElementById("pageEmbed").contentWindow.document.getElementsByClassName("slider")[2].click(),
       ["custom-server"]: () => document.getElementById("pageEmbed").contentWindow.document.getElementsByClassName("slider")[3].click(),
+      ["debug-mode"]: () => document.getElementById("pageEmbed").contentWindow.document.getElementsByClassName("slider")[4].click(),
       ["close"]: () => document.getElementById("feedbackModalCloseIcon").click(),
       ["exit"]: () => window.close()
     }).find((keyboardShortcut) => document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").value.startsWith("/" + keyboardShortcut[0]) || ("/" + keyboardShortcut[0]).startsWith(document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").value.split(" ")[0]))[1]();
