@@ -201,7 +201,6 @@ const createWindow = () => {
         properties: ["openFile"]
       }).then(({ canceled, filePaths: [filePath] }) => {
         if (canceled) return;
-        window.webContents.send("debugLog", "Received File");
         socket.emit("receiveFile", [path.basename(filePath), fs.readFileSync(filePath, "utf8")]);
       });
     });

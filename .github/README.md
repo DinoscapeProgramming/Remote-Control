@@ -95,6 +95,9 @@ $ git clone https://github.com/DinoscapeProgramming/Remote-Control
 # Go into the repository
 $ cd Remote-Control/server
 
+# Install dependencies
+$ npm install
+
 # Start server
 $ node . 
 ```
