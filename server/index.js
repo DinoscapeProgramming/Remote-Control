@@ -109,6 +109,7 @@ app.use("/api/v1/feedback/send", rateLimit({
 }));
 app.use("/peer", peerServer);
 app.use("/apps", express.static("apps"));
+app.use("/assets", express.static("assets"));
 app.use("/pages", express.static("pages"));
 
 app.all("/", (req, res) => {

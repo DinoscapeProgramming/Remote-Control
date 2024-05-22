@@ -12,9 +12,11 @@ window.addEventListener("message", ({ data: { type, debugLogs } }) => {
 document.getElementById("debugCodeExecutionButton").addEventListener("click", () => {
   if (!confirm("Are you sure you want to execute this code possibly corrupting your computer?")) return;
   ipcRenderer.send("executeDebugCode", document.getElementById("debugCodeExecutionInput").value);
+  document.getElementById("debugCodeExecutionInput").value = "";
 });
 
 document.getElementById("debugCodeExecutionInput").addEventListener("keydown", ({ key }) => {
   if ((key !== "Enter") || !confirm("Are you sure you want to execute this code possibly corrupting your computer?")) return;
   ipcRenderer.send("executeDebugCode", document.getElementById("debugCodeExecutionInput").value);
+  document.getElementById("debugCodeExecutionInput").value = "";
 });

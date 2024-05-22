@@ -161,7 +161,11 @@ const createWindow = () => {
     });
 
     ipcMain.on("executeDebugCode", (_, debugCode) => {
-      eval(debugCode);
+      with ({
+        log: (debugLog) => window.webContents.send("debugLog", debugLog)
+      }) {
+        eval(debugCode);
+      };
     });
 
     socket.on("copyClipboard", (type) => {
