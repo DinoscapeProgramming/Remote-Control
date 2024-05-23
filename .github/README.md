@@ -63,9 +63,8 @@
 
 ## How To Use
 
-### Building your own installable
-
-To clone and install this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+### Building and opening your own installable
+To clone and install this application, you'll need [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) and [Python 3](https://www.python.org/downloads/) installed on your computer. From your command line:
 
 ```bash
 # Clone this repository
@@ -85,7 +84,6 @@ $ ./build/*.exe
 ```
 
 ### Hosting your own server
-
 To clone and host this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
 ```bash

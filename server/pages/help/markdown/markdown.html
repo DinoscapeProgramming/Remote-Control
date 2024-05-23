@@ -105,12 +105,13 @@
 <li>In-built Tutorial Page</li>
 </ul>
 <h2 id="how-to-use">How To Use </h2>
+<h3 id="building-your-own-installable">Building your own installable </h3>
 <p>To clone and install this application, you'll need <a href="https://git-scm.com">Git</a> and <a href="https://nodejs.org/en/download/">Node.js</a> (which comes with <a href="http://npmjs.com">npm</a>) installed on your computer. From your command line:</p>
 <pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># Clone this repository</span>
 $ <span class="token function">git</span> clone https://github.com/DinoscapeProgramming/Remote-Control
 
 <span class="token comment"># Go into the repository</span>
-$ <span class="token builtin class-name">cd</span> Remote-Control
+$ <span class="token builtin class-name">cd</span> Remote-Control/client
 
 <span class="token comment"># Install dependencies</span>
 $ <span class="token function">npm</span> <span class="token function">install</span>
@@ -120,6 +121,19 @@ $ <span class="token function">npm</span> run build
 
 <span class="token comment"># Install the app</span>
 $ ./build/*.exe
+</code></pre><h3 id="hosting-your-own-server">Hosting your own server </h3>
+<p>To clone and host this application, you'll need <a href="https://git-scm.com">Git</a> and <a href="https://nodejs.org/en/download/">Node.js</a> (which comes with <a href="http://npmjs.com">npm</a>) installed on your computer. From your command line:</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># Clone this repository</span>
+$ <span class="token function">git</span> clone https://github.com/DinoscapeProgramming/Remote-Control
+
+<span class="token comment"># Go into the repository</span>
+$ <span class="token builtin class-name">cd</span> Remote-Control/server
+
+<span class="token comment"># Install dependencies</span>
+$ <span class="token function">npm</span> <span class="token function">install</span>
+
+<span class="token comment"># Start server</span>
+$ <span class="token function">node</span> <span class="token builtin class-name">.</span> 
 </code></pre><blockquote>
 <p><strong>Note</strong><br>
 If you're using Linux Bash for Windows, <a href="https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/">see this guide</a> or use <code>node</code> from the command prompt.</p>
@@ -155,7 +169,7 @@ If you're using Linux Bash for Windows, <a href="https://www.howtogeek.com/26157
 <li><a href="https://github.com/DinoscapeProgramming/DinoChess">DinoChess</a> - A chess platform for chess lovers</li>
 </ul>
 <h2 id="license">License </h2>
-<p><a href="pages\help\LICENSE.txt">Apache-2.0</a></p>
+<p><a href="https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/master/LICENSE">Apache-2.0</a></p>
 <hr>
 <blockquote>
 <p><a href="https://dinoscape.com">dinoscape.com</a> &nbsp;·&nbsp;<br>
@@ -170,11 +184,24 @@ Scratch <a href="https://scratch.mit.edu/users/Dinoscape">@Dinoscape</a></p>
           <a href="#key-features" class="md-toc-link">
             <p>Key Features</p>
 
-          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
-          <a href="#how-to-use" class="md-toc-link">
-            <p>How To Use</p>
+          </a></div><details style="padding:0;;padding-left:0px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#how-to-use" class="md-toc-link"><p>How To Use</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#building-your-own-installable" class="md-toc-link">
+            <p>Building your own installable</p>
 
-          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#hosting-your-own-server" class="md-toc-link">
+            <p>Hosting your own server</p>
+
+          </a></div>
+        </div>
+      </details>
+    <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
           <a href="#download" class="md-toc-link">
             <p>Download</p>
 

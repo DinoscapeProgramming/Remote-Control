@@ -71,7 +71,9 @@ $ npm install electron-remote-control
 ```
 
 ### Building and opening your own installable
+To build and open your own installable, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) and [Python 3](https://www.python.org/downloads/) installed on your computer.
 
+#### Using code
 ```js
 const { buildInstallable, openInstallable } = require("electron-remote-control");
 
@@ -87,8 +89,17 @@ buildInstallable({ stdout }).then(() => { // may take a while; uses electron-bui
 });
 ```
 
-### Hosting your own server
+#### Using commands
+```bash
+$ npm install -g # only execute this command once
+$ npx buildInstallable
+$ npx openInstallable
+```
 
+### Hosting your own server
+To host your own server, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer.
+
+#### Using code
 ```js
 const { hostServer } = require("electron-remote-control");
 
@@ -97,6 +108,12 @@ hostServer().then(({ stdout }) => { // may take a while; port :3000 opens
 }).catch(({ stderr }) => {
   throw new Error(stderr);
 });
+```
+
+#### Using commands
+```bash
+$ npm install -g # only execute this command once
+$ npx hostServer
 ```
 
 > **Note**
