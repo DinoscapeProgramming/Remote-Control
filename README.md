@@ -70,29 +70,32 @@ To install this package, you'll need [Node.js](https://nodejs.org/en/download/) 
 $ npm install electron-remote-control
 ```
 
-### Building your own installable
+### Building and opening your own installable
 
 ```js
-const moveProject = { buildInstallable, openInstallable } = require("electron-remote-control");
+const { buildInstallable, openInstallable } = require("electron-remote-control");
 
-moveProject().then(() => { // moves the project from the node_modules folder to the project folder -- required
-  buildInstallable().then(() => { // may take a while; uses electron-builder
-    openInstallable().then(() => {
-      console.log("Successfully built and opened installable.");
-    });
+buildInstallable({ stdout }).then(() => { // may take a while; uses electron-builder
+  console.log(stdout);
+  openInstallable({ stdout }).then(() => {
+    console.log(stdout);
+  }).catch(({ exitCode, stderr }) => {
+    throw new Error(stderr);
   });
+}).catch(({ exitCode, stderr }) => {
+  throw new Error(stderr);
 });
 ```
 
 ### Hosting your own server
 
 ```js
-const moveProject = { hostServer } = require("electron-remote-control");
+const { hostServer } = require("electron-remote-control");
 
-moveProject().then(() => { // moves the project from the node_modules folder to the project folder -- required
-  hostServer().then(() => { // may take a while; port :3000 opens
-    console.log("Successfully hosted server.");
-  });
+hostServer().then(({ stdout }) => { // may take a while; port :3000 opens
+  console.log(stdout);
+}).catch(({ stderr }) => {
+  throw new Error(stderr);
 });
 ```
 
