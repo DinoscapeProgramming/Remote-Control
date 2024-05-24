@@ -381,6 +381,7 @@ fetch(((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resource
     appDataTextNameContainer.style.display = "flex";
     appDataTextNameContainer.style.flexDirection = "row";
     let appDataTextContainerName = document.createElement("h2");
+    appDataTextContainerName.style.color = "black";
     appDataTextContainerName.style.marginTop = "16.5px";
     appDataTextContainerName.style.marginBottom = "0";
     appDataTextContainerName.innerText = name;
@@ -395,6 +396,7 @@ fetch(((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resource
       appDataTextContainerIcon.style.marginLeft = "6.25px";
     };
     let appDataTextContainerDescription = document.createElement("p");
+    appDataTextContainerDescription.style.color = "black";
     appDataTextContainerDescription.style.marginTop = "7.5px";
     appDataTextContainerDescription.style.marginBottom = "22.5px";
     appDataTextContainerDescription.style.fontSize = "14px";

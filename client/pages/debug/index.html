@@ -19,7 +19,7 @@
       }
     </style>
   </head>
-  <body style="margin: 0">
+  <div style="margin: 0">
     <div style="display: flex; flex-direction: row; width: 100vw; height: 60px">
       <p
         style="
@@ -71,50 +71,52 @@
         opacity: 0.75;
       "
     ></div>
-    <textarea
-      id="debugLogInput"
-      class="debugLogInput"
-      disabled=""
-      style="
-        width: calc(100% - 45px);
-        height: calc(100vh - 160px);
-        resize: none;
-        border: none;
-        padding: 22.5px;
-        font-size: 20px;
-        line-height: 27.5px;
-        color: black;
-        background-color: transparent;
-      "
-    ></textarea>
-    <div style="display: flex; flex-direction: row">
-      <input
-        id="debugCodeExecutionInput"
+    <div>
+      <textarea
+        id="debugLogInput"
+        class="debugLogInput"
+        disabled=""
         style="
-          width: calc(100% - 50px);
-          height: 44px;
-          border-bottom-left-radius: 20px;
+          width: calc(100% - 45px);
+          height: calc(100vh - 160px);
+          resize: none;
           border: none;
-          border-top: 1px solid #6a6868;
-          padding-top: 0;
-          padding-left: 12.5px;
-          font-size: large;
-          font-family: system-ui;
+          padding: 22.5px;
+          font-size: 20px;
+          line-height: 27.5px;
+          color: black;
+          background-color: transparent;
         "
-      />
-      <button
-        id="debugCodeExecutionButton"
-        class="debugCodeExecutionButton"
-        style="
-          width: 47.5px;
-          height: 47.5px;
-          background-color: #159be1;
-          border: 1px solid #6a6868;
-          border-radius: 2.5px;
-        "
-      >
-        <i class="fa fa-paper-plane" aria-hidden="true" style="font-size: 16.25px;"></i>
-      </button>
+      ></textarea>
+      <div style="display: flex; flex-direction: row">
+        <input
+          id="debugCodeExecutionInput"
+          style="
+            width: calc(100% - 50px);
+            height: 44px;
+            border-bottom-left-radius: 20px;
+            border: none;
+            border-top: 1px solid #6a6868;
+            padding-top: 0;
+            padding-left: 12.5px;
+            font-size: large;
+            font-family: system-ui;
+          "
+        />
+        <button
+          id="debugCodeExecutionButton"
+          class="debugCodeExecutionButton"
+          style="
+            width: 47.5px;
+            height: 47.5px;
+            background-color: #159be1;
+            border: 1px solid #6a6868;
+            border-radius: 2.5px;
+          "
+        >
+          <i class="fa fa-paper-plane" aria-hidden="true" style="font-size: 16.25px;"></i>
+        </button>
+      </div>
     </div>
   </body>
 </html>
