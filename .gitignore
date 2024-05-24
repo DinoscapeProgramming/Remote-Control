@@ -2,4 +2,3 @@ client/node_modules
 client/build
 client/.env
 server/node_modules
-server/apps
