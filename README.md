@@ -94,7 +94,7 @@ or
 ```js
 const { fullyBuildAndOpenInstallable } = require("electron-remote-control");
 
-fullyBuildAndOpenInstallable();
+fullyBuildAndOpenInstallable(); // this does exactly what the code above does
 ```
 
 #### Using commands
@@ -123,7 +123,7 @@ or
 ```js
 const { fullyHostServer } = require("electron-remote-control");
 
-fullyHostServer();
+fullyHostServer(); // this does exactly what the code above does
 ```
 
 #### Using commands
