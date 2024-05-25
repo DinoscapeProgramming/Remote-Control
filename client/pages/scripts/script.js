@@ -1,5 +1,6 @@
 const { ipcRenderer } = parent.require("electron");
 const fs = parent.require("fs");
+const os = parent.require("os");
 const path = parent.require("path");
 const crypto = parent.require("crypto");
 const parsedEnvironmentVariables = parent.require("dotenv").config({ path: parent.require("path").join(parent.process.resourcesPath, "app.asar/.env") }).parsed;
@@ -36,7 +37,7 @@ document.styleSheets[1].media.appendMedium("(prefers-color-scheme: " + (((JSON.p
   scriptContainerName.style.fontWeight = "400";
   scriptContainerName.style.border = "none";
   scriptContainerName.style.padding = "8.5px";
-  scriptContainerName.style.width = "calc(" + scriptName.length.toString() + "ch - 5px)";
+  scriptContainerName.style.width = "calc(" + scriptName?.length?.toString() + "ch - 5px)";
   scriptContainerName.style.maxWidth = "68%;";
   scriptContainerName.addEventListener("input", ({ target }) => {
     scriptContainerName.style.width = "calc(" + target.value.length.toString() + "ch - 5px)";
@@ -100,7 +101,16 @@ document.styleSheets[1].media.appendMedium("(prefers-color-scheme: " + (((JSON.p
   scriptContainerExecuteSelectDefaultOption.value = "defaultOption";
   scriptContainerExecuteSelectDefaultOption.innerText = "Execute";
   scriptContainerExecuteSelect.appendChild(scriptContainerExecuteSelectDefaultOption);
-  (JSON.parse(localStorage.getItem("history")) || []).forEach(([deviceName, deviceId, devicePassword]) => {
+  [
+    ...[
+      [
+        os.hostname() + " (me)",
+        JSON.parse(localStorage.getItem("loginDetails"))[0],
+        JSON.parse(localStorage.getItem("loginDetails"))[1]
+      ]
+    ],
+    ...JSON.parse(localStorage.getItem("history")) || []
+  ].forEach(([deviceName, deviceId, devicePassword]) => {
     let scriptContainerExecuteSelectDeviceOption = document.createElement("option");
     scriptContainerExecuteSelectDeviceOption.value = JSON.stringify([
       deviceId,
@@ -270,7 +280,16 @@ document.getElementById("createScriptButton").addEventListener("click", () => {
   scriptContainerExecuteSelectDefaultOption.value = "defaultOption";
   scriptContainerExecuteSelectDefaultOption.innerText = "Execute";
   scriptContainerExecuteSelect.appendChild(scriptContainerExecuteSelectDefaultOption);
-  (JSON.parse(localStorage.getItem("history")) || []).forEach(([deviceName, deviceId, devicePassword]) => {
+  [
+    ...[
+      [
+        os.hostname() + " (me)",
+        JSON.parse(localStorage.getItem("loginDetails"))[0],
+        JSON.parse(localStorage.getItem("loginDetails"))[1]
+      ]
+    ],
+    ...JSON.parse(localStorage.getItem("history")) || []
+  ].forEach(([deviceName, deviceId, devicePassword]) => {
     let scriptContainerExecuteSelectDeviceOption = document.createElement("option");
     scriptContainerExecuteSelectDeviceOption.value = JSON.stringify([
       deviceId,

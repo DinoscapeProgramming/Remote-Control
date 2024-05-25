@@ -1,5 +1,6 @@
 window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
   const fs = require("fs");
+  const os = require("os");
   const path = require("path");
   const crypto = require("crypto");
   const { ipcRenderer } = require("electron");
@@ -59,7 +60,16 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       socket.emit("keyTap", key);
     });
 
-    if (!(JSON.parse(localStorage.getItem("history")) || []).find((device) => JSON.stringify(device) === JSON.stringify([
+    if (![
+      ...[
+        [
+          os.hostname() + " (me)",
+          JSON.parse(localStorage.getItem("loginDetails"))[0],
+          JSON.parse(localStorage.getItem("loginDetails"))[1]
+        ]
+      ],
+      ...JSON.parse(localStorage.getItem("history")) || []
+    ].find((device) => JSON.stringify(device) === JSON.stringify([
       deviceName,
       roomId,
       password
