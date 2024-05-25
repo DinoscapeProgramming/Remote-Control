@@ -12,6 +12,16 @@ if (document.getElementById("pageEmbed").src.endsWith("/settings/index.html")) {
   document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].remove();
 };
 if (document.getElementById("pageEmbed").src.endsWith("/help/index.html")) document.getElementById("pageEmbed").contentWindow.document.getElementById("markdownEmbed").style.filter = "invert(95%) hue-rotate(180deg)"; 
+if (JSON.parse(localStorage.getItem("settings")).darkMode) {
+  localStorage.setItem("settings", JSON.stringify({
+    ...JSON.parse(localStorage.getItem("settings")) || {},
+    ...{
+      darkMode: false
+    }
+  }));
+  document.styleSheets[2].media.deleteMedium("(prefers-color-scheme: dark)");
+  document.styleSheets[2].media.appendMedium("(prefers-color-scheme: white)");
+};
 document.getElementById("pageEmbed").addEventListener("load", () => {
   document.getElementById("pageEmbed").contentWindow.document.body.style.color = "white";
   document.getElementById("pageEmbed").contentWindow.document.body.children[0].children[0].style.color = "white";

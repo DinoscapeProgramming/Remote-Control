@@ -159,7 +159,8 @@ ipcRenderer.on("executeScript", (_, { roomId, password, scriptContent } = {}) =>
             });
           });
           return pythonProcess;
-        }
+        },
+        executeInMainProcess: (func) => ipcRenderer.send("executeDebugCode", "(" + func.toString() + ")();")
       }) {
         eval("(async () => {" + scriptContent + "})();");
       };
