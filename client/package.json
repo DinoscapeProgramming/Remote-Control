@@ -10,7 +10,7 @@
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
   "keywords": ["remote-control", "remote-desktop", "electron"],
-  "author": "Dinoscape",
+  "author": "DinoscapeProgramming",
   "license": "Apache-2.0",
   "dependencies": {
     "@jitsi/robotjs": "^0.6.13",

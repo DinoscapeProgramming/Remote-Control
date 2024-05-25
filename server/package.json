@@ -9,7 +9,7 @@
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
   "keywords": ["remote-control", "remote-desktop", "electron"],
-  "author": "",
+  "author": "DinoscapeProgramming",
   "license": "Apache-2.0",
   "dependencies": {
     "body-parser": "^1.20.2",
