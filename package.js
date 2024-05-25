@@ -45,5 +45,23 @@ module.exports.executeScript = (scriptType) => new Promise((resolve, reject) => 
 });
 module.exports.buildInstallable = () => module.exports.executeScript("buildInstallable");
 module.exports.openInstallable = () => module.exports.executeScript("openInstallable");
-module.exports.createInstallable = () => new Promise((resolve, reject))
+module.exports.fullyBuildAndOpenInstallable = () => {
+  module.exports.buildInstallable({ stdout }).then(() => { // may take a while; uses electron-builder
+    console.log(stdout);
+    module.exports.openInstallable({ stdout }).then(() => {
+      console.log(stdout);
+    }).catch(({ stderr }) => {
+      throw new Error(stderr);
+    });
+  }).catch(({ exitCode, stderr }) => {
+    throw new Error(stderr);
+  });
+};
 module.exports.hostServer = () => module.exports.executeScript("hostServer");
+module.exports.fullyHostServer = () => {
+  module.exports.hostServer().then(({ stdout }) => { // may take a while; port :3000 opens
+    console.log(stdout);
+  }).catch(({ stderr }) => {
+    throw new Error(stderr);
+  });
+};
