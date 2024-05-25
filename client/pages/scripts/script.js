@@ -156,7 +156,9 @@ document.styleSheets[1].media.appendMedium("(prefers-color-scheme: " + (((JSON.p
       document.getElementById("scriptViewContainer").appendChild(scriptIconPlacementContainer);
     };
     localStorage.setItem("scripts", JSON.stringify((JSON.parse(localStorage.getItem("scripts")) || []).filter((script) => script[0] !== scriptId)));
-    fs.unlinkSync(path.join(parent.process.resourcesPath, "scripts/" + scriptId + ".js"));
+    try {
+      fs.unlinkSync(path.join(parent.process.resourcesPath, "scripts/" + scriptId + ".js"));
+    } catch {};
   });
   let scriptContainerDeleteButtonIcon = document.createElement("i");
   scriptContainerDeleteButtonIcon.className = "fa fa-trash";
@@ -186,7 +188,7 @@ document.getElementById("createScriptButton").addEventListener("click", () => {
       ]
     ]
   ]));
-  fs.writeFileSync(path.join(parent.process.resourcesPath, "scripts/" + scriptId + ".js"), "/* Default Parameters include:\n  - window\n  - electron\n  - robotjs\n  - alert\n  - prompt\n  - confirm\n  - runPython\n*/", "utf8");
+  fs.writeFileSync(path.join(parent.process.resourcesPath, "scripts/" + scriptId + ".js"), "/* Default Parameters include:\n  - window\n  - electron\n  - robotjs\n  - alert\n  - prompt\n  - confirm\n  - runPython\n  - executeInMainProcess\n*/", "utf8");
   let scriptContainer = document.createElement("div");
   scriptContainer.dataset.id = scriptId;
   scriptContainer.style.display = "flex";
@@ -323,7 +325,9 @@ document.getElementById("createScriptButton").addEventListener("click", () => {
       document.getElementById("scriptViewContainer").appendChild(scriptIconPlacementContainer);
     };
     localStorage.setItem("scripts", JSON.stringify((JSON.parse(localStorage.getItem("scripts")) || []).filter((script) => script[0] !== scriptId)));
-    fs.unlinkSync(path.join(parent.process.resourcesPath, "scripts/" + scriptId + ".js"));
+    try {
+      fs.unlinkSync(path.join(parent.process.resourcesPath, "scripts/" + scriptId + ".js"));
+    } catch {};
   });
   let scriptContainerDeleteButtonIcon = document.createElement("i");
   scriptContainerDeleteButtonIcon.className = "fa fa-trash";
