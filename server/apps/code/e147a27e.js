@@ -4,12 +4,14 @@ document.body.children[0].style.opacity = "0.965";
 document.body.children[0].style.backgroundColor = "#159be1";
 document.getElementById("pageEmbed").style.backgroundColor = "black";
 document.getElementById("pageEmbed").style.opacity = "0.85";
+document.getElementById("pageEmbed").style.borderTopLeftRadius = "0";
+document.getElementById("pageEmbed").style.borderBottomLeftRadius = "0";
 document.getElementById("pageEmbed").contentWindow.document.body.style.color = "white";
 document.getElementById("pageEmbed").contentWindow.document.body.children[0].children[0].style.color = "white";
 if (document.getElementById("pageEmbed").src.endsWith("/scripts/index.html")) document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].children[1].style.color = "white";
 if (document.getElementById("pageEmbed").src.endsWith("/settings/index.html")) {
-  document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].remove();
-  document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].remove();
+  document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].style.display = "none";
+  document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[1].style.display = "none";
 };
 if (document.getElementById("pageEmbed").src.endsWith("/help/index.html")) document.getElementById("pageEmbed").contentWindow.document.getElementById("markdownEmbed").style.filter = "invert(95%) hue-rotate(180deg)"; 
 if (JSON.parse(localStorage.getItem("settings")).darkMode) {
@@ -27,8 +29,8 @@ document.getElementById("pageEmbed").addEventListener("load", () => {
   document.getElementById("pageEmbed").contentWindow.document.body.children[0].children[0].style.color = "white";
   if (document.getElementById("pageEmbed").src.endsWith("/scripts/index.html")) document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].children[1].style.color = "white"; 
   if (document.getElementById("pageEmbed").src.endsWith("/settings/index.html")) {
-    document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].remove();
-    document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].remove();
+    document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].style.display = "none";
+    document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[1].style.display = "none";
   };
   if (document.getElementById("pageEmbed").src.endsWith("/help/index.html")) document.getElementById("pageEmbed").contentWindow.document.getElementById("markdownEmbed").style.filter = "invert(95%) hue-rotate(180deg)";
 });
