@@ -11,6 +11,10 @@ scriptEditor.setOption("tabSize", 2);
 scriptEditor.on("change", () => {
   fs.writeFileSync(path.join(parent.process.resourcesPath, "scripts/" + document.getElementById("scriptEditorContainer").dataset.id + ".js"), scriptEditor.getValue(), "utf8");
 });
+(new ResizeObserver(() => {
+  scriptEditor.resize();
+  scriptEditor.renderer.updateFull();
+})).observe(document.getElementById("scriptEditor"));
 
 if (!fs.readdirSync(parent.process.resourcesPath).includes("scripts")) fs.mkdirSync(path.join(parent.process.resourcesPath, "scripts"));
 
