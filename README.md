@@ -89,6 +89,14 @@ buildInstallable({ stdout }).then(() => { // may take a while; uses electron-bui
 });
 ```
 
+or 
+
+```js
+const { fullyBuildAndOpenInstallable } = require("electron-remote-control");
+
+fullyBuildAndOpenInstallable();
+```
+
 #### Using commands
 ```bash
 $ npm install -g # only execute this command once
@@ -108,6 +116,14 @@ hostServer().then(({ stdout }) => { // may take a while; port :3000 opens
 }).catch(({ stderr }) => {
   throw new Error(stderr);
 });
+```
+
+or
+
+```js
+const { fullyHostServer } = require("electron-remote-control");
+
+fullyHostServer();
 ```
 
 #### Using commands
