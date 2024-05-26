@@ -458,8 +458,10 @@ fetch(((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resource
         localStorage.setItem("scripts", JSON.stringify([
           ...JSON.parse(localStorage.getItem("scripts")) || [],
           ...[
-            Array.from(document.getElementById("scriptViewContainer").children).at(-1).dataset.id,
-            name
+            [
+              Array.from(document.getElementById("scriptViewContainer").children).at(-1).dataset.id,
+              name
+            ]
           ]
         ]));
         fs.writeFileSync(path.join(parent.process.resourcesPath, "scripts/" + Array.from(document.getElementById("scriptViewContainer").children).at(-1).dataset.id + ".js"), appContent, "utf8");
