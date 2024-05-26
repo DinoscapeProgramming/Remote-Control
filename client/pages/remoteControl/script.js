@@ -63,7 +63,7 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
     if (![
       ...[
         [
-          os.hostname() + " (me)",
+          os.hostname(),
           JSON.parse(localStorage.getItem("loginDetails"))[0],
           JSON.parse(localStorage.getItem("loginDetails"))[1]
         ]
