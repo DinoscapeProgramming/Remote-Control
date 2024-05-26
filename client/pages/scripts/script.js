@@ -456,7 +456,7 @@ fetch(((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resource
         Array.from(document.getElementById("scriptViewContainer").children).at(-1).children[0].value = name;
         Array.from(document.getElementById("scriptViewContainer").children).at(-1).children[0].style.width = "calc(" + name.length.toString() + "ch - 5px)";
         localStorage.setItem("scripts", JSON.stringify([
-          ...JSON.parse(localStorage.getItem("scripts")) || [],
+          ...(JSON.parse(localStorage.getItem("scripts")) || []).toSpliced(-1),
           ...[
             [
               Array.from(document.getElementById("scriptViewContainer").children).at(-1).dataset.id,
