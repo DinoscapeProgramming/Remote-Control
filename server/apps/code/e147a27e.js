@@ -13,6 +13,8 @@ document.getElementById("pageEmbed").contentWindow.document.body.children[0].chi
 if (document.getElementById("pageEmbed").src.endsWith("/scripts/index.html")) {
   document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].children[1].style.color = "white";
   document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.filter = "none";
+  document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.width = "calc(100% + 2px)";
+  document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.marginBottom = "-1px";
 };
 if (document.getElementById("pageEmbed").src.endsWith("/settings/index.html")) {
   document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].style.display = "none";
@@ -38,6 +40,8 @@ document.getElementById("pageEmbed").addEventListener("load", () => {
   if (document.getElementById("pageEmbed").src.endsWith("/scripts/index.html")) {
     document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].children[1].style.color = "white"; 
     document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.filter = "none";
+    document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.width = "calc(100% + 2px)";
+    document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.marginBottom = "-1px";
   };
   if (document.getElementById("pageEmbed").src.endsWith("/settings/index.html")) {
     document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].style.display = "none";
