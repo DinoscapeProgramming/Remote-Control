@@ -66,7 +66,7 @@
 To install this package, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
 ```bash
-# Clone this repository
+# Install this package
 $ npm install electron-remote-control
 ```
 
