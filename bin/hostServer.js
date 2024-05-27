@@ -4,5 +4,5 @@ const { hostServer } = require("../package.js");
 hostServer().then(({ stdout }) => {
   console.log(stdout);
 }).catch(({ stderr }) => {
-  throw new Error(stderr);
+  throw stderr;
 });

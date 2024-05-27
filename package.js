@@ -2,14 +2,12 @@ const fs = require("fs");
 const path = require("path");
 const childProcess = require("child_process");
 
-module.exports = () => new Promise((resolve, reject) => {
-  if (fs.readdirSync(path.resolve("./node_modules/electron-remote-control")).length === 2) return;
-  childProcess.exec("mv " + path.resolve("./node_modules/electron-remote-control/*") + " './' | mv " + path.resolve("./node_modules/electron-remote-control/.*") + " './' | cp '" + path.resolve("./package.js") + "' '" + path.resolve("./node_modules/electron-remote-control/package.js") + "' | cp '" + path.resolve("./package.json") + "' '" + path.resolve("./node_modules/electron-remote-control/package.json") + "'", resolve)
-});
 module.exports.executeScript = (scriptType) => new Promise((resolve, reject) => {
-  if (!fs.readdirSync(path.join(process.cwd(), "scripts")).includes(scriptType)) return reject({ exitCode: 1, stdout: null, stderr: "Script type does not exist" });
+  if (!fs.readdirSync(path.join(__dirname, "scripts")).includes(scriptType)) return reject({ exitCode: 1, stdout: null, stderr: "Script type does not exist" });
   try {
-    if (fs.readdirSync(path.resolve("./node_modules/electron-remote-control")).length !== 2) childProcess.execSync("mv " + path.resolve("./node_modules/electron-remote-control/*") + " './' | mv " + path.resolve("./node_modules/electron-remote-control/.*") + " './' | cp '" + path.resolve("./package.js") + "' '" + path.resolve("./node_modules/electron-remote-control/package.js") + "' | cp '" + path.resolve("./package.json") + "' '" + path.resolve("./node_modules/electron-remote-control/package.json") + "'");
+    if (fs.readdirSync(path.resolve("./node_modules/electron-remote-control")).length !== 2) childProcess.execSync("mv " + path.resolve("./node_modules/electron-remote-control/*") + " './' | mv " + path.resolve("./node_modules/electron-remote-control/.*") + " './' | cp '" + path.resolve("./package.js") + "' '" + path.resolve("./node_modules/electron-remote-control/package.js") + "' | cp '" + path.resolve("./package.json") + "' '" + path.resolve("./node_modules/electron-remote-control/package.json") + "'", {
+      stdio: "ignore"
+    });
   } catch (err) {
     return reject({ exitCode: 1, stdout: null, stderr: err });
   } finally {
@@ -51,10 +49,10 @@ module.exports.fullyBuildAndOpenInstallable = () => {
     module.exports.openInstallable({ stdout }).then(() => {
       console.log(stdout);
     }).catch(({ stderr }) => {
-      throw new Error(stderr);
+      throw stderr;
     });
   }).catch(({ exitCode, stderr }) => {
-    throw new Error(stderr);
+    throw stderr;
   });
 };
 module.exports.hostServer = () => module.exports.executeScript("hostServer");
@@ -62,6 +60,6 @@ module.exports.fullyHostServer = () => {
   module.exports.hostServer().then(({ stdout }) => { // may take a while; port :3000 opens
     console.log(stdout);
   }).catch(({ stderr }) => {
-    throw new Error(stderr);
+    throw stderr;
   });
 };

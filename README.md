@@ -82,10 +82,10 @@ buildInstallable({ stdout }).then(() => { // may take a while; uses electron-bui
   openInstallable({ stdout }).then(() => {
     console.log(stdout);
   }).catch(({ exitCode, stderr }) => {
-    throw new Error(stderr);
+    throw stderr;
   });
 }).catch(({ exitCode, stderr }) => {
-  throw new Error(stderr);
+  throw stderr;
 });
 ```
 
@@ -114,7 +114,7 @@ const { hostServer } = require("electron-remote-control");
 hostServer().then(({ stdout }) => { // may take a while; port :3000 opens
   console.log(stdout);
 }).catch(({ stderr }) => {
-  throw new Error(stderr);
+  throw stderr;
 });
 ```
 
