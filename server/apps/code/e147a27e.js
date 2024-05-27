@@ -19,7 +19,8 @@ if (document.getElementById("pageEmbed").src.endsWith("/scripts/index.html")) {
 };
 if (document.getElementById("pageEmbed").src.endsWith("/debug/index.html")) {
   document.getElementById("pageEmbed").contentWindow.document.getElementById("debugLogInput").style.color = "white";
-  document.getElementById("pageEmbed").contentWindow.document.getElementById("debugCodeExecutionInput").style.borderBottomLeftRadius = "0";
+  document.getElementById("pageEmbed").contentWindow.document.getElementById("debugCodeExecutionInput").style.borderTopLeftRadius = "2.5px";
+  document.getElementById("pageEmbed").contentWindow.document.getElementById("debugCodeExecutionInput").style.borderBottomLeftRadius = "2.5px";
 };
 if (document.getElementById("pageEmbed").src.endsWith("/settings/index.html")) {
   document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].style.display = "none";
@@ -51,7 +52,8 @@ document.getElementById("pageEmbed").addEventListener("load", () => {
   };
   if (document.getElementById("pageEmbed").src.endsWith("/debug/index.html")) {
     document.getElementById("pageEmbed").contentWindow.document.getElementById("debugLogInput").style.color = "white";
-    document.getElementById("pageEmbed").contentWindow.document.getElementById("debugCodeExecutionInput").style.borderBottomLeftRadius = "0";
+    document.getElementById("pageEmbed").contentWindow.document.getElementById("debugCodeExecutionInput").style.borderTopLeftRadius = "2.5px";
+    document.getElementById("pageEmbed").contentWindow.document.getElementById("debugCodeExecutionInput").style.borderBottomLeftRadius = "2.5px";
   };
   if (document.getElementById("pageEmbed").src.endsWith("/settings/index.html")) {
     document.getElementById("pageEmbed").contentWindow.document.body.children[2].children[0].style.display = "none";
