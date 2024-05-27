@@ -1,7 +1,6 @@
 const { ipcRenderer } = parent.require("electron");
-const robot = parent.require("@jitsi/robotjs");
 
-robot.keyTap("i", ["control", "shift"]);
+ipcRenderer.send("executeDebugCode", "window.webContents.openDevTools();");
 
 parent.postMessage({
   type: "requestDebugLogs"
