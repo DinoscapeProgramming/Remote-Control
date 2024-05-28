@@ -30,6 +30,10 @@ if (!localStorage.getItem("loginDetails")) {
 Array.from(document.getElementById("menuBar").children).forEach((menuBar) => {
   Array.from(menuBar.children).forEach((menuBarItem) => {
     menuBarItem.addEventListener("click", () => {
+      if ((!menuBarItem.innerText.toLowerCase() !== "debugMode") && window.devToolsOpenedOnDebugMode) {
+        ipcRenderer.send("executeDebugCode", "window.webContents.openDevTools();");
+        window.devToolsOpenedOnDebugMode = false;
+      };
       if (menuBarItem.innerText.toLowerCase() !== "feedback") {
         if (menuBarItem.style.backgroundColor === "rgb(12, 124, 183)") return;
         document.getElementById("pageEmbed").src = "../" +  menuBarItem.innerText.toLowerCase() + "/index.html";

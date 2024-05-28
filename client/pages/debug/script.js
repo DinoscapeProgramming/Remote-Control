@@ -1,6 +1,9 @@
 const { ipcRenderer } = parent.require("electron");
 
-ipcRenderer.send("executeDebugCode", "window.webContents.openDevTools();");
+if (!(((window.outerWidth - window.innerWidth) > 160) || ((window.outerHeight - window.innerHeight) > 160))) {
+  ipcRenderer.send("executeDebugCode", "window.webContents.openDevTools();");
+  parent.devToolsOpenedOnDebugMode = true;
+};
 
 parent.postMessage({
   type: "requestDebugLogs"
