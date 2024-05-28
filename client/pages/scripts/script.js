@@ -450,6 +450,7 @@ fetch(((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resource
     appInstallButtonIcon.ariaHidden = true;
     appInstallButtonIcon.style.marginRight = "2px";
     appInstallButton.addEventListener("click", () => {
+      if (!verified && !confirm("Are you sure you want install this unverified app possibly corrupting your computer?")) return;
       fetch(((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourceProtocol + "//" + JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourceHostname + ((JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourcePort) ? (":" + JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourcePort) : "")) : (parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PROTOCOL + "//" + parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_HOSTNAME + ((parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PORT) ? (":" + parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PORT) : ""))) + "/apps/code/" + appId + ".js")
       .then((response) => response.text())
       .then((appContent) => {
