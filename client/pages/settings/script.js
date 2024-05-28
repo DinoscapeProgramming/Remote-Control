@@ -58,7 +58,7 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
           })[parent.process.platform]), "Custom WebRTC URL", "Please specify your resource server URL", parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PROTOCOL + "//" + parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_HOSTNAME + ((parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PORT) ? (":" + parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PORT) : "")]).stdout.on('data', (customResourceServerURL) => {
             try {
               if (!customResourceServerURL.toString().startsWith("RETURN")) return;
-              if (!["http:", "https:"].includes(new URL(customResourceServerURL.toString().substring(6)).protocol)) throw alert("Invalid resource server URL");
+              if (!["http:", "https:"].includes(new URL(customResourceServerURL.toString().substring(6, customResourceServerURL.toString().length - 2)).protocol)) throw alert("Invalid resource server URL");
               childProcess.spawn(({
                 win32: "cscript",
                 darwin: "osascript",
@@ -70,7 +70,7 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
               })[parent.process.platform]), "Custom WebRTC URL", "Please specify your socket server URL", parsedEnvironmentVariables.DEFAULT_SOCKET_SERVER_PROTOCOL + "//" + parsedEnvironmentVariables.DEFAULT_SOCKET_SERVER_HOSTNAME + ((parsedEnvironmentVariables.DEFAULT_SOCKET_SERVER_PORT) ? (":" + parsedEnvironmentVariables.DEFAULT_SOCKET_SERVER_PORT) : "")]).stdout.on('data', (customSocketServerURL) => {
                 try {
                   if (!customSocketServerURL.toString().startsWith("RETURN")) return;
-                  if (!["http:", "https:"].includes(new URL(customSocketServerURL.toString().substring(6)).protocol)) throw alert("Invalid socket server URL");
+                  if (!["http:", "https:"].includes(new URL(customSocketServerURL.toString().substring(6, customSocketServerURL.toString().length - 2)).protocol)) throw alert("Invalid socket server URL");
                   childProcess.spawn(({
                     win32: "cscript",
                     darwin: "osascript",
@@ -82,18 +82,18 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
                   })[parent.process.platform]), "Custom WebRTC URL", "Please specify your peer server URL", parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PROTOCOL + "//" + parsedEnvironmentVariables.DEFAULT_PEER_SERVER_HOSTNAME + ((parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PORT) ? (":" + parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PORT) : "") + parsedEnvironmentVariables.DEFAULT_PEER_SERVER_PATH]).stdout.on('data', (customPeerServerURL) => {
                     try {
                       if (!customPeerServerURL.toString().startsWith("RETURN")) return;
-                      if (!["ws:", "wss:"].includes(new URL(customPeerServerURL.toString().substring(6)).protocol)) throw alert("Invalid peer server URL");
+                      if (!["ws:", "wss:"].includes(new URL(customPeerServerURL.toString().substring(6, customPeerServerURL.toString().length - 2)).protocol)) throw alert("Invalid peer server URL");
                       fs.writeFileSync(path.join(parent.process.resourcesPath, "customServer.json"), JSON.stringify({
-                        resourceProtocol: new URL(customResourceServerURL.toString().substring(6)).protocol,
-                        resourceHostname: new URL(customResourceServerURL.toString().substring(6)).hostname,
-                        resourcePort: new URL(customResourceServerURL.toString().substring(6)).port,
-                        socketProtocol: new URL(customSocketServerURL.toString().substring(6)).protocol,
-                        socketHostname: new URL(customSocketServerURL.toString().substring(6)).hostname,
-                        socketPort: new URL(customSocketServerURL.toString().substring(6)).port,
-                        peerProtocol: new URL(customPeerServerURL.toString().substring(6)).protocol,
-                        peerHostname: new URL(customPeerServerURL.toString().substring(6)).hostname,
-                        peerPort: new URL(customPeerServerURL.toString().substring(6)).port,
-                        peerPath: new URL(customPeerServerURL.toString().substring(6)).pathname
+                        resourceProtocol: new URL(customResourceServerURL.toString().substring(6, customResourceServerURL.toString().length - 2)).protocol,
+                        resourceHostname: new URL(customResourceServerURL.toString().substring(6, customResourceServerURL.toString().length - 2)).hostname,
+                        resourcePort: new URL(customResourceServerURL.toString().substring(6, customResourceServerURL.toString().length - 2)).port,
+                        socketProtocol: new URL(customSocketServerURL.toString().substring(6, customSocketServerURL.toString().length - 2)).protocol,
+                        socketHostname: new URL(customSocketServerURL.toString().substring(6, customSocketServerURL.toString().length - 2)).hostname,
+                        socketPort: new URL(customSocketServerURL.toString().substring(6, customSocketServerURL.toString().length - 2)).port,
+                        peerProtocol: new URL(customPeerServerURL.toString().substring(6, customPeerServerURL.toString().length - 2)).protocol,
+                        peerHostname: new URL(customPeerServerURL.toString().substring(6, customPeerServerURL.toString().length - 2)).hostname,
+                        peerPort: new URL(customPeerServerURL.toString().substring(6, customPeerServerURL.toString().length - 2)).port,
+                        peerPath: new URL(customPeerServerURL.toString().substring(6, customPeerServerURL.toString().length - 2)).pathname
                       }), "utf8");
                       localStorage.setItem("settings", JSON.stringify({
                         ...JSON.parse(localStorage.getItem("settings")) || {},

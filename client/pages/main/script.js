@@ -142,7 +142,7 @@ ipcRenderer.on("executeScript", (_, { roomId, password, scriptContent } = {}) =>
               linux: "linux.sh"
             })[process.platform]), (options || {}).title || require(path.join(process.resourcesPath, "app.asar/package.json")).productName, body, (options || {}).defaultText || ((typeof options === "string") ? options : "")]).stdout.on('data', (promptData) => {
               if (!promptData.toString().startsWith("RETURN")) return;
-              resolve(promptData.toString().substring(6));
+              resolve(promptData.toString().substring(6, promptData.toString().length - 2));
             });
           });
         },

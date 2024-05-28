@@ -6,6 +6,7 @@ const crypto = parent.require("crypto");
 const parsedEnvironmentVariables = parent.require("dotenv").config({ path: parent.require("path").join(parent.process.resourcesPath, "app.asar/.env") }).parsed;
 let scriptEditor = ace.edit("scriptEditor");
 scriptEditor.setTheme("ace/theme/monokai");
+scriptEditor.session.setUseWorker(false);
 scriptEditor.session.setMode(new (ace.require('ace/mode/javascript')).Mode());
 scriptEditor.setOption("tabSize", 2);
 scriptEditor.on("change", () => {
