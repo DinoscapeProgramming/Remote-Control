@@ -12,10 +12,12 @@ document.getElementById("markdownEmbed").addEventListener("load", () => {
     anchor.addEventListener("click", (event) => {
       event.preventDefault();
       if (confirm("Are you sure you want to open this page possibly corrupting your computer?")) {
+        parent.postMessage({
+          type: "linkOpened"
+        });
         let link = document.createElement("a");
         link.href = anchor.href;
         link.click();
-        parent.postMessage();
       };
     });
   });
