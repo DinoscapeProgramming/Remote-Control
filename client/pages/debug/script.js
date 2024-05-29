@@ -1,6 +1,6 @@
 const { ipcRenderer } = parent.require("electron");
 
-if (!(((window.outerWidth - window.innerWidth) > 160) || ((window.outerHeight - window.innerHeight) > 160))) {
+if (!(((parent.outerWidth - parent.innerWidth) > 160) || ((parent.outerHeight - parent.innerHeight) > 160))) {
   ipcRenderer.send("executeDebugCode", "window.webContents.openDevTools();");
   parent.devToolsOpenedOnDebugMode = true;
 };

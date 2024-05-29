@@ -116,6 +116,11 @@ document.getElementById("pageEmbed").addEventListener("load", () => {
     document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").focus();
     document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").select();
   });
+  document.getElementById("pageEmbed").contentWindow.devTools = {
+    left: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'left' });"),
+    right: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'right' });"),
+    detach: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'detach' });")
+  };
 });
 
 ipcRenderer.on("roomId", () => {
@@ -339,3 +344,9 @@ ipcRenderer.on("debugLog", (_, debugLog) => {
     ]  
   });
 });
+
+window.devTools = {
+  left: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'left' });"),
+  right: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'right' });"),
+  detach: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'detach' });")
+};
