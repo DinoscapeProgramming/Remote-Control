@@ -15,6 +15,7 @@ document.getElementById("markdownEmbed").addEventListener("load", () => {
         let link = document.createElement("a");
         link.href = anchor.href;
         link.click();
+        parent.postMessage();
       };
     });
   });
