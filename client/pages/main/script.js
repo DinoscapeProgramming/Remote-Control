@@ -30,12 +30,12 @@ if (!localStorage.getItem("loginDetails")) {
 Array.from(document.getElementById("menuBar").children).forEach((menuBar) => {
   Array.from(menuBar.children).forEach((menuBarItem) => {
     menuBarItem.addEventListener("click", () => {
-      if ((menuBarItem.innerText.toLowerCase() !== "debugMode") && window.devToolsOpenedOnDebugMode) {
-        ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools();");
-        window.devToolsOpenedOnDebugMode = false;
-      };
       if (menuBarItem.innerText.toLowerCase() !== "feedback") {
         if (menuBarItem.style.backgroundColor === "rgb(12, 124, 183)") return;
+        if ((menuBarItem.innerText.toLowerCase() !== "debug") && window.devToolsOpenedOnDebugMode) {
+          ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools();");
+          window.devToolsOpenedOnDebugMode = false;
+        };
         document.getElementById("pageEmbed").src = "../" +  menuBarItem.innerText.toLowerCase() + "/index.html";
         Array.from(document.getElementById("menuBar").children).forEach((unhighlightingMenuBar) => {
           Array.from(unhighlightingMenuBar.children).forEach((unhighlightingMenuBarItem) => {
