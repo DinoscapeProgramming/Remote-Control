@@ -44,6 +44,10 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
           autoUpdate: !slider.previousElementSibling.checked
         }
       }));
+      ipcRenderer.send("updateSettings", {
+        type: "autoUpdate",
+        value: !slider.previousElementSibling.checked
+      });
     } else if (slider.parentElement.dataset.type === "customServer") {
       if (!slider.previousElementSibling.checked) {
       try {
@@ -101,6 +105,12 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
                           customServer: true
                         }
                       }));
+                      ipcRenderer.send("updateSettings", {
+                        type: "customServer"
+                      });
+                      parent.postMessage({
+                        type: "customServer"
+                      });
                     } catch {
                       document.getElementsByClassName("slider")[3].click();
                       fs.writeFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "{}", "utf8");
@@ -128,6 +138,12 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
             customServer: false
           }
         }));
+        ipcRenderer.send("updateSettings", {
+          type: "customServer"
+        });
+        parent.postMessage({
+          type: "customServer"
+        });
       };
     } else if (slider.parentElement.dataset.type === "debugMode") {
       localStorage.setItem("settings", JSON.stringify({
