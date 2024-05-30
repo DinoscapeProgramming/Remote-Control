@@ -17,9 +17,7 @@ let devToolsOpenedOnDebugMode = false;
 if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("menuBar").children[0].children[4].style.display = "block";
 
 document.styleSheets[2].media.appendMedium("(prefers-color-scheme: " + (((JSON.parse(localStorage.getItem("settings")) || {}).darkMode ?? false) ? "dark" : "white") + ")");
-if ((JSON.parse(localStorage.getItem("settings")) || {}).autoUpdate ?? true) {
-  ipcRenderer.send("updateElectronApp");
-};
+if ((JSON.parse(localStorage.getItem("settings")) || {}).autoUpdate ?? true) ipcRenderer.send("updateElectronApp");
 
 if (!localStorage.getItem("loginDetails")) {
   localStorage.setItem("loginDetails", JSON.stringify([
@@ -123,7 +121,8 @@ document.getElementById("pageEmbed").addEventListener("load", () => {
   document.getElementById("pageEmbed").contentWindow.devTools = {
     left: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'left' });"),
     right: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'right' });"),
-    detach: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'detach' });")
+    detach: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'detach' });"),
+    close: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools();")
   };
 });
 
@@ -352,5 +351,6 @@ ipcRenderer.on("debugLog", (_, debugLog) => {
 window.devTools = {
   left: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'left' });"),
   right: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'right' });"),
-  detach: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'detach' });")
+  detach: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'detach' });"),
+  close: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools();")
 };
