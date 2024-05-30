@@ -12,6 +12,7 @@ const peer = new Peer(null, {
 });
 let systemUsageData = {};
 let debugLogs = [];
+let devToolsOpenedOnDebugMode = false;
 
 if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("menuBar").children[0].children[4].style.display = "block";
 
@@ -32,9 +33,12 @@ Array.from(document.getElementById("menuBar").children).forEach((menuBar) => {
     menuBarItem.addEventListener("click", () => {
       if (menuBarItem.innerText.toLowerCase() !== "feedback") {
         if (menuBarItem.style.backgroundColor === "rgb(12, 124, 183)") return;
-        if ((menuBarItem.innerText.toLowerCase() !== "debug") && window.devToolsOpenedOnDebugMode) {
+        if ((menuBarItem.innerText.toLowerCase() !== "debug") && devToolsOpenedOnDebugMode) {
           ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools();");
-          window.devToolsOpenedOnDebugMode = false;
+          devToolsOpenedOnDebugMode = false;
+        } else if ((menuBarItem.innerText.toLowerCase() === "debug") && !(((window.outerWidth - window.innerWidth) > 160) || ((window.outerHeight - window.innerHeight) > 160))) {
+          ipcRenderer.send("executeDebugCode", "window.webContents.openDevTools();");
+          devToolsOpenedOnDebugMode = true;
         };
         document.getElementById("pageEmbed").src = "../" +  menuBarItem.innerText.toLowerCase() + "/index.html";
         Array.from(document.getElementById("menuBar").children).forEach((unhighlightingMenuBar) => {
