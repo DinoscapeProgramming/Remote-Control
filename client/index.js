@@ -17,6 +17,7 @@ const socket = io((Object.keys(JSON.parse(fs.readFileSync(path.join(process.reso
 const robot = require("@jitsi/robotjs");
 const { updateElectronApp } = require("update-electron-app");
 let systemUsageDataIntervals = {};
+let autoUpdateListener;
 
 const createWindow = () => {
   const window = new BrowserWindow({
@@ -33,7 +34,9 @@ const createWindow = () => {
   window.show();
   window.loadFile("pages/main/index.html");
 
-  ipcMain.on("updateElectronApp", () => updateElectronApp());
+  ipcMain.on("updateElectronApp", () => {
+    autoUpdateListener = updateElectronApp()
+  });
   setTimeout(() => {
     window.webContents.send("debugLog", "Started App");
 
@@ -228,8 +231,13 @@ const createWindow = () => {
             path: app.getPath("exe")
           } : {}
         });
-      } else if (type === "autoUpdate" && value) {
-        updateElectronApp();
+      } else if (type === "autoUpdate") {
+        if (value) {
+          updateElectronApp();
+        } else if (autoUpdateListener) {
+          autoUpdateListener.removeAllListeners();
+          autoUpdateListener = null;
+        };
       } else if (type === "customServer") {
         socket.io.uri = (Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketProtocol + "//" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketHostname + ((JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) ? (":" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) : "")) : (process.env.DEFAULT_SOCKET_SERVER_PROTOCOL + "//" + process.env.DEFAULT_SOCKET_SERVER_HOSTNAME + ((process.env.DEFAULT_SOCKET_SERVER_PORT) ? (":" + process.env.DEFAULT_SOCKET_SERVER_PORT) : ""));
         socket.disconnect().connect();
