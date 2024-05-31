@@ -1,2 +1,2 @@
-deleteAppStartupFile(localStorage.getItem("translucenceThemeId"));
+deleteAppStartupCodeFile(localStorage.getItem("translucenceThemeId"));
 localStorage.removeItem("translucenceThemeId");
