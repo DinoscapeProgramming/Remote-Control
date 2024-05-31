@@ -114,7 +114,7 @@ document.styleSheets[1].media.appendMedium("(prefers-color-scheme: " + (((JSON.p
         JSON.parse(localStorage.getItem("loginDetails"))[1]
       ]
     ],
-    ...JSON.parse(localStorage.getItem("history")) || []
+    ...(JSON.parse(localStorage.getItem("history")) || []).filter(([_, deviceId]) => deviceId !== JSON.parse(localStorage.getItem("loginDetails"))[0])
   ].forEach(([deviceName, deviceId, devicePassword]) => {
     let scriptContainerExecuteSelectDeviceOption = document.createElement("option");
     scriptContainerExecuteSelectDeviceOption.value = JSON.stringify([
@@ -293,7 +293,7 @@ document.getElementById("createScriptButton").addEventListener("click", () => {
         JSON.parse(localStorage.getItem("loginDetails"))[1]
       ]
     ],
-    ...JSON.parse(localStorage.getItem("history")) || []
+    ...(JSON.parse(localStorage.getItem("history")) || []).filter((_, deviceId) => deviceId !== JSON.parse(localStorage.getItem("loginDetails"))[0])
   ].forEach(([deviceName, deviceId, devicePassword]) => {
     let scriptContainerExecuteSelectDeviceOption = document.createElement("option");
     scriptContainerExecuteSelectDeviceOption.value = JSON.stringify([

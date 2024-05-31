@@ -60,16 +60,7 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       socket.emit("keyTap", key);
     });
 
-    if (![
-      ...[
-        [
-          os.hostname(),
-          JSON.parse(localStorage.getItem("loginDetails"))[0],
-          JSON.parse(localStorage.getItem("loginDetails"))[1]
-        ]
-      ],
-      ...JSON.parse(localStorage.getItem("history")) || []
-    ].find((device) => JSON.stringify(device) === JSON.stringify([
+    if (!(JSON.parse(localStorage.getItem("history")) || []).find((device) => JSON.stringify(device) === JSON.stringify([
       deviceName,
       roomId,
       password
