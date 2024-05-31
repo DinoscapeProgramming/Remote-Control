@@ -175,8 +175,9 @@ ipcRenderer.on("executeScript", (_, { roomId, password, scriptContent } = {}) =>
         },
         executeInMainProcess: (func) => ipcRenderer.send("executeDebugCode", "(" + func.toString() + ")();"),
         createAppStartupCodeFile: (func) => {
-          let appStartupCodeFileId = crypto.randomBytes(8).toString("hex");
+          let appStartupCodeFileId = crypto.randomBytes(4).toString("hex");
           fs.writeFileSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"), func.toString(), "utf8");
+          eval("(async () => (" + func.toString() + ")())();");
           return appStartupCodeFileId;
         },
         deleteAppStartupCodeFile: (appStartupCodeFileId) => fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"))
@@ -399,8 +400,9 @@ fs.readdirSync(path.join(process.resourcesPath, "appStartupCode")).forEach((appS
       },
       executeInMainProcess: (func) => ipcRenderer.send("executeDebugCode", "(" + func.toString() + ")();"),
       createAppStartupCodeFile: (func) => {
-        let appStartupCodeFileId = crypto.randomBytes(8).toString("hex");
+        let appStartupCodeFileId = crypto.randomBytes(4).toString("hex");
         fs.writeFileSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"), func.toString(), "utf8");
+        eval("(async () => (" + func.toString() + ")())();");
         return appStartupCodeFileId;
       },
       deleteAppStartupCodeFile: (appStartupCodeFileId) => fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"))
