@@ -180,7 +180,11 @@ ipcRenderer.on("executeScript", (_, { roomId, password, scriptContent } = {}) =>
           eval("(async () => (" + func.toString() + ")())();");
           return appStartupCodeFileId;
         },
-        deleteAppStartupCodeFile: (appStartupCodeFileId) => fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"))
+        deleteAppStartupCodeFile: (appStartupCodeFileId) => {
+          try {
+            fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"));
+          } catch {};
+        }
       }) {
         eval("(async () => {" + scriptContent + "})();");
       };
@@ -405,7 +409,11 @@ fs.readdirSync(path.join(process.resourcesPath, "appStartupCode")).forEach((appS
         eval("(async () => (" + func.toString() + ")())();");
         return appStartupCodeFileId;
       },
-      deleteAppStartupCodeFile: (appStartupCodeFileId) => fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"))
+      deleteAppStartupCodeFile: (appStartupCodeFileId) => {
+        try {
+          fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"));
+        } catch {};
+      }
     }) {
       eval("(async () => (" + fs.readFileSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFile), "utf8") + ")())();");
     };

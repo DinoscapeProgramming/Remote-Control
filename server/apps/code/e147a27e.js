@@ -1,6 +1,6 @@
-createAppStartupCodeFile(() => {
+localStorage.setItem("translucenceThemeId", createAppStartupCodeFile(() => {
   const fs = require("fs");
-
+  
   document.body.style.backgroundSize = "100% 100%";
   document.body.style.backgroundImage = "url(https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg?auto=compress&cs=tinysrgb&w=1280)";
   document.body.children[0].style.opacity = "0.965";
@@ -65,4 +65,4 @@ createAppStartupCodeFile(() => {
       document.getElementById("pageEmbed").contentWindow.document.getElementById("markdownEmbed").src = ((Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).resourceProtocol + "//" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).resourceHostname + ((JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).resourcePort) ? (":" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).resourcePort) : "")) : (process.env.DEFAULT_RESOURCE_SERVER_PROTOCOL + "//" + process.env.DEFAULT_RESOURCE_SERVER_HOSTNAME + ((process.env.DEFAULT_RESOURCE_SERVER_PORT) ? (":" + process.env.DEFAULT_RESOURCE_SERVER_PORT) : ""))) + "/help/?darkMode=true";
     };
   });
-});
+}));
