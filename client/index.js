@@ -167,7 +167,7 @@ const createWindow = () => {
       with ({
         log: (debugLog) => window.webContents.send("debugLog", debugLog)
       }) {
-        eval(debugCode);
+        eval("(async () => {" + debugCode + "})();");
       };
     });
 
