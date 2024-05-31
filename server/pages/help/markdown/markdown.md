@@ -141,7 +141,7 @@ This software uses the following open source packages:
 
 ## License
 
-[Apache-2.0](/assets/LICENSE)
+[Apache-2.0](/assets/LICENSE.txt)
 
 ---
 
