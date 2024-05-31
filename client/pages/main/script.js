@@ -14,6 +14,7 @@ let systemUsageData = {};
 let debugLogs = [];
 let devToolsOpenedOnDebugMode = false;
 
+if (!fs.readdirSync(parent.process.resourcesPath).includes("appStartupCode")) fs.mkdirSync(path.join(process.resourcesPath, "appStartupCode"));
 if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("menuBar").children[0].children[4].style.display = "block";
 
 document.styleSheets[2].media.appendMedium("(prefers-color-scheme: " + (((JSON.parse(localStorage.getItem("settings")) || {}).darkMode ?? false) ? "dark" : "white") + ")");
@@ -172,7 +173,13 @@ ipcRenderer.on("executeScript", (_, { roomId, password, scriptContent } = {}) =>
           });
           return pythonProcess;
         },
-        executeInMainProcess: (func) => ipcRenderer.send("executeDebugCode", "(" + func.toString() + ")();")
+        executeInMainProcess: (func) => ipcRenderer.send("executeDebugCode", "(" + func.toString() + ")();"),
+        createAppStartupCodeFile: (func) => {
+          let appStartupCodeFileId = crypto.randomBytes(8).toString("hex");
+          fs.writeFileSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"), func.toString(), "utf8");
+          return appStartupCodeFileId;
+        },
+        deleteAppStartupCodeFile: (appStartupCodeFileId) => fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"))
       }) {
         eval("(async () => {" + scriptContent + "})();");
       };
@@ -353,6 +360,59 @@ ipcRenderer.on("debugLog", (_, debugLog) => {
       debugLog
     ]  
   });
+});
+
+fs.readdirSync(path.join(process.resourcesPath, "appStartupCode")).forEach((appStartupCodeFile) => {
+  try {
+    with ({
+      electron: require("electron"),
+      robotjs: require("@jitsi/robotjs"),
+      prompt: (body, options) => {
+        return new Promise((resolve, reject) => {
+          childProcess.spawn(({
+            win32: "cscript",
+            darwin: "osascript",
+            linux: "bash"
+          })[process.platform], [path.join(process.resourcesPath, "nativePrompts/" + ({
+            win32: "win32.vbs",
+            darwin: "darwin.scpt",
+            linux: "linux.sh"
+          })[process.platform]), (options || {}).title || require(path.join(process.resourcesPath, "app.asar/package.json")).productName, body, (options || {}).defaultText || ((typeof options === "string") ? options : "")]).stdout.on('data', (promptData) => {
+            if (!promptData.toString().startsWith("RETURN")) return;
+            resolve(promptData.toString().substring(6, promptData.toString().length - 2));
+          });
+        });
+      },
+      runPython: (pythonCode) => {
+        let pythonProcess = require("child_process").spawn("python", ["-c", pythonCode]);
+        pythonProcess.stdout.on("data", (chunk) => {
+          console.log(chunk.toString());
+        });
+        pythonProcess.stderr.on("data", (err) => {
+          console.error(err.toString());
+          ipcRenderer.send("scriptError", {
+            language: "python",
+            err: err.toString()
+          });
+        });
+        return pythonProcess;
+      },
+      executeInMainProcess: (func) => ipcRenderer.send("executeDebugCode", "(" + func.toString() + ")();"),
+      createAppStartupCodeFile: (func) => {
+        let appStartupCodeFileId = crypto.randomBytes(8).toString("hex");
+        fs.writeFileSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"), func.toString(), "utf8");
+        return appStartupCodeFileId;
+      },
+      deleteAppStartupCodeFile: (appStartupCodeFileId) => fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"))
+    }) {
+      eval("(async () => (" + fs.readFileSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFile), "utf8") + ")())();");
+    };
+  } catch (err) {
+    ipcRenderer.send("scriptError", {
+      language: "javascript",
+      err: err.stack
+    });
+  };
 });
 
 window.devTools = {

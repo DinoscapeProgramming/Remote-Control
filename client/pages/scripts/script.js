@@ -203,7 +203,7 @@ document.getElementById("createScriptButton").addEventListener("click", () => {
       ]
     ]
   ]));
-  fs.writeFileSync(path.join(parent.process.resourcesPath, "scripts/" + scriptId + ".js"), "/* Default Parameters include:\n  - window\n  - electron\n  - robotjs\n  - alert\n  - prompt\n  - confirm\n  - runPython\n  - executeInMainProcess\n*/", "utf8");
+  fs.writeFileSync(path.join(parent.process.resourcesPath, "scripts/" + scriptId + ".js"), "/* Default Parameters include:\n  - window\n  - electron\n  - robotjs\n  - alert\n  - prompt\n  - confirm\n  - runPython\n  - executeInMainProcess\n  - createAppStartupCodeFile\n  - deleteAppStartupCodeFile\n*/", "utf8");
   let scriptContainer = document.createElement("div");
   scriptContainer.dataset.id = scriptId;
   scriptContainer.style.display = "flex";
