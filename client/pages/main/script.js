@@ -65,7 +65,7 @@ Array.from(document.getElementById("menuBar").children).forEach((menuBar) => {
 });
 
 document.getElementById("pageEmbed").addEventListener("load", () => {
-  if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("pageEmbed").contentWindow.document.getElementsByTagName("datalist")[0].children[3].disabled = false;
+  if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("pageEmbed").contentWindow.document.getElementsByTagName("datalist")[0].find((datalistItem) => datalistItem.value === "/debug") = false;
   document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").focus();
   document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").select();
   document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").addEventListener("keypress", ({ key }) => {
