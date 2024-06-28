@@ -117,6 +117,12 @@ app.all("/", (req, res) => {
   });
 });
 
+app.all("/team", (req, res) => {
+  res.sendFile("pages/team/index.html", {
+    root: __dirname
+  });
+});
+
 app.all("/reviews", (req, res) => {
   res.sendFile("pages/reviews/index.html", {
     root: __dirname
