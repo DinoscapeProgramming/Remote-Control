@@ -123,6 +123,12 @@ app.all("/team", (req, res) => {
   });
 });
 
+app.all("/open-source", (req, res) => {
+  res.sendFile("pages/openSource/index.html", {
+    root: __dirname
+  });
+});
+
 app.all("/reviews", (req, res) => {
   res.sendFile("pages/reviews/index.html", {
     root: __dirname
