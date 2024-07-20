@@ -134,6 +134,7 @@ This software uses the following open source packages:
 
 ## You may also like...
 
+- [Express Docs](https://github.com/DinoscapeProgramming/Express-Docs) - An easy-to-use documentation site creator
 - [Youtube Offline](https://github.com/DinoscapeProgramming/Youtube-Offline) - A lightweight YouTube video downloader
 - [Appify](https://github.com/DinoscapeProgramming/Appify) - A tiny tool that allows you to turn your website into an app
 - [Meetings](https://github.com/DinoscapeProgramming/Meetings) - A meetings app with lots of features
