@@ -8,13 +8,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
-  "keywords": ["remote-control", "remote-desktop", "electron"],
+  "keywords": [
+    "remote-control",
+    "remote-desktop",
+    "electron"
+  ],
   "author": "DinoscapeProgramming",
   "license": "Apache-2.0",
   "dependencies": {
     "body-parser": "^1.20.2",
     "crossnote": "^0.9.9",
+    "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "express-documentation": "^1.0.49",
     "express-rate-limit": "^7.2.0",
     "peer": "^0.6.1",
     "socket.io": "^4.7.4"

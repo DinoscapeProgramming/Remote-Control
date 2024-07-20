@@ -13,7 +13,9 @@ const peerServer = ExpressPeerServer(http, {
 });
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
+const expressDocs = require("express-documentation");
 const fs = require("fs");
+const path = require("path");
 const { Worker } = require("worker_threads");
 const keys = require("./keys.json");
 
@@ -101,6 +103,12 @@ if (!fs.readdirSync("./").includes("apps")) fs.mkdirSync("./apps");
 if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Worker("./worker.js");
 
 app.use(bodyParser.json());
+app.use("/docs", expressDocs(app, {
+  title: "Remote Control - Docs",
+  favicon: path.resolve("./assets/favicon.ico"),
+  logo: path.resolve("./assets/logo.svg"),
+  directory: path.resolve("./pages/docs")
+}));
 app.use("/api/v1/feedback/send", rateLimit({
   limit: 1,
   standardHeaders: "draft-7",
