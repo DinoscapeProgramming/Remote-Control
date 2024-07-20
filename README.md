@@ -155,7 +155,7 @@ This software uses the following open source packages:
 - [socket.io-client](https://socket.io)
 - [dotenv](https://github.com/motdotla/dotenv)
 - [update-electron-app](https://github.com/electron/update-electron-app)
-- [express](https://github.com/expressjs/express)
+- [Express.js](https://github.com/expressjs/express)
 - [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit)
 - [body-parser](https://github.com/expressjs/body-parser)
 - [Crossnote](https://github.com/shd101wyy/crossnote)
