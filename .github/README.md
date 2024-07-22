@@ -112,9 +112,9 @@ You can [download](https://github.com/DinoscapeProgramming/Remote-Control/releas
 
 This software uses the following open source packages:
 
+- [Node.js](https://nodejs.org)
 - [Electron](https://electronjs.org)
 - [electron-builder](https://www.electron.build)
-- [Node.js](https://nodejs.org)
 - [PeerServer](https://github.com/peers/peerjs-server)
 - [@jitsi/robotjs](https://github.com/jitsi/robotjs)
 - [socket.io](https://socket.io)
