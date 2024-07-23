@@ -106,7 +106,7 @@ $ node .
 
 ## Download
 
-You can [download](https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.1) the latest installable version of Remote Control for Windows, macOS and Linux.
+You can [download](https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0) the latest installable version of Remote Control for Windows, macOS and Linux.
 
 ## Credits
 
