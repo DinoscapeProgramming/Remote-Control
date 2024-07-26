@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
+  "homepage": "https://remote-control-cnp2.onrender.com",
   "keywords": ["remote-control", "remote-desktop", "electron"],
   "author": "DinoscapeProgramming",
   "license": "Apache-2.0",
