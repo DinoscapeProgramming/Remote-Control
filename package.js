@@ -63,3 +63,4 @@ module.exports.fullyHostServer = () => {
     throw stderr;
   });
 };
+module.exports = () => module.exports.executeScript("developerBuild");

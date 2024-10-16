@@ -15,6 +15,7 @@
   "bin": {
     "buildInstallable": "bin/buildInstallable.js",
     "openInstallable": "bin/openInstallable.js",
-    "hostServer": "bin/hostServer.js"
+    "hostServer": "bin/hostServer.js",
+    "developerBuild": "bin/developerBuild.js"
   }
 }

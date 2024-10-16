@@ -164,7 +164,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
   installRemotePrintDriverSpinnerIcon.ariaHidden = true;
   installRemotePrintDriverSpinnerIcon.style.marginLeft = "2.5px";
   document.getElementById("installRemotePrintDriverButton").disabled = true;
-  document.getElementById("installRemotePrintDriverButton").innerText = (document.getElementById("installRemotePrintDriverButton").innerText === "Install") ? "Uninstalling " : "Installing ";
+  document.getElementById("installRemotePrintDriverButton").innerText = (document.getElementById("installRemotePrintDriverButton").innerText === "Install") ? "Installing " : "Uninstalling ";
   document.getElementById("installRemotePrintDriverButton").appendChild(installRemotePrintDriverSpinnerIcon);
   if (document.getElementById("installRemotePrintDriverButton").innerText === "Installing ") {
     ({
