@@ -2,6 +2,7 @@ const { ipcRenderer } = parent.require("electron");
 const fs = parent.require("fs");
 const os = parent.require("os");
 const path = parent.require("path");
+const https = parent.require("https");
 const childProcess = parent.require("child_process");
 const parsedEnvironmentVariables = parent.require("dotenv").config({ path: parent.require("path").join(parent.process.resourcesPath, "app.asar/.env") }).parsed;
 

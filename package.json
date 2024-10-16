@@ -5,7 +5,11 @@
   "description": "An advanced, but easy-to-use Remote Desktop Application Program which has cross-platform support",
   "main": "package.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildInstallable": "node scripts/executeScript.js --buildInstallable",
+    "openInstallable": "node scripts/executeScript.js --openInstallable",
+    "hostServer": "node scripts/executeScript.js --hostServer",
+    "developerBuild": "node scripts/executeScript.js --developerBuild"
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
   "homepage": "https://remote-control-cnp2.onrender.com",
