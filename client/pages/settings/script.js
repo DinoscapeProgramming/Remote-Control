@@ -175,7 +175,10 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
           response.pipe(fileWriteStream);
           fileWriteStream.on('finish', () => {
             fileWriteStream.close(() => {
-              childProcess.execFile(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe") + " /SILENT /NORESTART", (err, stdout, stderr) => {
+              childProcess.execFile(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"), [
+                "/SILENT",
+                "/NORESTART"
+              ], (err, stdout, stderr) => {
                 document.getElementById("installRemotePrintDriverButton").disabled = false;
                 document.getElementById("installRemotePrintDriverButton").innerText = (err) ? "Install" : "Uninstall";
                 if (err || stderr) ipcRenderer.send("scriptError", {
