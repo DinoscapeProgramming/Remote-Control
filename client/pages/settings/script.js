@@ -171,24 +171,26 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
     ({
       win32: () => {
         https.get("https://download.pdfforge.org/download/pdfcreator/PDFCreator-stable?download", (response) => {
-          const fileWriteStream = fs.createWriteStream(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"));
-          response.pipe(fileWriteStream);
-          fileWriteStream.on('finish', () => {
-            fileWriteStream.close(() => {
-              childProcess.execFile(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"), [
-                "/SILENT",
-                "/NORESTART"
-              ], (err, stdout, stderr) => {
-                document.getElementById("installRemotePrintDriverButton").disabled = false;
-                document.getElementById("installRemotePrintDriverButton").innerText = (err) ? "Install" : "Uninstall";
-                if (err || stderr) ipcRenderer.send("scriptError", {
-                  language: "javascript",
-                  err: err.message || stderr || "Failed to install PDFCreator"
+          if (response.statusCode < 300 || response.statusCode >= 400 || !response.headers.location) return;
+          https.get(response.headers.location, (response) => {
+            const fileWriteStream = fs.createWriteStream(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"));
+            response.pipe(fileWriteStream);
+            fileWriteStream.on('finish', () => {
+              fileWriteStream.close(() => {
+                childProcess.execFile(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"), [
+                  "/SILENT",
+                  "/NORESTART"
+                ], (err, stdout, stderr) => {
+                  document.getElementById("installRemotePrintDriverButton").disabled = false;
+                  document.getElementById("installRemotePrintDriverButton").innerText = (err) ? "Install" : "Uninstall";
+                  if (err || stderr) ipcRenderer.send("scriptError", {
+                    language: "javascript",
+                    err: err.message || stderr || "Failed to install PDFCreator"
+                  });
                 });
               });
             });
-          });
-        }).on("error", (err) => {
+          }).on("error", (err) => {
             try {
               fs.unlinkSync(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"));
             } catch (err) {
@@ -204,6 +206,23 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
                 err: err.message || "Failed to download PDFCreator"
               });
             };
+          });
+        }).on("error", (err) => {
+          try {
+            fs.unlinkSync(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"));
+          } catch (err) {
+            ipcRenderer.send("scriptError", {
+              language: "javascript",
+              err: err.message || "Failed to delete PDFCreator"
+            });
+          } finally {
+            document.getElementById("installRemotePrintDriverButton").disabled = false;
+            document.getElementById("installRemotePrintDriverButton").innerText = "Install";
+            ipcRenderer.send("scriptError", {
+              language: "javascript",
+              err: err.message || "Failed to download PDFCreator"
+            });
+          };
         });
       },
       darwin: () => {
