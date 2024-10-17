@@ -170,7 +170,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
   if (document.getElementById("installRemotePrintDriverButton").innerText === "Installing ") {
     ({
       win32: () => {
-        https.get("https://download.pdfforge.org/download/pdfcreator/PDFCreator-stable", (response) => {
+        https.get("https://download.pdfforge.org/download/pdfcreator/PDFCreator-stable?download", (response) => {
           const fileWriteStream = fs.createWriteStream(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"));
           response.pipe(fileWriteStream);
           fileWriteStream.on('finish', () => {
