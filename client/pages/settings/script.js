@@ -178,51 +178,57 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
               childProcess.execFile(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe") + " /SILENT /NORESTART", (err, stdout, stderr) => {
                 document.getElementById("installRemotePrintDriverButton").disabled = false;
                 document.getElementById("installRemotePrintDriverButton").innerText = (err) ? "Install" : "Uninstall";
-                if (err) ipcRenderer.send("scriptError", {
+                if (err || stderr) ipcRenderer.send("scriptError", {
                   language: "javascript",
-                  err: err.message
+                  err: err.message || stderr || "Failed to install PDFCreator"
                 });
               });
             });
           });
         }).on("error", (err) => {
-          try {
-            document.getElementById("installRemotePrintDriverButton").disabled = false;
-            document.getElementById("installRemotePrintDriverButton").innerText = "Install";
-            ipcRenderer.send("scriptError", {
-              language: "javascript",
-              err: err.message
-            });
-            fs.unlinkSync(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"));
-          } catch {};
+            try {
+              fs.unlinkSync(path.join(parent.process.resourcesPath, "PDFCreator-Setup.exe"));
+            } catch (err) {
+              ipcRenderer.send("scriptError", {
+                language: "javascript",
+                err: err.message || "Failed to delete PDFCreator"
+              });
+            } finally {
+              document.getElementById("installRemotePrintDriverButton").disabled = false;
+              document.getElementById("installRemotePrintDriverButton").innerText = "Install";
+              ipcRenderer.send("scriptError", {
+                language: "javascript",
+                err: err.message || "Failed to download PDFCreator"
+              });
+            };
         });
       },
       darwin: () => {
         childProcess.exec("sudo lpadmin -p RemotePrinter -E -v cups-pdf:/ -m everywhere", (err, stdout, stderr) => {
           document.getElementById("installRemotePrintDriverButton").disabled = false;
           document.getElementById("installRemotePrintDriverButton").innerText = ((err) ? "Install" : "Uninstall");
-          if (err) ipcRenderer.send("scriptError", {
+          if (err || stderr) ipcRenderer.send("scriptError", {
             language: "javascript",
-            err: err.message
+            err: err.message || stderr || "Failed to launch CUPS"
           });
         });
       },
       linux: () => {
         childProcess.exec("sudo apt-get install cups -y", (err, stdout, stderr) => {
-          if (err) {
+          if (err || stderr) {
             document.getElementById("installRemotePrintDriverButton").disabled = false;
             document.getElementById("installRemotePrintDriverButton").innerText = "Install";
             ipcRenderer.send("scriptError", {
               language: "javascript",
-              err: err.message
+              err: err.message || stderr || "Failed to install CUPS"
             });
           } else {
             childProcess.exec("sudo systemctl start cups", (err, stdout, stderr) => {
               document.getElementById("installRemotePrintDriverButton").disabled = false;
               document.getElementById("installRemotePrintDriverButton").innerText = ((err) ? "Install" : "Uninstall");
-              if (err) ipcRenderer.send("scriptError", {
+              if (err || stderr) ipcRenderer.send("scriptError", {
                 language: "javascript",
-                err: err.message
+                err: err.message || stderr || "Failed to launch CUPS"
               });
             });
           };
@@ -236,9 +242,9 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
           childProcess.exec("wmic product where \"name like '%PDFCreator%'\" call uninstall /nointeractive", (err, stdout, stderr) => {
             document.getElementById("installRemotePrintDriverButton").disabled = false;
             document.getElementById("installRemotePrintDriverButton").innerText = ((err || !stdout.includes("ReturnValue = 0")) ? "Uninstall" : "Install");
-            if (err || !stdout.includes("ReturnValue = 0")) ipcRenderer.send("scriptError", {
+            if (err || stderr || !stdout.includes("ReturnValue = 0")) ipcRenderer.send("scriptError", {
               language: "javascript",
-              err: err.message || "Failed to uninstall PDFCreator"
+              err: err.message || stderr || "Failed to uninstall PDFCreator"
             });
           });
         }
@@ -248,9 +254,9 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
           childProcess.exec("lpadmin -x CUPS-PDF", (err, stdout, stderr) => {
             document.getElementById("installRemotePrintDriverButton").disabled = false;
             document.getElementById("installRemotePrintDriverButton").innerText = ((err) ? "Uninstall" : "Install");
-            if (err) ipcRenderer.send("scriptError", {
+            if (err || stderr) ipcRenderer.send("scriptError", {
               language: "javascript",
-              err: err.message
+              err: err.message || stderr || "Failed to uninstall CUPS"
             });
           });
         }
