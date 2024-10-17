@@ -185,7 +185,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
                   document.getElementById("installRemotePrintDriverButton").innerText = (err) ? "Install" : "Uninstall";
                   if (err || stderr) ipcRenderer.send("scriptError", {
                     language: "javascript",
-                    err: err.message || stderr || "Failed to install PDFCreator"
+                    err: err?.message || stderr || "Failed to install PDFCreator"
                   });
                 });
               });
@@ -196,14 +196,14 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
             } catch (err) {
               ipcRenderer.send("scriptError", {
                 language: "javascript",
-                err: err.message || "Failed to delete PDFCreator"
+                err: err?.message || "Failed to delete PDFCreator"
               });
             } finally {
               document.getElementById("installRemotePrintDriverButton").disabled = false;
               document.getElementById("installRemotePrintDriverButton").innerText = "Install";
               ipcRenderer.send("scriptError", {
                 language: "javascript",
-                err: err.message || "Failed to download PDFCreator"
+                err: err?.message || "Failed to download PDFCreator"
               });
             };
           });
@@ -213,14 +213,14 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
           } catch (err) {
             ipcRenderer.send("scriptError", {
               language: "javascript",
-              err: err.message || "Failed to delete PDFCreator"
+              err: err?.message || "Failed to delete PDFCreator"
             });
           } finally {
             document.getElementById("installRemotePrintDriverButton").disabled = false;
             document.getElementById("installRemotePrintDriverButton").innerText = "Install";
             ipcRenderer.send("scriptError", {
               language: "javascript",
-              err: err.message || "Failed to download PDFCreator"
+              err: err?.message || "Failed to download PDFCreator"
             });
           };
         });
@@ -231,7 +231,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
           document.getElementById("installRemotePrintDriverButton").innerText = ((err) ? "Install" : "Uninstall");
           if (err || stderr) ipcRenderer.send("scriptError", {
             language: "javascript",
-            err: err.message || stderr || "Failed to launch CUPS"
+            err: err?.message || stderr || "Failed to launch CUPS"
           });
         });
       },
@@ -242,7 +242,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
             document.getElementById("installRemotePrintDriverButton").innerText = "Install";
             ipcRenderer.send("scriptError", {
               language: "javascript",
-              err: err.message || stderr || "Failed to install CUPS"
+              err: err?.message || stderr || "Failed to install CUPS"
             });
           } else {
             childProcess.exec("sudo systemctl start cups", (err, stdout, stderr) => {
@@ -250,7 +250,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
               document.getElementById("installRemotePrintDriverButton").innerText = ((err) ? "Install" : "Uninstall");
               if (err || stderr) ipcRenderer.send("scriptError", {
                 language: "javascript",
-                err: err.message || stderr || "Failed to launch CUPS"
+                err: err?.message || stderr || "Failed to launch CUPS"
               });
             });
           };
@@ -266,7 +266,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
             document.getElementById("installRemotePrintDriverButton").innerText = ((err || !stdout.includes("ReturnValue = 0")) ? "Uninstall" : "Install");
             if (err || stderr || !stdout.includes("ReturnValue = 0")) ipcRenderer.send("scriptError", {
               language: "javascript",
-              err: err.message || stderr || "Failed to uninstall PDFCreator"
+              err: err?.message || stderr || "Failed to uninstall PDFCreator"
             });
           });
         }
@@ -278,7 +278,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
             document.getElementById("installRemotePrintDriverButton").innerText = ((err) ? "Uninstall" : "Install");
             if (err || stderr) ipcRenderer.send("scriptError", {
               language: "javascript",
-              err: err.message || stderr || "Failed to uninstall CUPS"
+              err: err?.message || stderr || "Failed to uninstall CUPS"
             });
           });
         }
