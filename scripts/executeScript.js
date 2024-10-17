@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const childProcess = require("child_process");
 
 if (!["win32", "darwin", "linux"].includes(process.platform) || !fs.readdirSync("./scripts").filter((folderItem) => folderItem !== "executeScript.js").map((folderItem) => "--" + folderItem).includes(process.argv[2])) process.exit(1);

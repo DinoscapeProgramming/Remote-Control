@@ -1,7 +1,7 @@
 set userName to do shell script "whoami"
 set programPath to "/Users/" & userName & "/.local/share/Remote Control"
 set uninstallPath to programPath & "/Uninstall Remote Control"
-set clientDir to POSIX path of (path to me) & "client/"
+set clientDir to (POSIX path of (do shell script "dirname $(dirname " & quoted form of POSIX path of (path to me) & ")")) & "/client/"
 set buildPath to clientDir & "build/"
 set exePath to buildPath & "Remote Control Setup 1.0.0.pkg"
 

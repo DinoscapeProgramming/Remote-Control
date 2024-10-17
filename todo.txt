@@ -1,1 +1,2 @@
-- Bug fix (line 33 in "./scripts/developerBuild/win32.vbs"; line 6 in "./scripts/developerBuild/darwin.scpt" and "./scripts/developerBuild/linux.sh"): "cd client" does not work anymore since the developer build vbs, sh and scpt scripts were moved into "./scripts/developerBuild" instead of staying in the root directory
+- Finish remote printing
+- Wake on LAN

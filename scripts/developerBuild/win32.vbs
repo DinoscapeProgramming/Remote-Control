@@ -30,7 +30,7 @@ If objFSO.FolderExists(programPath) Then
 End If
 
 Dim clientDir
-clientDir = objFSO.GetParentFolderName(WScript.ScriptFullName) & "\client"
+clientDir = objFSO.GetParentFolderName(objFSO.GetParentFolderName(objFSO.GetParentFolderName(WScript.ScriptFullName))) & "\client"
 
 If objFSO.FolderExists(clientDir) Then
     objShell.CurrentDirectory = clientDir
@@ -71,12 +71,17 @@ End Sub
 Sub CloseApplication(appName)
     Dim objWMIService, colProcesses, objProcess
     Set objWMIService = GetObject("winmgmts:\\.\root\CIMV2")
-    
     Set colProcesses = objWMIService.ExecQuery("SELECT * FROM Win32_Process WHERE Name = '" & appName & "'")
     
-    For Each objProcess In colProcesses
-        objProcess.Terminate
-    Next
+    If colProcesses.Count = 0 Then
+        Exit Sub
+    Else
+        For Each objProcess In colProcesses
+            On Error Resume Next
+            objProcess.Terminate
+            On Error GoTo 0
+        Next
+    End If
 End Sub
 
 If objFSO.FileExists(programPath & "\Remote Control.exe") Then
