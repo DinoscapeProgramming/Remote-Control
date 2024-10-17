@@ -9,7 +9,8 @@
     "buildInstallable": "node scripts/executeScript.js --buildInstallable",
     "openInstallable": "node scripts/executeScript.js --openInstallable",
     "hostServer": "node scripts/executeScript.js --hostServer",
-    "developerBuild": "node scripts/executeScript.js --developerBuild"
+    "developerBuild": "node scripts/executeScript.js --developerBuild",
+    "repeatPublish": "node scripts/executeScript.js --repeatPublish"
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
   "homepage": "https://remote-control-cnp2.onrender.com",
