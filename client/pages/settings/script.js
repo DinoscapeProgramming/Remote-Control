@@ -171,12 +171,12 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
     ({
       win32: () => {
         https.get("https://download.pdfforge.org/download/pdfcreator/PDFCreator-stable", (response) => {
-          const fileWriteStream = fs.createWriteStream(path.join(__dirname, "PDFCreator-Setup.exe"));
+          const fileWriteStream = fs.createWriteStream(path.join(parent.__dirname, "PDFCreator-Setup.exe"));
           response.pipe(fileWriteStream);
           fileWriteStream.on('finish', () => {
             fileWriteStream.close(() => {
               installPDFCreator(installerPath);
-              childProcess.exec(path.join(__dirname, "PDFCreator-Setup.exe") + " /SILENT /NORESTART", (err, stdout, stderr) => {
+              childProcess.exec(path.join(parent.__dirname, "PDFCreator-Setup.exe") + " /SILENT /NORESTART", (err, stdout, stderr) => {
                 document.getElementById("installRemotePrintDriverButton").disabled = false;
                 document.getElementById("installRemotePrintDriverButton").innerText = (err) ? "Install" : "Uninstall";
                 if (err) ipcRenderer.send("scriptError", {
@@ -194,7 +194,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
               language: "javascript",
               err: err.message
             });
-            fs.unlinkSync(path.join(__dirname, "PDFCreator-Setup.exe"));
+            fs.unlinkSync(path.join(parent.__dirname, "PDFCreator-Setup.exe"));
           } catch {};
         });
       },

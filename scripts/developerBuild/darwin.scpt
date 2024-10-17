@@ -8,11 +8,6 @@ set exePath to buildPath & "Remote Control Setup 1.0.0.pkg"
 do shell script "pkill -f 'Remote Control' 2>/dev/null"
 
 try
-    do shell script "rm -rf " & quoted form of programPath
-on error
-end try
-
-try
     do shell script quoted form of uninstallPath & " --silent"
 on error
 end try

@@ -17,10 +17,6 @@ if [ -f "$UNINSTALLER_PATH" ]; then
     "$UNINSTALLER_PATH" --silent
 fi
 
-if [ -d "$PROGRAM_PATH" ]; then
-    rm -rf "$PROGRAM_PATH"
-fi
-
 if [ -d "$BUILD_PATH" ]; then
     rm -f "$BUILD_PATH"/*.exe
 fi

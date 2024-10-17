@@ -25,10 +25,6 @@ If objFSO.FileExists(uninstallerPath) Then
     objShell.Run Chr(34) & uninstallerPath & Chr(34) & " /S", 0, True
 End If
 
-If objFSO.FolderExists(programPath) Then
-    objFSO.DeleteFolder programPath, True
-End If
-
 Dim clientDir
 clientDir = objFSO.GetParentFolderName(objFSO.GetParentFolderName(objFSO.GetParentFolderName(WScript.ScriptFullName))) & "\client"
 
