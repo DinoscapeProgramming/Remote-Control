@@ -118,6 +118,7 @@ app.use("/peer", peerServer);
 app.use("/apps", express.static("apps"));
 app.use("/assets", express.static("assets"));
 app.use("/pages", express.static("pages"));
+app.use(express.static("data"));
 
 app.all("/", (req, res) => {
   res.sendFile("pages/home/index.html", {
