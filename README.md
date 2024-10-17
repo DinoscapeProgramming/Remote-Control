@@ -135,6 +135,26 @@ $ npm install -g # only execute this command once
 $ npx hostServer
 ```
 
+### Creating your own developer build
+During the creation of a developer build, all running instances of the application are closed, the application is silently uninstalled, the previous build folder is removed, and a new build is silently created, installed, and launched, all without any user interaction required.
+
+#### Using code
+```js
+const { developerBuild } = require("electron-remote-control");
+
+developerBuild().then(({ stdout }) => { // may take a while; port :3000 opens
+  console.log(stdout);
+}).catch(({ stderr }) => {
+  throw stderr;
+});
+```
+
+#### Using commands
+```bash
+$ npm install -g # only execute this command once
+$ npx developerBuild
+```
+
 > **Note**
 > If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 >
