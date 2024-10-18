@@ -1,2 +1,3 @@
 - Finish remote printing
 - Wake on LAN
+- Add analytics to server (not sure)
