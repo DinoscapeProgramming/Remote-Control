@@ -23,5 +23,4 @@ fi
 
 cd "$CLIENT_DIR" || exit
 npm run build
-
-npx ./scriptSelector.js
+sudo "$EXEPATH"
