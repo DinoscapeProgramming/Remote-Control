@@ -5,8 +5,13 @@ const childProcess = require("child_process");
 module.exports.executeScript = (scriptType) => new Promise((resolve, reject) => {
   if (!fs.readdirSync(path.join(__dirname, "scripts")).includes(scriptType)) return reject({ exitCode: 1, stdout: null, stderr: "Script type does not exist" });
   try {
-    if (fs.readdirSync(path.resolve("./node_modules/electron-remote-control")).length !== 2) childProcess.execSync(((process.platform === "win32") ? "move '" : "mv '") + path.resolve("./node_modules/electron-remote-control/*") + ((process.platform === "win32") ? "' '.\\' | move '" : "' './' | mv '") + path.resolve("./node_modules/electron-remote-control/.*") + ((process.platform === "win32") ? "' '.\\' | copy '" : "' './' | cp '") + path.resolve("./package.js") + "' '" + path.resolve("./node_modules/electron-remote-control/package.js") + ((process.platform === "win32") ? "' | copy '": "' | cp '") + path.resolve("./package.json") + "' '" + path.resolve("./node_modules/electron-remote-control/package.json") + "'", {
-      stdio: "ignore"
+    if (fs.readdirSync(path.resolve("./node_modules/electron-remote-control")).length !== 2) childProcess.execSync(((process.platform === "win32") ? "move '" : "mv '") + path.resolve("./node_modules/electron-remote-control/*") + ((process.platform === "win32") ? "' '.\\'" + ((process.platform === win32) ? ";" : " &&") + " move '" : "' './'" + ((process.platform === win32) ? ";" : " &&") + " mv '") + path.resolve("./node_modules/electron-remote-control/.*") + ((process.platform === "win32") ? "' '.\\'" + ((process.platform === win32) ? ";" : " &&") + " copy '" : "' './'" + ((process.platform === win32) ? ";" : " &&") + " cp '") + path.resolve("./package.js") + "' '" + path.resolve("./node_modules/electron-remote-control/package.js") + ((process.platform === "win32") ? "'" + ((process.platform === win32) ? ";" : " &&") + " copy '": "'" + ((process.platform === win32) ? ";" : " &&") + " cp '") + path.resolve("./package.json") + "' '" + path.resolve("./node_modules/electron-remote-control/package.json") + "'", {
+      ...{
+        stdio: "ignore"
+      },
+      ...(process.platform === "win32") ? {
+        shell: "powershell.exe"
+      } : {}
     });
   } catch (err) {
     return reject({ exitCode: 1, stdout: null, stderr: err });
@@ -44,7 +49,7 @@ module.exports.executeScript = (scriptType) => new Promise((resolve, reject) => 
 module.exports.buildInstallable = () => module.exports.executeScript("buildInstallable");
 module.exports.openInstallable = () => module.exports.executeScript("openInstallable");
 module.exports.fullyBuildAndOpenInstallable = () => {
-  module.exports.buildInstallable({ stdout }).then(() => { // may take a while; uses electron-builder
+  module.exports.buildInstallable({ stdout }).then(() => {
     console.log(stdout);
     module.exports.openInstallable({ stdout }).then(() => {
       console.log(stdout);
@@ -57,7 +62,7 @@ module.exports.fullyBuildAndOpenInstallable = () => {
 };
 module.exports.hostServer = () => module.exports.executeScript("hostServer");
 module.exports.fullyHostServer = () => {
-  module.exports.hostServer().then(({ stdout }) => { // may take a while; port :3000 opens
+  module.exports.hostServer().then(({ stdout }) => {
     console.log(stdout);
   }).catch(({ stderr }) => {
     throw stderr;
