@@ -68,11 +68,11 @@ To install this package, you'll need [Node.js](https://nodejs.org/en/download/) 
 ```bash
 # Using npm
 $ npm init -y
-$ npm install express-remote-control
+$ npm install electron-remote-control
 
 # Using yarn
 $ yarn init -y
-$ yarn add express-remote-control
+$ yarn add electron-remote-control
 ```
 
 ### Building and opening your own installable
