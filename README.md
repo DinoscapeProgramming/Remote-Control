@@ -67,9 +67,11 @@ To install this package, you'll need [Node.js](https://nodejs.org/en/download/) 
 
 ```bash
 # Using npm
+$ npm init -y
 $ npm install express-remote-control
 
 # Using yarn
+$ yarn init -y
 $ yarn add express-remote-control
 ```
 
@@ -102,7 +104,6 @@ fullyBuildAndOpenInstallable(); // this does exactly what the code above does
 
 #### Using commands
 ```bash
-$ npm install -g # only execute this command once
 $ npx buildInstallable
 $ npx openInstallable
 ```
@@ -131,7 +132,6 @@ fullyHostServer(); // this does exactly what the code above does
 
 #### Using commands
 ```bash
-$ npm install -g # only execute this command once
 $ npx hostServer
 ```
 
@@ -151,7 +151,6 @@ developerBuild().then(({ stdout }) => { // may take a while; port :3000 opens
 
 #### Using commands
 ```bash
-$ npm install -g # only execute this command once
 $ npx developerBuild
 ```
 
