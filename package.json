@@ -1,7 +1,7 @@
 {
   "name": "electron-remote-control",
   "productName": "Remote Control Package",
-  "version": "1.1.131",
+  "version": "1.1.141",
   "description": "An advanced, but easy-to-use Remote Desktop Application Program which has cross-platform support",
   "main": "package.js",
   "scripts": {
@@ -29,8 +29,12 @@
   "license": "Apache-2.0",
   "bin": {
     "buildInstallable": "bin/buildInstallable.js",
+    "bi": "bin/buildInstallable.js",
     "openInstallable": "bin/openInstallable.js",
+    "oi": "bin/openInstallable.js",
     "hostServer": "bin/hostServer.js",
-    "developerBuild": "bin/developerBuild.js"
+    "hs": "bin/hostServer.js",
+    "developerBuild": "bin/developerBuild.js",
+    "db": "bin/developerBuild.js"
   }
 }
