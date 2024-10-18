@@ -18,6 +18,7 @@ const fs = require("fs");
 const path = require("path");
 const { Worker } = require("worker_threads");
 const keys = require("./keys.json");
+const helmet = require('helmet');
 
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ type, roomId, password } = {}) => {
@@ -102,6 +103,7 @@ io.on("connection", (socket) => {
 if (!fs.readdirSync("./").includes("apps")) fs.mkdirSync("./apps");
 if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Worker("./worker.js");
 
+app.use(helmet());
 app.use(bodyParser.json());
 app.use("/docs", expressDocs(app, {
   title: "Remote Control - Docs",
