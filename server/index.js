@@ -109,7 +109,10 @@ app.use("/docs", expressDocs(app, {
   title: "Remote Control - Docs",
   favicon: path.resolve("./assets/favicon.ico"),
   logo: path.resolve("./assets/logo.svg"),
-  directory: path.resolve("./pages/docs")
+  directory: path.resolve("./pages/docs"),
+  options: {
+    customCode: fs.readFileSync("./data/postHog.js", "utf8")
+  }
 }));
 app.use("/api/v1/feedback/send", rateLimit({
   limit: 1,
