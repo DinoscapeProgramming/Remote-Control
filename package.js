@@ -5,7 +5,7 @@ const childProcess = require("child_process");
 module.exports.executeScript = (scriptType) => new Promise((resolve, reject) => {
   if (!fs.readdirSync(path.join(__dirname, "scripts")).includes(scriptType)) return reject({ exitCode: 1, stdout: null, stderr: "Script type does not exist" });
   try {
-    if (fs.readdirSync(path.resolve("./node_modules/electron-remote-control")).length !== 2) {
+    if (fs.readdirSync(path.resolve("./node_modules/electron-remote-control")).length !== 4) {
       fs.writeFileSync("./node_modules/electron-remote-control/package.json", JSON.stringify(Object.assign({
         ...JSON.parse(fs.readFileSync("./package.json", "utf8") || "{}") || {},
         ...JSON.parse(fs.readFileSync("./node_modules/electron-remote-control/package.json", "utf8") || "{}") || {}
