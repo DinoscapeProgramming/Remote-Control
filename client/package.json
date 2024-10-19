@@ -9,7 +9,11 @@
     "build": "electron-builder"
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
-  "keywords": ["remote-control", "remote-desktop", "electron"],
+  "keywords": [
+    "remote-control",
+    "remote-desktop",
+    "electron"
+  ],
   "author": "DinoscapeProgramming",
   "license": "Apache-2.0",
   "dependencies": {
