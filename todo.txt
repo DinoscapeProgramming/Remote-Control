@@ -1,3 +1,5 @@
 - Finish remote printing
-- Wake on LAN
+- Add Wake on LAN
 - Add analytics to server (not sure)
+- Add newsletter portal
+- Fix the website (a lot of work)
