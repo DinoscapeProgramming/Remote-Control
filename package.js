@@ -10,10 +10,10 @@ module.exports.executeScript = (scriptType) => new Promise((resolve, reject) => 
         ...JSON.parse(fs.readFileSync("./package.json", "utf8") || "{}") || {},
         ...JSON.parse(fs.readFileSync("./node_modules/electron-remote-control/package.json", "utf8") || "{}") || {}
       }, ...["scripts", "keywords", "bin"].map((key) => ({
-        [key]: {
-          ...(JSON.parse(fs.readFileSync("./package.json", "utf8") || "{}") || {})[key],
-          ...(JSON.parse(fs.readFileSync("./node_modules/electron-remote-control/package.json", "utf8") || "{}") || {})[key]
-        }
+        [key]: ((key === "keywords") ? Object.values : ((value) => value))({
+          ...(JSON.parse(fs.readFileSync("./package.json", "utf8") || "{}") || {})[key] || {},
+          ...(JSON.parse(fs.readFileSync("./node_modules/electron-remote-control/package.json", "utf8") || "{}") || {})[key] || {}
+        })
       }))), null, 2), "utf8");
       childProcess.execSync(((process.platform === "win32") ? "del '" : "rm '") + path.resolve("./package.json") + ((process.platform === "win32") ? "'; move '" : "' && mv '") + path.resolve("./node_modules/electron-remote-control/*") + ((process.platform === "win32") ? "' '.\\'; move '" : "' './' && mv '") + path.resolve("./node_modules/electron-remote-control/.*") + ((process.platform === "win32") ? "' '.\\'; copy '" : "' './' && cp '") + path.resolve("./package.js") + "' '" + path.resolve("./node_modules/electron-remote-control/package.js") + ((process.platform === "win32") ? "'; copy '" : "' && cp '") + path.resolve("./package.json") + "' '" + path.resolve("./node_modules/electron-remote-control/package.json") + "'", {
         ...{
