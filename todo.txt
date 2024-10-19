@@ -6,3 +6,4 @@
 - Move print driver installation process to main page of client to keep it alive even when visiting another sub-page
 - Make app runnable in the background
 - Build installers for MacOS and Linux too
+- Detect if print driver installation is unnecessary
