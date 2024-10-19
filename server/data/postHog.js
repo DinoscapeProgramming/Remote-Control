@@ -42,7 +42,7 @@
     }),
     (e.__SV = 1));
 })(document, window.posthog || []);
-posthog.init("phc_VDIov4SC5IqtknFgo2ylZ6pI2mUYO3wQ28H4BqCy4CH", {
+posthog.init("phc_ewjmOMzNAD7TkbpdzsJ0KIXZB2vVbOYjL2Lfsrdc5tc", {
   api_host: "https://eu.i.posthog.com",
   person_profiles: "always",
 });
