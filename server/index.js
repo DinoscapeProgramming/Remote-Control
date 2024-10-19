@@ -111,7 +111,7 @@ app.use("/docs", expressDocs(app, {
   logo: path.resolve("./assets/logo.svg"),
   directory: path.resolve("./pages/docs"),
   options: {
-    customCode: fs.readFileSync("./data/postHog.js", "utf8")
+    customCode: fs.readFileSync("./data/postHog.js", "utf8") || (() => {}).toString()
   }
 }));
 app.use("/api/v1/feedback/send", rateLimit({
