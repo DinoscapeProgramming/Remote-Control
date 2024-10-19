@@ -78,6 +78,12 @@ $ yarn add electron-remote-control
 ### Building and opening your own installable
 To build and open your own installable, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) and [Python 3](https://www.python.org/downloads/) installed on your computer.
 
+#### Using commands
+```bash
+$ npx buildInstallable
+$ npx openInstallable
+```
+
 #### Using code
 ```js
 const { buildInstallable, openInstallable } = require("electron-remote-control");
@@ -102,14 +108,13 @@ const { fullyBuildAndOpenInstallable } = require("electron-remote-control");
 fullyBuildAndOpenInstallable(); // this does exactly what the code above does
 ```
 
-#### Using commands
-```bash
-$ npx buildInstallable
-$ npx openInstallable
-```
-
 ### Hosting your own server
 To host your own server, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer.
+
+#### Using commands
+```bash
+$ npx hostServer
+```
 
 #### Using code
 ```js
@@ -130,13 +135,13 @@ const { fullyHostServer } = require("electron-remote-control");
 fullyHostServer(); // this does exactly what the code above does
 ```
 
-#### Using commands
-```bash
-$ npx hostServer
-```
-
 ### Creating your own developer build
 During the creation of a developer build, all running instances of the application are closed, the application is silently uninstalled, the previous build folder is removed, and a new build is silently created, installed, and launched, all without any user interaction required.
+
+#### Using commands
+```bash
+$ npx developerBuild
+```
 
 #### Using code
 ```js
@@ -147,11 +152,6 @@ developerBuild().then(({ stdout }) => { // may take a while; port :3000 opens
 }).catch(({ stderr }) => {
   throw stderr;
 });
-```
-
-#### Using commands
-```bash
-$ npx developerBuild
 ```
 
 > **Note**

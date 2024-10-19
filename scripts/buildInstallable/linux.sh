@@ -6,7 +6,7 @@ UNINSTALLER_PATH="$PROGRAM_PATH/Uninstall Remote Control"
 CLIENT_DIR=$(dirname "$(dirname "$(dirname "$(realpath "$0")")")")/client
 
 if [ -d "$BUILD_PATH" ]; then
-    rm -f "$BUILD_PATH"/*.exe
+  rm -f "$BUILD_PATH"/*.exe
 fi
 
 cd "$CLIENT_DIR" || exit

@@ -30,11 +30,11 @@ Dim exePath
 exePath = buildPath & "\Remote Control Setup 1.0.0.exe"
 
 If objFSO.FileExists(exePath) Then
-    objShell.Run "cmd /c " & Chr(34) & exePath & Chr(34) & " /S", 0, True
+  objShell.Run "cmd /c " & Chr(34) & exePath & Chr(34) & " /S", 0, True
 End If
 
 If objFSO.FileExists(programPath & "\Remote Control.exe") Then
-    objShell.Run Chr(34) & programPath & "\Remote Control.exe", 0, False
+  objShell.Run Chr(34) & programPath & "\Remote Control.exe", 0, False
 End If
 
 Set objShell = Nothing

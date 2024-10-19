@@ -5,14 +5,25 @@ const childProcess = require("child_process");
 module.exports.executeScript = (scriptType) => new Promise((resolve, reject) => {
   if (!fs.readdirSync(path.join(__dirname, "scripts")).includes(scriptType)) return reject({ exitCode: 1, stdout: null, stderr: "Script type does not exist" });
   try {
-    if (fs.readdirSync(path.resolve("./node_modules/electron-remote-control")).length !== 2) childProcess.execSync(((process.platform === "win32") ? "move '" : "mv '") + path.resolve("./node_modules/electron-remote-control/*") + ((process.platform === "win32") ? "' '.\\'" + ((process.platform === "win32") ? ";" : " &&") + " move '" : "' './'" + ((process.platform === "win32") ? ";" : " &&") + " mv '") + path.resolve("./node_modules/electron-remote-control/.*") + ((process.platform === "win32") ? "' '.\\'" + ((process.platform === "win32") ? ";" : " &&") + " copy '" : "' './'" + ((process.platform === "win32") ? ";" : " &&") + " cp '") + path.resolve("./package.js") + "' '" + path.resolve("./node_modules/electron-remote-control/package.js") + ((process.platform === "win32") ? "'" + ((process.platform === "win32") ? ";" : " &&") + " copy '": "'" + ((process.platform === "win32") ? ";" : " &&") + " cp '") + path.resolve("./package.json") + "' '" + path.resolve("./node_modules/electron-remote-control/package.json") + "'", {
-      ...{
-        stdio: "ignore"
-      },
-      ...(process.platform === "win32") ? {
-        shell: "powershell.exe"
-      } : {}
-    });
+    if (fs.readdirSync(path.resolve("./node_modules/electron-remote-control")).length !== 2) {
+      fs.writeFileSync("./node_modules/electron-remote-control/package.json", JSON.stringify(Object.assign({
+        ...JSON.parse(fs.readFileSync("./package.json", "utf8") || "{}") || {},
+        ...JSON.parse(fs.readFileSync("./node_modules/electron-remote-control", "utf8") || "{}") || {}
+      }, ...["scripts", "keywords", "bin"].map((key) => ({
+        [key]: {
+          ...(JSON.parse(fs.readFileSync("./package.json", "utf8") || "{}") || {})[key],
+          ...(JSON.parse(fs.readFileSync("./node_modules/electron-remote-control/package.json", "utf8") || "{}") || {})[key]
+        }
+      }))), null, 2), "utf8");
+      childProcess.execSync(((process.platform === "win32") ? "del '" : "rm '") + path.resolve("./package.json") + ((process.platform === "win32") ? "'; move '" : "' && mv '") + path.resolve("./node_modules/electron-remote-control/*") + ((process.platform === "win32") ? "' '.\\'; move '" : "' './' && mv '") + path.resolve("./node_modules/electron-remote-control/.*") + ((process.platform === "win32") ? "' '.\\'; copy '" : "' './' && cp '") + path.resolve("./package.js") + "' '" + path.resolve("./node_modules/electron-remote-control/package.js") + ((process.platform === "win32") ? "'; copy '" : "' && cp '") + path.resolve("./package.json") + "' '" + path.resolve("./node_modules/electron-remote-control/package.json") + "'", {
+        ...{
+          stdio: "ignore"
+        },
+        ...(process.platform === "win32") ? {
+          shell: "powershell.exe"
+        } : {}
+      });
+    };
   } catch (err) {
     return reject({ exitCode: 1, stdout: null, stderr: err });
   } finally {
