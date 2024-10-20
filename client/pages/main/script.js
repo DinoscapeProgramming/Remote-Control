@@ -17,7 +17,7 @@ let devToolsOpenedOnDebugMode = false;
 window.installingRemotePrintDriver = false;
 window.uninstallingRemotePrintDriver = false;
 
-if (!fs.readdirSync(parent.process.resourcesPath).includes("appStartupCode")) fs.mkdirSync(path.join(process.resourcesPath, "appStartupCode"));
+if (!fs.readdirSync(process.resourcesPath).includes("appStartupCode")) fs.mkdirSync(path.join(process.resourcesPath, "appStartupCode"));
 if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("menuBar").children[0].children[4].style.display = "block";
 
 document.styleSheets[2].media.appendMedium("(prefers-color-scheme: " + (((JSON.parse(localStorage.getItem("settings")) || {}).darkMode ?? false) ? "dark" : "white") + ")");
@@ -504,7 +504,43 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
           };
         });
       }
-    })[parent.process.platform]();
+    })[process.platform]();
+  } else if (type === "uninstallRemotePrintDriver") {
+    window.uninstallingRemotePrintDriver = true;
+    Object.assign(
+      {
+        win32: () => {
+          if (!confirm("Are you sure you want to delete PDFCreator potentially corrupting other programs dependent on it?")) return;
+          childProcess.exec("wmic product where \"name like '%PDFCreator%'\" call uninstall /nointeractive", (err, stdout, stderr) => {
+            window.uninstallingRemotePrintDriver = false;
+            document.getElementById("pageEmbed").contentWindow.postMessage({
+              type: "installRemotePrintDriverButtonLabel",
+              installRemotePrintDriverButtonLabel: (err || stderr || !stdout.includes("ReturnValue = 0")) ? "Uninstall" : "Install"
+            });
+            if (err || stderr || !stdout.includes("ReturnValue = 0")) ipcRenderer.send("scriptError", {
+              language: "javascript",
+              err: err?.message || stderr || "Failed to uninstall PDFCreator"
+            });
+          });
+        }
+      },
+      ...["darwin", "linux"].map((key) => ({
+        [key]: () => {
+          if (!confirm("Are you sure you want to delete CUPS potentially corrupting other programs dependent on it?")) return;
+          childProcess.exec("lpadmin -x CUPS-PDF", (err, stdout, stderr) => {
+            window.uninstallingRemotePrintDriver = false;
+            document.getElementById("pageEmbed").contentWindow.postMessage({
+              type: "installRemotePrintDriverButtonLabel",
+              installRemotePrintDriverButtonLabel: (err || stderr) ? "Uninstall" : "Install"
+            });
+            if (err || stderr) ipcRenderer.send("scriptError", {
+              language: "javascript",
+              err: err?.message || stderr || "Failed to uninstall CUPS"
+            });
+          });
+        }
+      }))
+    )[process.platform]();
   };
 });
 
