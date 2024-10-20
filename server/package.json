@@ -5,7 +5,8 @@
   "description": "An advanced, but easy-to-use Remote Desktop Application Program which has cross-platform support",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "t": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
   "keywords": [

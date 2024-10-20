@@ -6,7 +6,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "electron-builder"
+    "t": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder -mwl",
+    "b": "electron-builder -mwl",
+    "buildWindows": "electron-builder --win",
+    "bw": "electron-builder --win",
+    "buildMacOS": "electron-builder --mac",
+    "bm": "electron-builder --mac",
+    "buildDarwin": "electron-builder --mac",
+    "bd": "electron-build --mac",
+    "buildLinux": "electron-builder --linux",
+    "bl": "electron-builder --linux"
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
   "keywords": [
@@ -16,6 +26,10 @@
   ],
   "author": "DinoscapeProgramming",
   "license": "Apache-2.0",
+  "bin": {
+    "build": "bin/build.js",
+    "b": "bin/build.js"
+  },
   "dependencies": {
     "@jitsi/robotjs": "^0.6.13",
     "dotenv": "^16.4.5",

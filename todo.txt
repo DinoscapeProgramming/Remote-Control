@@ -3,5 +3,4 @@
 - Add newsletter portal
 - Fix the website (a lot of work)
 - Make app runnable in the background
-- Build installers for MacOS and Linux too
 - Code sign my app (can't afford it yet)

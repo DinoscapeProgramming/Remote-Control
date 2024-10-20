@@ -18,7 +18,7 @@ Else
 End If
 
 objShell.Run "cmd /c npm install", 0, True
-objShell.Run "cmd /c npm run build", 0, True
+objShell.Run "cmd /c npm run buildWindows", 0, True
 
 Set objShell = Nothing
 Set objFSO = Nothing

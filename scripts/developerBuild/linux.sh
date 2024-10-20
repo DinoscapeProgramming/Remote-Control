@@ -26,5 +26,5 @@ cd "$CLIENT_DIR" || exit
 if [ ! -d "$NODE_MODULES_PATH" ]; then
   npm install
 fi
-npm run build
+npm run buildLinux
 sudo "$EXEPATH"

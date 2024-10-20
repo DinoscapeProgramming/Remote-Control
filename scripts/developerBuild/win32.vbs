@@ -52,7 +52,7 @@ If objFSO.FolderExists(buildPath) Then
   Next
 End If
 
-objShell.Run "cmd /c npm run build", 0, True
+objShell.Run "cmd /c npm run buildWindows", 0, True
 
 Dim exePath
 exePath = buildPath & "\Remote Control Setup 1.0.0.exe"

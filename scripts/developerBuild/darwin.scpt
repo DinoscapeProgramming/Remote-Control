@@ -18,7 +18,7 @@ if (do shell script "test -d " & quoted form of clientDir & "node_modules && ech
   do shell script "npm install --prefix " & quoted form of clientDir
 end if
 
-do shell script "npm run build --prefix " & quoted form of clientDir
+do shell script "npm run buildMacOS --prefix " & quoted form of clientDir
 
 try
   if (do shell script "test -e " & quoted form of exePath & " && echo 1") = "1" then
