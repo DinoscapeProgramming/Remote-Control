@@ -29,6 +29,8 @@
   "author": "DinoscapeProgramming",
   "license": "Apache-2.0",
   "bin": {
+    "test": "bin/test.js",
+    "t": "bin/test.js",
     "build": "bin/build.js",
     "b": "bin/build.js"
   },

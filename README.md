@@ -75,77 +75,325 @@ $ yarn init -y
 $ yarn add electron-remote-control
 ```
 
-### Building and opening your own installable
-To build and open your own installable, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) and [Python 3](https://www.python.org/downloads/) installed on your computer.
+### Programmatic usage
 
-#### Using commands
-```bash
-$ npx buildInstallable
-$ npx openInstallable
-```
+#### Move project
+Moving the project is automatically done when using other methods.
 
-#### Using code
 ```js
-const { buildInstallable, openInstallable } = require("electron-remote-control");
+const { moveProject } = require("electron-remote-control");
 
-buildInstallable().then(() => { // may take a while; uses electron-builder
-  openInstallable().catch(({ exitCode, stderr }) => {
-    throw stderr;
+moveProject()
+  .then(({ exitCode, stdout, stderr }) => {
+    // handle results
+  })
+  .catch(({ exitCode, stdout, stderr }) => {
+    // handle error
   });
-}).catch(({ exitCode, stderr }) => {
-  throw stderr;
-});
 ```
 
-or 
+#### Building your own client
+To build and open your own installable, you'll need [Python 3](https://www.python.org/downloads/) installed on your computer.
+
+During the creation of a new client, all running instances of the application are closed, the application is silently uninstalled, the previous build folder is removed, and a new build is silently created, installed, and launched, all without any user interaction required.
 
 ```js
-const { fullyBuildAndOpenInstallable } = require("electron-remote-control");
+const { buildClient } = require("electron-remote-control");
 
-fullyBuildAndOpenInstallable(); // this does exactly what the code above does
+buildClient()
+  .then(({ exitCode, stdout, stderr }) => {
+    // handle results
+  })
+  .catch(({ exitCode, stdout, stderr }) => {
+    // handle error
+  });
 ```
 
-### Creating your own developer build
-During the creation of a developer build, all running instances of the application are closed, the application is silently uninstalled, the previous build folder is removed, and a new build is silently created, installed, and launched, all without any user interaction required.
+#### Hosting your own server
+The Remote Control server opens on port :3000.
 
-#### Using commands
-```bash
-$ npx developerBuild
-```
-
-#### Using code
-```js
-const { developerBuild } = require("electron-remote-control");
-
-developerBuild().catch(({ exitCode, stderr }) => { // may take a while; port :3000 opens
-  throw stderr;
-});
-```
-
-### Hosting your own server
-To host your own server, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer.
-
-#### Using commands
-```bash
-$ npx hostServer
-```
-
-#### Using code
 ```js
 const { hostServer } = require("electron-remote-control");
 
-hostServer().catch(({ exitCode, stderr }) => { // may take a while; port :3000 opens
-  throw stderr;
-});
+hostServer()
+  .then(({ exitCode, stdout, stderr }) => {
+    // handle results
+  })
+  .catch(({ exitCode, stdout, stderr }) => {
+    // handle error
+  });
 ```
 
-or
+Check out deprecated methods on our [full documentation](https://remote-control-cnp2.onrender.com/docs) for backwards compatibility.
 
-```js
-const { fullyHostServer } = require("electron-remote-control");
+### Command Line Interface (CLI)
 
-fullyHostServer(); // this does exactly what the code above does
+#### Root Directory
+<table>
+<tr>
+  <td>
+
+**Command**
+  </td>
+  <td>
+  
+**Bin** _(npx)_
+  </td>
+  <td>
+
+**Script** _(npm run)_
+</tr>
+<tr>
+  <td>Test</td>
+  <td>
+
+```bash
+1. $ npx test
+2. $ npx t
 ```
+  </td>
+  <td>
+  
+```bash
+1. $ npm run test
+2. $ npm run t
+```
+  </td>
+</tr>
+<tr>
+  <td>Move Project</td>
+  <td>
+
+```bash
+1. $ npx moveProject
+2. $ npx mp
+```
+  </td>
+  <td>
+  
+```bash
+1. $ npm run moveProject
+2. $ npm run mp
+```
+  </td>
+  </tr>
+  <tr>
+    <td>Build Client</td>
+    <td>
+
+```bash
+1. $ npx buildClient
+2. $ npx bc
+```
+
+  </td>
+  <td>
+  
+```bash
+1. $ npm run buildClient
+2. $ npm run bc
+```
+  </td>
+</tr>
+<tr>
+  <td>Host Server</td>
+  <td>
+
+```bash
+1. $ npx hostServer
+2. $ npx hs
+```
+
+  </td>
+  <td>
+  
+```bash
+1. $ npm run hostServer
+2. $ npm run hs
+```
+  </td>
+</tr>
+</table>
+
+#### Client Directory
+Enter the client directory using this command:
+```bash
+$ cd client
+```
+
+<table>
+<tr>
+  <td>
+
+**Command**
+  </td>
+  <td>
+  
+**Bin** _(npx)_
+  </td>
+  <td>
+
+**Script** _(npm run)_
+</tr>
+<tr>
+  <td>Test</td>
+  <td>
+
+```bash
+1. $ npx test
+2. $ npx t
+```
+  </td>
+  <td>
+  
+```bash
+1. $ npm run test
+2. $ npm run t
+```
+  </td>
+</tr>
+<tr>
+  <td>
+
+Build _(win32, darwin, linux)_
+  </td>
+  <td>
+
+```bash
+1. $ npx build -mwl
+2. $ npx b -mwl
+```
+  </td>
+  <td>
+  
+```bash
+1. $ npm run buildMWL
+2. $ npm run bmwl
+```
+  </td>
+  </tr>
+<tr>
+  <td>
+
+Build _(win32)_
+  </td>
+  <td>
+
+```bash
+1. $ npx build --win
+2. $ npx b --win
+```
+  </td>
+  <td>
+  
+```bash
+1. $ npm run buildWindows
+2. $ npm run bw
+```
+  </td>
+</tr>
+<tr>
+  <td>
+
+Build _(darwin)_
+</td>
+  <td>
+
+```bash
+1. $ npx build --mac
+2. $ npx b --mac
+```
+
+  </td>
+  <td>
+  
+```bash
+1. $ npm run buildDarwin
+2. $ npm run bd
+3. $ npm run buildMacOS
+4. $ npm run bm
+```
+  </td>
+</tr>
+<tr>
+  <td>
+Build _(linux)_
+  </td>
+  <td>
+
+```bash
+1. $ npx build --linux
+2. $ npx b --linux
+```
+
+  </td>
+  <td>
+  
+```bash
+1. $ npm run buildLinux
+2. $ npm run bl
+```
+  </td>
+</tr>
+</table>
+
+Note that macOS builds can only be made on macOS itself.
+
+#### Server Directory
+Enter the client directory using this command:
+```bash
+$ cd server
+```
+
+<table>
+<tr>
+  <td>
+
+**Command**
+  </td>
+  <td>
+  
+**Bin** _(npx)_
+  </td>
+  <td>
+
+**Script** _(npm run)_
+</tr>
+<tr>
+  <td>Test</td>
+  <td>
+
+```bash
+1. $ npx test
+2. $ npx t
+```
+  </td>
+  <td>
+  
+```bash
+1. $ npm run test
+2. $ npm run t
+```
+  </td>
+</tr>
+<tr>
+  <td>Host</td>
+  <td>
+
+```bash
+1. $ npx host
+2. $ npx h
+```
+  </td>
+  <td>
+  
+```bash
+1. $ npm run host
+2. $ npm run h
+```
+  </td>
+</tr>
+</table>
 
 > **Note**
 > If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
@@ -171,6 +419,7 @@ This software uses the following open source packages:
 - [dotenv](https://github.com/motdotla/dotenv)
 - [update-electron-app](https://github.com/electron/update-electron-app)
 - [Express.js](https://github.com/expressjs/express)
+- [Express Docs](https://github.com/DinoscapeProgramming/Express-Docs)
 - [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit)
 - [body-parser](https://github.com/expressjs/body-parser)
 - [Crossnote](https://github.com/shd101wyy/crossnote)

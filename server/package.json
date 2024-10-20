@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "t": "echo \"Error: no test specified\" && exit 1"
+    "t": "echo \"Error: no test specified\" && exit 1",
+    "host": "node ../scripts/executeScript.js --hostServer",
+    "h": "node ../scripts/executeScript.js --hostServer"
   },
   "repository": "https://github.com/DinoscapeProgramming/Remote-Control",
   "keywords": [
@@ -16,6 +18,12 @@
   ],
   "author": "DinoscapeProgramming",
   "license": "Apache-2.0",
+  "bin": {
+    "test": "bin/test.js",
+    "t": "bin/test.js",
+    "host": "bin/host.js",
+    "h": "bin/host.js"
+  },
   "dependencies": {
     "body-parser": "^1.20.2",
     "crossnote": "^0.9.9",

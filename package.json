@@ -1,20 +1,22 @@
 {
   "name": "electron-remote-control",
   "productName": "Remote Control Package",
-  "version": "1.1.375",
+  "version": "1.1.390",
   "description": "An advanced, but easy-to-use Remote Desktop Application Program which has cross-platform support",
   "main": "package.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "t": "echo \"Error: no test specified\" && exit 1",
+    "moveProject": "node scripts/executeScript.js --moveProject",
+    "mp": "node scripts/executeScript.js --moveProject",
     "buildInstallable": "node scripts/executeScript.js --buildInstallable",
     "bi": "node scripts/executeScript.js --buildInstallable",
     "openInstallable": "node scripts/executeScript.js --openInstallable",
     "oi": "node scripts/executeScript.js --openInstallable",
     "hostServer": "node scripts/executeScript.js --hostServer",
     "hs": "node scripts/executeScript.js --hostServer",
-    "developerBuild": "node scripts/executeScript.js --developerBuild",
-    "db": "node scripts/executeScript.js --developerBuild",
+    "buildClient": "node scripts/executeScript.js --developerBuild",
+    "bc": "node scripts/executeScript.js --developerBuild",
     "repeatPublish": "node scripts/executeScript.js --repeatPublish",
     "rp": "node scripts/executeScript.js --repeatPublish"
   },
@@ -28,13 +30,17 @@
   "author": "DinoscapeProgramming",
   "license": "Apache-2.0",
   "bin": {
+    "test": "bin/test.js",
+    "t": "bin/test.js",
+    "moveProject": "bin/moveProject.js",
+    "mp": "bin/moveProject.js",
     "buildInstallable": "bin/buildInstallable.js",
     "bi": "bin/buildInstallable.js",
     "openInstallable": "bin/openInstallable.js",
     "oi": "bin/openInstallable.js",
     "hostServer": "bin/hostServer.js",
     "hs": "bin/hostServer.js",
-    "developerBuild": "bin/developerBuild.js",
-    "db": "bin/developerBuild.js"
+    "buildClient": "bin/developerBuild.js",
+    "bc": "bin/developerBuild.js"
   }
 }
