@@ -112,6 +112,7 @@ document.getElementById("pageEmbed").addEventListener("load", () => {
       ["auto-update"]: () => document.getElementById("pageEmbed").contentWindow.document.getElementsByClassName("slider")[2].click(),
       ["custom-server"]: () => document.getElementById("pageEmbed").contentWindow.document.getElementsByClassName("slider")[3].click(),
       ["debug-mode"]: () => document.getElementById("pageEmbed").contentWindow.document.getElementsByClassName("slider")[4].click(),
+      ["remote-print-driver"]: () => document.getElementById("pageEmbed").contentWindow.document.getElementsByClassName("installRemotePrintDriverButton")[0].click(),
       ["close"]: () => document.getElementById("feedbackModalCloseIcon").click(),
       ["exit"]: () => window.close()
     }).find((keyboardShortcut) => document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").value.startsWith("/" + keyboardShortcut[0]) || ("/" + keyboardShortcut[0]).startsWith(document.getElementById("pageEmbed").contentWindow.document.getElementById("searchInput").value.split(" ")[0]))[1]();
