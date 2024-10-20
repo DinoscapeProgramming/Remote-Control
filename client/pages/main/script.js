@@ -2,6 +2,7 @@ require("dotenv").config({ path: require("path").join(process.resourcesPath, "ap
 const { ipcRenderer } = require("electron");
 const fs = require("fs");
 const path = require("path");
+const https = require("https");
 const crypto = require("crypto");
 const childProcess = require("child_process");
 let peer = new Peer(null, {
@@ -13,6 +14,8 @@ let peer = new Peer(null, {
 let systemUsageData = {};
 let debugLogs = [];
 let devToolsOpenedOnDebugMode = false;
+window.installingRemotePrintDriver = false;
+window.uninstallingRemotePrintDriver = false;
 
 if (!fs.readdirSync(parent.process.resourcesPath).includes("appStartupCode")) fs.mkdirSync(path.join(process.resourcesPath, "appStartupCode"));
 if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("menuBar").children[0].children[4].style.display = "block";
@@ -338,6 +341,170 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
       path: (Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).peerPath : process.env.DEFAULT_PEER_SERVER_PATH,
       secure: ((Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).peerProtocol : process.env.DEFAULT_PEER_SERVER_PROTOCOL) === "wss:"
     });
+  } else if (type === "installRemotePrintDriver") {
+    window.installingRemotePrintDriver = true;
+    ({
+      win32: () => {
+        childProcess.exec("reg query HKCU\\Software\\PDFCreator.net", (err, stdout, stderr) => {
+          if (!err && !stderr && stdout.includes("PDFCreator")) {
+            childProcess.exec("reg add 'HKCU\\Software\\PDFCreator.net\\Settings\\ApplicationSettings' /v Path /t REG_SZ /d '" + path.join(process.env.resourcesPath, "printJobs") + "' /f", (err, stdout, stderr) => {
+              window.installingRemotePrintDriver = false;
+              document.getElementById("pageEmbed").contentWindow.postMessage({
+                type: "installRemotePrintDriverButtonLabel",
+                installRemotePrintDriverButtonLabel: (err || stderr) ? "Install" : "Uninstall"
+              });
+              if (err || stderr) ipcRenderer.send("scriptError", {
+                language: "javascript",
+                err: err?.message || stderr || "Failed to modify PDFCreator"
+              });
+            });
+          } else {
+            https.get("https://download.pdfforge.org/download/pdfcreator/PDFCreator-stable?download", (response) => {
+              if (response.statusCode < 300 || response.statusCode >= 400 || !response.headers.location) return;
+              https.get(response.headers.location, (response) => {
+                const fileWriteStream = fs.createWriteStream(path.join(process.resourcesPath, "PDFCreator-Setup.exe"));
+                response.pipe(fileWriteStream);
+                fileWriteStream.on('finish', () => {
+                  fileWriteStream.close(() => {
+                    childProcess.execFile(path.join(process.resourcesPath, "PDFCreator-Setup.exe"), [
+                      "/SILENT",
+                      "/NORESTART"
+                    ], (err, stdout, stderr) => {
+                      try {
+                        fs.unlinkSync(path.join(process.resourcesPath, "PDFCreator-Setup.exe"));
+                      } catch (err) {
+                        ipcRenderer.send("scriptError", {
+                          language: "javascript",
+                          err: err?.message || "Failed to delete PDFCreator installer"
+                        });
+                      } finally {
+                        if (err || stderr) {
+                          window.installingRemotePrintDriver = false;
+                          document.getElementById("pageEmbed").contentWindow.postMessage({
+                            type: "installRemotePrintDriverButtonLabel",
+                            installRemotePrintDriverButtonLabel: "Install"
+                          });
+                          ipcRenderer.send("scriptError", {
+                            language: "javascript",
+                            err: err?.message || stderr || "Failed to install PDFCreator"
+                          });
+                        } else {
+                          childProcess.exec("reg add 'HKCU\\Software\\PDFCreator.net\\Settings\\ApplicationSettings' /v Path /t REG_SZ /d '" + path.join(process.env.resourcesPath, "printJobs") + "' /f", (err, stdout, stderr) => {
+                            window.installingRemotePrintDriver = false;
+                            document.getElementById("pageEmbed").contentWindow.postMessage({
+                              type: "installRemotePrintDriverButtonLabel",
+                              installRemotePrintDriverButtonLabel: (err || stderr) ? "Install" : "Uninstall"
+                            });
+                            if (err || stderr) ipcRenderer.send("scriptError", {
+                              language: "javascript",
+                              err: err?.message || stderr || "Failed to modify PDFCreator"
+                            });
+                          });
+                        };
+                      };
+                    });
+                  });
+                });
+              }).on("error", (err) => {
+                try {
+                  fs.unlinkSync(path.join(process.resourcesPath, "PDFCreator-Setup.exe"));
+                } catch (err) {
+                  ipcRenderer.send("scriptError", {
+                    language: "javascript",
+                    err: err?.message || "Failed to delete PDFCreator installer"
+                  });
+                } finally {
+                  window.installingRemotePrintDriver = false;
+                  document.getElementById("pageEmbed").contentWindow.postMessage({
+                    type: "installRemotePrintDriverButtonLabel",
+                    installRemotePrintDriverButtonLabel: "Install"
+                  });
+                  ipcRenderer.send("scriptError", {
+                    language: "javascript",
+                    err: err?.message || "Failed to download PDFCreator"
+                  });
+                };
+              });
+            }).on("error", (err) => {
+              try {
+                fs.unlinkSync(path.join(process.resourcesPath, "PDFCreator-Setup.exe"));
+              } catch (err) {
+                ipcRenderer.send("scriptError", {
+                  language: "javascript",
+                  err: err?.message || "Failed to delete PDFCreator installer"
+                });
+              } finally {
+                window.installingRemotePrintDriver = false;
+                document.getElementById("pageEmbed").contentWindow.postMessage({
+                  type: "installRemotePrintDriverButtonLabel",
+                  installRemotePrintDriverButtonLabel: "Install"
+                });
+                ipcRenderer.send("scriptError", {
+                  language: "javascript",
+                  err: err?.message || "Failed to download PDFCreator"
+                });
+              };
+            });
+          };
+        });
+      },
+      darwin: () => {
+        childProcess.exec("sudo lpadmin -p RemotePrinter -E -v cups-pdf:/ -m everywhere", (err, stdout, stderr) => {
+          window.installingRemotePrintDriver = false;
+          document.getElementById("pageEmbed").contentWindow.postMessage({
+            type: "installRemotePrintDriverButtonLabel",
+            installRemotePrintDriverButtonLabel: (err || stderr) ? "Install" : "Uninstall"
+          });
+          if (err || stderr) ipcRenderer.send("scriptError", {
+            language: "javascript",
+            err: err?.message || stderr || "Failed to launch CUPS"
+          });
+        });
+      },
+      linux: () => {
+        childProcess.exec("lpstat -p", (err, stdout, stderr) => {
+          if (!err && !stderr && stdout.includes("CUPS-PDF")) {
+            childProcess.exec("sudo systemctl start cups", (err, stdout, stderr) => {
+              window.installingRemotePrintDriver = false;
+              document.getElementById("pageEmbed").contentWindow.postMessage({
+                type: "installRemotePrintDriverButtonLabel",
+                installRemotePrintDriverButtonLabel: (err || stderr) ? "Install" : "Uninstall"
+              });
+              if (err || stderr) ipcRenderer.send("scriptError", {
+                language: "javascript",
+                err: err?.message || stderr || "Failed to launch CUPS"
+              });
+            });
+          } else {
+            childProcess.exec("sudo apt-get install cups -y", (err, stdout, stderr) => {
+              if (err || stderr) {
+                window.installingRemotePrintDriver = false;
+                document.getElementById("pageEmbed").contentWindow.postMessage({
+                  type: "installRemotePrintDriverButtonLabel",
+                  installRemotePrintDriverButtonLabel: "Install"
+                });
+                ipcRenderer.send("scriptError", {
+                  language: "javascript",
+                  err: err?.message || stderr || "Failed to install CUPS"
+                });
+              } else {
+                childProcess.exec("sudo systemctl start cups", (err, stdout, stderr) => {
+                  window.installingRemotePrintDriver = false;
+                  document.getElementById("pageEmbed").contentWindow.postMessage({
+                    type: "installRemotePrintDriverButtonLabel",
+                    installRemotePrintDriverButtonLabel: (err || stderr) ? "Install" : "Uninstall"
+                  });
+                  if (err || stderr) ipcRenderer.send("scriptError", {
+                    language: "javascript",
+                    err: err?.message || stderr || "Failed to launch CUPS"
+                  });
+                });
+              };
+            });
+          };
+        });
+      }
+    })[parent.process.platform]();
   };
 });
 
