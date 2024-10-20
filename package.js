@@ -41,12 +41,21 @@ module.exports.executeScript = (scriptType) => new Promise((resolve, reject) => 
           linux: "linux.sh"
         })[process.platform])
       ]
-    ]);
+    ], {
+      env: {
+        ...process.env,
+        ...{
+          FORCE_COLOR: true
+        }
+      }
+    });
     spawnedProcess.stdout.on("data", (data) => {
-      stdoutData += data;
+      console.log(data.toString());
+      stdoutData += data.toString();
     });
     spawnedProcess.stderr.on("data", (data) => {
-      stderrData += data;
+      console.log(data.toString());
+      stderrData += data.toString();
     });
     spawnedProcess.on("close", (exitCode) => {
       if (!exitCode) {
@@ -60,21 +69,17 @@ module.exports.executeScript = (scriptType) => new Promise((resolve, reject) => 
 module.exports.buildInstallable = () => module.exports.executeScript("buildInstallable");
 module.exports.openInstallable = () => module.exports.executeScript("openInstallable");
 module.exports.fullyBuildAndOpenInstallable = () => {
-  module.exports.buildInstallable({ stdout }).then(() => {
-    console.log(stdout);
-    module.exports.openInstallable({ stdout }).then(() => {
-      console.log(stdout);
-    }).catch(({ stderr }) => {
+  module.exports.buildInstallable().then(() => {
+    module.exports.openInstallable().catch(({ stderr }) => {
       throw stderr;
     });
-  }).catch(({ exitCode, stderr }) => {
+  }).catch(({ stderr }) => {
     throw stderr;
   });
 };
 module.exports.hostServer = () => module.exports.executeScript("hostServer");
 module.exports.fullyHostServer = () => {
-  module.exports.hostServer().then(({ stdout }) => {
-    console.log(stdout);
+  module.exports.hostServer().then(() => {
   }).catch(({ stderr }) => {
     throw stderr;
   });

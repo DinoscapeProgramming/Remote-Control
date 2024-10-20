@@ -88,11 +88,8 @@ $ npx openInstallable
 ```js
 const { buildInstallable, openInstallable } = require("electron-remote-control");
 
-buildInstallable({ stdout }).then(() => { // may take a while; uses electron-builder
-  console.log(stdout);
-  openInstallable({ stdout }).then(() => {
-    console.log(stdout);
-  }).catch(({ exitCode, stderr }) => {
+buildInstallable().then(() => { // may take a while; uses electron-builder
+  openInstallable().catch(({ exitCode, stderr }) => {
     throw stderr;
   });
 }).catch(({ exitCode, stderr }) => {
@@ -108,33 +105,6 @@ const { fullyBuildAndOpenInstallable } = require("electron-remote-control");
 fullyBuildAndOpenInstallable(); // this does exactly what the code above does
 ```
 
-### Hosting your own server
-To host your own server, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer.
-
-#### Using commands
-```bash
-$ npx hostServer
-```
-
-#### Using code
-```js
-const { hostServer } = require("electron-remote-control");
-
-hostServer().then(({ stdout }) => { // may take a while; port :3000 opens
-  console.log(stdout);
-}).catch(({ stderr }) => {
-  throw stderr;
-});
-```
-
-or
-
-```js
-const { fullyHostServer } = require("electron-remote-control");
-
-fullyHostServer(); // this does exactly what the code above does
-```
-
 ### Creating your own developer build
 During the creation of a developer build, all running instances of the application are closed, the application is silently uninstalled, the previous build folder is removed, and a new build is silently created, installed, and launched, all without any user interaction required.
 
@@ -147,11 +117,34 @@ $ npx developerBuild
 ```js
 const { developerBuild } = require("electron-remote-control");
 
-developerBuild().then(({ stdout }) => { // may take a while; port :3000 opens
-  console.log(stdout);
-}).catch(({ stderr }) => {
+developerBuild().catch(({ exitCode, stderr }) => { // may take a while; port :3000 opens
   throw stderr;
 });
+```
+
+### Hosting your own server
+To host your own server, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer.
+
+#### Using commands
+```bash
+$ npx hostServer
+```
+
+#### Using code
+```js
+const { hostServer } = require("electron-remote-control");
+
+hostServer().catch(({ exitCode, stderr }) => { // may take a while; port :3000 opens
+  throw stderr;
+});
+```
+
+or
+
+```js
+const { fullyHostServer } = require("electron-remote-control");
+
+fullyHostServer(); // this does exactly what the code above does
 ```
 
 > **Note**

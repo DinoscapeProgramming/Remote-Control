@@ -7,8 +7,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "t": "echo \"Error: no test specified\" && exit 1",
-    "build": "electron-builder -mwl",
-    "b": "electron-builder -mwl",
+    "build": "electron-builder",
+    "b": "electron-builder",
+    "buildMWL": "electron-builder -mwl",
+    "bmwl": "electron-builder -mwl",
     "buildWindows": "electron-builder --win",
     "bw": "electron-builder --win",
     "buildMacOS": "electron-builder --mac",
