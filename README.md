@@ -340,7 +340,7 @@ Build _(linux)_
 Note that macOS builds can only be made on macOS itself.
 
 #### Server Directory
-Enter the client directory using this command:
+Enter the server directory using this command:
 ```bash
 $ cd server
 ```
