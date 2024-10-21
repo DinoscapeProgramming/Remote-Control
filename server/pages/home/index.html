@@ -4,24 +4,207 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Remote Control - Home</title>
-    <script defer src="/postHog.js"></script>
-    <script defer src="/pages/home/script.js"></script>
     <link rel="icon" href="/assets/favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
     <style>
-      ul li,
-      ul ol {
-        margin-bottom: 5px;
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        color: #333;
+        background-color: #f9f9f9;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      h1, h2, h3 {
+        margin: 0;
+      }
+
+      header {
+        background-color: #024eff;
+        padding: 15px 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      header img {
+        width: 200px;
+      }
+
+      nav {
+        display: flex;
+        gap: 20px;
+      }
+
+      nav a {
+        color: white;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-download {
+        background-color: #00eeff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: #000;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 80px 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero h1 {
+        font-size: 48px;
+        color: #024eff;
+      }
+
+      .hero h2 {
+        font-size: 24px;
+        color: #555;
+        margin-bottom: 30px;
+      }
+
+      .hero a {
+        font-size: 18px;
+        padding: 15px 30px;
+        margin: 10px;
+        border-radius: 50px;
+        display: inline-block;
+        transition: background-color 0.3s;
+      }
+
+      .hero a.primary-btn {
+        background-color: #024eff;
+        color: white;
+      }
+
+      .hero a.primary-btn:hover {
+        background-color: #0036cc;
+      }
+
+      .hero a.secondary-btn {
+        background-color: white;
+        color: #024eff;
+        border: 1px solid #024eff;
+      }
+
+      .hero a.secondary-btn:hover {
+        background-color: #f0f0f0;
+      }
+
+      .community {
+        padding: 50px 20px;
+        background-color: #f0f4f8;
+        text-align: center;
+      }
+
+      .community h3 {
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+
+      .community a {
+        display: inline-block;
+        margin: 10px 20px;
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        transition: background-color 0.3s;
+      }
+
+      .community a:hover {
+        background-color: #e9ecef;
+      }
+
+      .newsletter {
+        padding: 50px 20px;
+        text-align: center;
+        background-color: #fff;
+      }
+
+      .newsletter h3 {
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+
+      .newsletter input,
+      .newsletter button {
+        width: 80%;
+        padding: 15px;
+        font-size: 16px;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+        margin: 5px 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .newsletter button {
+        background-color: #024eff;
+        color: white;
+        cursor: pointer;
+      }
+
+      .features {
+        padding: 50px 20px;
+        background-color: #f9f9f9;
+      }
+
+      .features h3 {
+        font-size: 30px;
+        margin-left: 65px;
+      }
+
+      .features ul {
+        list-style: none;
+        margin-left: 65px;
+        padding-left: 0;
+      }
+
+      .features li {
+        margin-bottom: 15px;
+        font-size: 18px;
+      }
+
+      .features li::before {
+        content: "✓";
+        color: #00eeff;
+        margin-right: 10px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #333;
+        color: white;
       }
     </style>
   </head>
-  <body style="margin: 0;">
+  <body>
     <div style="display: flex; flex-direction: row; padding: 27px">
-      <a href="/" style="position: absolute"
-        ><img
+      <a href="/" style="position: absolute">
+        <img
           src="https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/main/docs/static/logo.svg"
           style="width: 300px; margin-top: -13px; margin-left: 60px"
-      /></a>
-
+        />
+      </a>
       <a
         href="/"
         style="
@@ -33,8 +216,9 @@
           margin-left: 391px;
           margin-right: 32.5px;
         "
-        >Home</a
       >
+        Home
+      </a>
       <a
         href="/team"
         style="
@@ -45,8 +229,10 @@
           text-decoration: none;
           margin-right: 32.5px;
         "
-        >About us</a
-      ><a
+      >
+        About us
+      </a>
+      <a
         href="https://github.com/DinoscapeProgramming/Remote-Control/releases"
         style="
           color: #585c67;
@@ -56,8 +242,10 @@
           text-decoration: none;
           margin-right: 32.5px;
         "
-        >Changelog</a
-      ><a
+      >
+        Changelog
+      </a>
+      <a
         href="/open-source"
         style="
           color: #585c67;
@@ -67,8 +255,10 @@
           text-decoration: none;
           margin-right: 32.5px;
         "
-        >Open Source</a
-      ><a
+      >
+        Open Source
+      </a>
+      <a
         href="/docs"
         style="
           color: #585c67;
@@ -78,8 +268,9 @@
           text-decoration: none;
           margin-right: 32.5px;
         "
-        >Docs</a
       >
+        Docs
+      </a>
       <a
         href="https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0"
         style="
@@ -98,247 +289,56 @@
           padding-left: 18.5px;
           padding-right: 19.5px;
         "
-        >Download</a
       >
+        Download
+      </a>
     </div>
-    <div
-      style="
-        width: 100%;
-        height: 1px;
-        background-color: #bfbfbfd9;
-        opacity: 0.25;
-      "
-    ></div>
-    <h1
-      style="
-        font-size: 40px;
-        font-weight: 700;
-        font-family: system-ui;
-        margin-top: 45px;
-        margin-left: 65px;
-        margin-right: 65px;
-      "
-    >
-      Top-notch open-source Remote Desktop solution for less than a penny
-    </h1>
-    <h2
-      style="
-        font-size: 20px;
-        font-weight: 600;
-        font-family: system-ui;
-        margin-top: -15px;
-        margin-bottom: 57.5px;
-        margin-left: 65px;
-      "
-    >
-      Why pay if it can be done for free?
-    </h2>
-    <a
-      href="https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0"
-      style="
-        color: #ffffff;
-        background-color: #024eff;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        font-family: system-ui;
-        margin-left: 65px;
-        border-radius: 9px;
-        padding-top: 15px;
-        padding-bottom: 17px;
-        padding-left: 24.5px;
-        padding-right: 25.5px;
-      "
-      >Download App</a
-    >
-    <a
-      href="/self-hosting"
-      style="
-        color: black;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        font-family: system-ui;
-        margin-left: 7.25px;
-        border-radius: 9px;
-        padding-top: 15px;
-        padding-bottom: 17px;
-        padding-left: 24.5px;
-        padding-right: 25.5px;
-        border: 1px solid #bfbfbfb8;
-        opacity: 0.9;
-      "
-      >Self Hosting</a
-    >
-
-    <h3
-      style="
-        font-size: 27.5px;
-        font-family: system-ui;
-        margin-top: 82.5px;
-        margin-left: 65px;
-      "
-    >
-      Join the community
-    </h3>
-    <a
-      href="https://github.com/DinoscapeProgramming/Remote-Control/discussions"
-      style="
-        color: black;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        font-family: system-ui;
-        margin-top: -11px;
-        margin-left: 65px;
-        border-radius: 9px;
-        padding-top: 11px;
-        padding-bottom: 13px;
-        padding-left: 18.5px;
-        padding-right: 19.5px;
-        border: 1px solid #bfbfbfb8;
-        opacity: 0.9;
-      "
-      >GitHub Discussions</a
-    ><a
-      href="https://discord.gg/xquQEp7xeq"
-      style="
-        color: black;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        font-family: system-ui;
-        margin-top: -11px;
-        margin-left: 11.5px;
-        border-radius: 9px;
-        padding-top: 11px;
-        padding-bottom: 13px;
-        padding-left: 18.5px;
-        padding-right: 19.5px;
-        border: 1px solid #bfbfbfb8;
-        opacity: 0.9;
-      "
-      >Discord</a
-    ><a
-      href="https://scratch.mit.edu/users/Dinoscape"
-      style="
-        color: black;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        font-family: system-ui;
-        margin-top: -11px;
-        margin-left: 11.5px;
-        border-radius: 9px;
-        padding-top: 11px;
-        padding-bottom: 13px;
-        padding-left: 18.5px;
-        padding-right: 19.5px;
-        border: 1px solid #bfbfbfb8;
-        opacity: 0.9;
-      "
-      >Scratch</a
-    >
-    <h3
-      style="
-        font-size: 27.5px;
-        font-family: system-ui;
-        margin-top: 92.5px;
-        margin-left: 65px;
-      "
-    >
-      Sign up to our daily newsletter
-    </h3>
-    <input
-      style="
-        font-size: 15.25px;
-        width: 70%;
-        height: 40px;
-        margin-left: 65px;
-        margin-bottom: 6.25px;
-        border: 1px solid #bfbfbfb8;
-        border-radius: 50px;
-        text-align: center;
-      "
-    />
-    <button
-      style="
-        color: white;
-        background-color: #024eff;
-        font-family: system-ui;
-        width: calc(70% + 7.5px);
-        height: 42.5px;
-        margin-left: 65px;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-      "
-    >
-      Subscribe Now
-    </button>
-    <h3
-      style="
-        font-size: 27.5px;
-        font-family: system-ui;
-        margin-top: 82.5px;
-        margin-left: 65px;
-      "
-    >
-      Features
-    </h3>
-    <ul style="font-size: 17.5px; font-family: system-ui; margin-left: 43.5px">
-      <li>Instant Connection</li>
-      <li>Control over connected devices</li>
-      <ol>
-        <li>
-          Be able to control the keyboard and mouse of your connected devices.
-        </li>
-      </ol>
-      <li>Device History</li>
-      <ol>
-        <li>Connect to known devices with one click.</li>
-      </ol>
-      <li>File Sharing across multiple devices</li>
-      <li>Smart Bar with commands</li>
-      <ol>
-        <li>Navigate faster by typing commands in the upper smart bar.</li>
-      </ol>
-      <li>Device Monitoring for CPU, Memory and WLAN Usage</li>
-      <li>Script Execution with Node.js Integration</li>
-      <li>Script Store for non-programmers</li>
-      <li>Dark/Light Mode</li>
-      <li>Feedback Writing and Viewing</li>
-      <li>Full screen mode</li>
-      <ol>
-        <li>Work distraction free.</li>
-      </ol>
-      <li>Auto Launch</li>
-      <ol>
-        <li>
-          Remote Control launches automatically after you start your device.
-        </li>
-      </ol>
-      <li>Auto Update</li>
-      <ol>
-        <li>
-          Remote Control automatically updates when new updates are released.
-        </li>
-      </ol>
-      <li>Custom WebRTC Server</li>
-      <ol>
-        <li>
-          Configure Remote Control in order to use your custom WebRTC server.
-        </li>
-      </ol>
-      <li>Debug Mode</li>
-      <ol>
-        <li>Activate debug mode to help us fix issues faster.</li>
-      </ol>
-      <li>Cross platform</li>
-      <ol>
-        <li>Windows, macOS and Linux ready.</li>
-      </ol>
-      <li>In-built Tutorial Page</li>
-    </ul>
+    <div class="hero">
+      <h1>Open-source Remote Desktop Solution</h1>
+      <h2>Why pay if it can be done for free?</h2>
+      <a
+        href="https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0"
+        class="primary-btn"
+      >
+        Download App
+      </a>
+      <a
+        href="/self-hosting"
+        class="secondary-btn"
+      >
+        Self Hosting
+      </a>
+    </div>
+    <section class="community">
+      <h3>Join the Community</h3>
+      <a href="https://github.com/DinoscapeProgramming/Remote-Control/discussions">GitHub Discussions</a>
+      <a href="https://discord.gg/xquQEp7xeq">Discord</a>
+      <a href="https://scratch.mit.edu/users/Dinoscape">Scratch</a>
+    </section>
+    <section class="newsletter">
+      <h3>Sign up to our daily newsletter</h3>
+      <input
+        type="email"
+        placeholder="Enter your email"
+        style="width: calc(77% + 2.5px); height: 17.5px"
+      />
+      <button>Subscribe Now</button>
+    </section>
+    <section class="features">
+      <h3>Features</h3>
+      <ul>
+        <li>Instant Connection</li>
+        <li>Full control over connected devices</li>
+        <li>Device History</li>
+        <li>File Sharing across multiple devices</li>
+        <li>Smart Bar with commands</li>
+        <li>Device Monitoring for CPU, Memory, and WLAN Usage</li>
+        <li>Script Execution with Node.js Integration</li>
+        <li>Dark/Light Mode</li>
+        <li>Auto Launch &amp; Auto Update</li>
+        <li>Cross-platform (Windows, macOS, Linux)</li>
+      </ul>
+    </section>
+    <footer>© 2024 Remote Control. All Rights Reserved.</footer>
   </body>
 </html>
