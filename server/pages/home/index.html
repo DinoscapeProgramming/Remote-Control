@@ -129,6 +129,11 @@
         background-color: #024eff;
         color: white;
         cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .newsletter button:hover {
+        background-color: #0036cc;
       }
 
       .features {
@@ -287,10 +292,11 @@
     <section class="newsletter">
       <h3>Sign up to our daily newsletter</h3>
       <input
+        id="newsletterInput"
         type="email"
         placeholder="Enter your email"
       />
-      <button>Subscribe Now</button>
+      <button id="newsletterButton">Subscribe Now</button>
     </section>
     <section class="features">
       <h3>Features</h3>

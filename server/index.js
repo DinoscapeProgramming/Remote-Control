@@ -112,7 +112,7 @@ app.use("/docs", expressDocs(app, {
     customCode: fs.readFileSync("./data/postHog.js", "utf8") || (() => {}).toString()
   }
 }));
-app.use("/api/v1/feedback/send", rateLimit({
+app.use(["/api/v1/feedback/send", "/api/v1/newsletter/register"], rateLimit({
   limit: 1,
   standardHeaders: "draft-7",
   legacyHeaders: false
@@ -158,8 +158,8 @@ app.get("/api/v1/feedback/get", (req, res) => {
 });
 
 app.post("/api/v1/feedback/send", (req, res) => {
-  if (!req.body.rating) return res.status(404).json({ err: "Missing rating" });
-  if ((typeof req.body.rating !== "number") || (req.body.rating < 1) || (req.body.rating > 5)) return res.status(400).json({ err: "Invalid rating" });
+  if (!req.body?.rating) return res.status(404).json({ err: "Missing rating" });
+  if ((typeof req.body?.rating !== "number") || (req.body?.rating < 1) || (req.body?.rating > 5)) return res.status(422).json({ err: "Invalid rating" });
   fs.writeFile("./data.json", JSON.stringify({
     ...JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}"),
     ...{
@@ -168,10 +168,10 @@ app.post("/api/v1/feedback/send", (req, res) => {
         ...[
           {
             ...{
-              rating: req.body.rating
+              rating: req.body?.rating
             },
-            ...(req.body.comment && (typeof req.body.comment === "string")) ? {
-              comment: req.body.comment
+            ...(req.body?.comment && (typeof req.body?.comment === "string")) ? {
+              comment: req.body?.comment
             } : {}
           }
         ]
@@ -194,6 +194,47 @@ app.get("/api/v1/apps/get", (req, res) => {
       }
     }
   }), {}));
+});
+
+app.post("/api/v1/newsletter/register", (req, res) => {
+  if (!req.body?.email) return res.status(404).json({ err: "Missing email" });
+  if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi.test(req.body?.email)) return res.status(422).json({ err: "Invalid email" });
+  fs.writeFile("./data.json", JSON.stringify({
+    ...JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}"),
+    ...{
+      newsletter: [
+        ...JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").newsletter || [],
+        ...[
+          req.body?.email
+        ]
+      ]
+    }
+  }), "utf8", () => {
+    res.status(200).json({ err: null });
+  });
+}); 
+
+app.post("/api/v1/newsletter/send", (req, res) => {
+  if (!req.body?.password) return res.status(404).json({ err: "Missing password" });
+  if (req.body?.password !== process.env.ADMIN_PASSWORD) return res.status(422).json({ err: "Invalid password" });
+  if (!req.body?.subject) return res.status(404).json({ err: "Missing subject" });
+  if ((typeof req.body?.subject !== "string") || (req.body?.subject.length < 1)) return res.status(422).json({ err: "Invalid subject" });
+  if (!req.body?.type) return res.status(404).json({ err: "Missing type" });
+  if (!["text", "html"].includes(req.body?.type)) return res.status(422).json({ err: "Invalid type" });
+  if (!req.body?.content) return res.status(404).json({ err: "Missing content" });
+  if ((typeof req.body?.content !== "string") || (req.body?.content.length < 1)) return res.status(422).json({ err: "Invalid content" });
+  Promise.all(
+    Array.from(Array(Math.ceil((JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").newsletter || []).length / 10))).map((_, index) => {
+      return Promise.all((JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").newsletter || []).slice(index * 10, (index + 1) * 10).map((email) =>
+        emailTransport.sendMail({
+          from: process.env.EMAIL,
+          to: email,
+          subject: req.body?.subject,
+          [req.body?.type]: req.body?.content
+        }).catch(() => {})
+      ));
+    })
+  ).then(() => res.status(200).json({ err: null })).catch(() => res.status(500).json({ err: "Failed to send emails" }));
 });
 
 const listen = http.listen(3000, () => {

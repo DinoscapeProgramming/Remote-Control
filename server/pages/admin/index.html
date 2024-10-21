@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Portal</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background-color: #f4f6f9;
+        color: #333;
+      }
+
+      .sidebar {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        width: 250px;
+        height: 100vh;
+        background-color: #024eff;
+        padding: 20px;
+        color: white;
+      }
+
+      .sidebar h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #ffffff;
+      }
+
+      .sidebar a {
+        text-decoration: none;
+        color: #ffffffcc;
+        font-size: 16px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 7.5px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .sidebar a:hover, .sidebar a.active {
+        background-color: #0f5ffdc2;
+        color: white;
+      }
+
+      .main-content {
+        margin-left: 285px;
+        padding-top: 50px;
+        padding-left: 50px;
+        padding-right: 50px;
+        background-color: #f4f6f9;
+        min-height: calc(100vh - 50px);
+      }
+
+      .main-content h1 {
+        font-size: 35px;
+        font-weight: 700;
+        color: black;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 30px;
+        margin-bottom: 30px;
+      }
+
+      .card h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-top: -6.5px;
+        margin-bottom: 20px;
+      }
+
+      .card label {
+        font-size: 16px;
+        color: #333;
+      }
+
+      .card input, .card textarea, .card button {
+        width: 100%;
+        margin-top: 7.5px;
+        margin-bottom: 12.5px;
+        padding: 12.5px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+      }
+
+      .card input:focus, .card textarea:focus {
+        outline: none;
+        border-color: #024eff;
+      }
+
+      .card button {
+        margin-top: 0;
+        background-color: #024eff;
+        color: white;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .card button:hover {
+        background-color: #023ac3;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      table th, table td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      table th {
+        background-color: #024eff;
+        color: white;
+        font-weight: 600;
+      }
+
+      table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .btn-link {
+        background-color: #024eff;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+
+      .btn-link:hover {
+        background-color: #023ac3;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 200px;
+        }
+
+        .main-content {
+          margin-left: 200px;
+          padding: 40px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .sidebar {
+          width: 180px;
+        }
+
+        .main-content {
+          margin-left: 180px;
+          padding: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>Admin Portal</h2>
+      <a href="#newsletter" class="active"
+        ><i class="fas fa-paper-plane"></i> Send Newsletter</a
+      >
+      <a href="#contacts"><i class="fas fa-envelope"></i> Contact Messages</a>
+      <a href="#database"><i class="fas fa-database"></i> Manage Databases</a>
+    </div>
+    <div class="main-content">
+      <div id="newsletter">
+        <h1>Send Newsletter</h1>
+        <div class="card">
+          <h2>Create a New Post</h2>
+          <form
+            action="/admin/send-newsletter"
+            method="POST"
+            style="margin-bottom: -15px"
+          >
+            <label for="title">Post Title</label>
+            <input type="text" id="title" name="title" required="" />
+            <label for="content">Post Content</label>
+            <textarea
+              id="content"
+              name="content"
+              rows="8"
+              required=""
+            ></textarea>
+            <button type="submit">Send Newsletter</button>
+          </form>
+        </div>
+      </div>
+      <div id="contacts" style="display: none">
+        <h1>Contact Messages</h1>
+        <div class="card">
+          <h2>Messages from Users</h2>
+
+          &lt;% contacts.forEach(contact =&gt; { %&gt; &lt;% }) %&gt;
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>&lt;%= contact.name %&gt;</td>
+                <td>&lt;%= contact.email %&gt;</td>
+                <td>&lt;%= contact.message %&gt;</td>
+                <td>
+                  <a href="/admin/reply/<%= contact.id %>" class="btn-link"
+                    >Reply</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="database" style="display: none">
+        <h1>Manage Databases</h1>
+        <div class="card">
+          <h2>Databases Overview</h2>
+
+          &lt;% databases.forEach(db =&gt; { %&gt; &lt;% }) %&gt;
+          <table>
+            <thead>
+              <tr>
+                <th>Database Name</th>
+                <th>Records</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>&lt;%= db.name %&gt;</td>
+                <td>&lt;%= db.records %&gt;</td>
+                <td>
+                  <a href="/admin/database/<%= db.id %>" class="btn-link"
+                    >View/Edit</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.querySelectorAll(".sidebar a").forEach((link) => {
+        link.addEventListener("click", function () {
+          document
+            .querySelectorAll(".main-content > div")
+            .forEach((section) => (section.style.display = "none"));
+          document
+            .querySelectorAll(".sidebar a")
+            .forEach((link) => link.classList.remove("active"));
+
+          this.classList.add("active");
+          document.querySelector(this.getAttribute("href")).style.display =
+            "block";
+        });
+      });
+    </script>
+  </body>
+</html>
