@@ -15,8 +15,8 @@
     "oi": "node scripts/executeScript.js --openInstallable",
     "hostServer": "node scripts/executeScript.js --hostServer",
     "hs": "node scripts/executeScript.js --hostServer",
-    "buildClient": "node scripts/executeScript.js --developerBuild",
-    "bc": "node scripts/executeScript.js --developerBuild",
+    "buildClient": "node scripts/executeScript.js --buildClient",
+    "bc": "node scripts/executeScript.js --buildClient",
     "repeatPublish": "node scripts/executeScript.js --repeatPublish",
     "rp": "node scripts/executeScript.js --repeatPublish"
   },
@@ -40,7 +40,7 @@
     "oi": "bin/openInstallable.js",
     "hostServer": "bin/hostServer.js",
     "hs": "bin/hostServer.js",
-    "buildClient": "bin/developerBuild.js",
-    "bc": "bin/developerBuild.js"
+    "buildClient": "bin/buildClient.js",
+    "bc": "bin/buildClient.js"
   }
 }
