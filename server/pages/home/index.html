@@ -26,24 +26,6 @@
         margin: 0;
       }
 
-      nav {
-        display: flex;
-        gap: 20px;
-      }
-
-      nav a {
-        color: white;
-        font-size: 16px;
-        font-weight: 500;
-        padding: 10px 20px;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-      }
-
-      nav a:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-      }
-
       .hero {
         text-align: center;
         padding: 80px 20px;
@@ -92,8 +74,10 @@
 
       .community {
         padding: 50px 20px;
-        background-color: #f0f4f8;
+        background-color: #f9f9f900;
         text-align: center;
+        border-top: 1px solid #dbdbdb;
+        border-bottom: 1px solid #dbdbdb;
       }
 
       .community h3 {
@@ -126,8 +110,7 @@
         margin-bottom: 20px;
       }
 
-      .newsletter input,
-      .newsletter button {
+      .newsletter input, .newsletter button {
         padding: 15px;
         font-size: 16px;
         border-radius: 50px;
@@ -184,7 +167,7 @@
     </style>
   </head>
   <body>
-    <div style="display: flex; flex-direction: row; padding: 27px;">
+    <div style="display: flex; flex-direction: row; padding: 27px; border-bottom: 1px solid #dbdbdb;">
       <a href="/" style="position: absolute">
         <img
           src="https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/main/docs/static/logo.svg"
@@ -306,7 +289,6 @@
       <input
         type="email"
         placeholder="Enter your email"
-        style="width: calc(77% + 2.5px); height: 17.5px;"
       />
       <button>Subscribe Now</button>
     </section>
