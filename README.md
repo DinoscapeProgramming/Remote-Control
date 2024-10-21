@@ -63,14 +63,22 @@
 
 ## How To Use
 
-To install this package, you'll need [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To install this package, ensure that [Node.js](https://nodejs.org/en/download/) (which includes [npm](http://npmjs.com)) is installed on your system. You can use either `npm` or `yarn` to install the package:
+
+### Installation
+
+Using npm:
 
 ```bash
-# Using npm
+# Initialize your project and install Remote Control
 $ npm init -y
 $ npm install electron-remote-control
+```
 
-# Using yarn
+Using yarn:
+
+```bash
+# Initialize your project and install Remote Control
 $ yarn init -y
 $ yarn add electron-remote-control
 ```
@@ -110,7 +118,7 @@ buildClient()
 ```
 
 #### Hosting your own server
-The Remote Control server opens on port :3000.
+The Remote Control server listens on port `:3000`.
 
 ```js
 const { hostServer } = require("electron-remote-control");
@@ -124,286 +132,56 @@ hostServer()
   });
 ```
 
-Check out deprecated methods on our [full documentation](https://remote-control-cnp2.onrender.com/docs) for backwards compatibility.
+For more information, including deprecated methods, check our [full documentation](https://remote-control-cnp2.onrender.com/docs).
 
 ### Command Line Interface (CLI)
 
-#### Root Directory
-<table>
-<tr>
-  <td>
+#### Commands in the Root Directory
 
-**Command**
-  </td>
-  <td>
-  
-**Bin** _(npx)_
-  </td>
-  <td>
+| **Command**    | **Bin (npx)**                  | **Script (npm run)**               |
+|----------------|---------------------------------|------------------------------------|
+| Test           | `$ npx test` / `$ npx t`        | `$ npm run test` / `$ npm run t`   |
+| Move Project   | `$ npx moveProject` / `$ npx mp`| `$ npm run moveProject` / `$ npm run mp` |
+| Build Client   | `$ npx buildClient` / `$ npx bc`| `$ npm run buildClient` / `$ npm run bc` |
+| Host Server    | `$ npx hostServer` / `$ npx hs` | `$ npm run hostServer` / `$ npm run hs`  |
 
-**Script** _(npm run)_
-</tr>
-<tr>
-  <td>Test</td>
-  <td>
+#### Commands in the Client Directory
 
-```bash
-1. $ npx test
-2. $ npx t
-```
-  </td>
-  <td>
-  
-```bash
-1. $ npm run test
-2. $ npm run t
-```
-  </td>
-</tr>
-<tr>
-  <td>Move Project</td>
-  <td>
+Change to the client directory:
 
-```bash
-1. $ npx moveProject
-2. $ npx mp
-```
-  </td>
-  <td>
-  
-```bash
-1. $ npm run moveProject
-2. $ npm run mp
-```
-  </td>
-  </tr>
-  <tr>
-    <td>Build Client</td>
-    <td>
-
-```bash
-1. $ npx buildClient
-2. $ npx bc
-```
-
-  </td>
-  <td>
-  
-```bash
-1. $ npm run buildClient
-2. $ npm run bc
-```
-  </td>
-</tr>
-<tr>
-  <td>Host Server</td>
-  <td>
-
-```bash
-1. $ npx hostServer
-2. $ npx hs
-```
-
-  </td>
-  <td>
-  
-```bash
-1. $ npm run hostServer
-2. $ npm run hs
-```
-  </td>
-</tr>
-</table>
-
-#### Client Directory
-Enter the client directory using this command:
 ```bash
 $ cd client
 ```
 
-<table>
-<tr>
-  <td>
+| **Command**        | **Bin (npx)**                        | **Script (npm run)**               |
+|--------------------|--------------------------------------|------------------------------------|
+| Test               | `$ npx test` / `$ npx t`             | `$ npm run test` / `$ npm run t`   |
+| Build for All (MWL) | `$ npx build -mwl` / `$ npx b -mwl`  | `$ npm run buildMWL` / `$ npm run bmwl` |
+| Build for Windows  | `$ npx build --win` / `$ npx b --win` | `$ npm run buildWindows` / `$ npm run bw` |
+| Build for macOS    | `$ npx build --mac` / `$ npx b --mac` | `$ npm run buildMacOS` / `$ npm run bm` |
+| Build for Linux    | `$ npx build --linux` / `$ npx b --linux`| `$ npm run buildLinux` / `$ npm run bl` |
 
-**Command**
-  </td>
-  <td>
-  
-**Bin** _(npx)_
-  </td>
-  <td>
+> **Note**: macOS builds can only be generated on macOS systems.
 
-**Script** _(npm run)_
-</tr>
-<tr>
-  <td>Test</td>
-  <td>
+#### Commands in the Server Directory
 
-```bash
-1. $ npx test
-2. $ npx t
-```
-  </td>
-  <td>
-  
-```bash
-1. $ npm run test
-2. $ npm run t
-```
-  </td>
-</tr>
-<tr>
-  <td>
+Change to the server directory:
 
-Build _(win32, darwin, linux)_
-  </td>
-  <td>
-
-```bash
-1. $ npx build -mwl
-2. $ npx b -mwl
-```
-  </td>
-  <td>
-  
-```bash
-1. $ npm run buildMWL
-2. $ npm run bmwl
-```
-  </td>
-  </tr>
-<tr>
-  <td>
-
-Build _(win32)_
-  </td>
-  <td>
-
-```bash
-1. $ npx build --win
-2. $ npx b --win
-```
-  </td>
-  <td>
-  
-```bash
-1. $ npm run buildWindows
-2. $ npm run bw
-```
-  </td>
-</tr>
-<tr>
-  <td>
-
-Build _(darwin)_
-</td>
-  <td>
-
-```bash
-1. $ npx build --mac
-2. $ npx b --mac
-```
-
-  </td>
-  <td>
-  
-```bash
-1. $ npm run buildDarwin
-2. $ npm run bd
-3. $ npm run buildMacOS
-4. $ npm run bm
-```
-  </td>
-</tr>
-<tr>
-  <td>
-Build _(linux)_
-  </td>
-  <td>
-
-```bash
-1. $ npx build --linux
-2. $ npx b --linux
-```
-
-  </td>
-  <td>
-  
-```bash
-1. $ npm run buildLinux
-2. $ npm run bl
-```
-  </td>
-</tr>
-</table>
-
-Note that macOS builds can only be made on macOS itself.
-
-#### Server Directory
-Enter the server directory using this command:
 ```bash
 $ cd server
 ```
 
-<table>
-<tr>
-  <td>
+| **Command**    | **Bin (npx)**                | **Script (npm run)**               |
+|----------------|------------------------------|------------------------------------|
+| Test           | `$ npx test` / `$ npx t`      | `$ npm run test` / `$ npm run t`   |
+| Host Server    | `$ npx host` / `$ npx h`      | `$ npm run host` / `$ npm run h`   |
 
-**Command**
-  </td>
-  <td>
-  
-**Bin** _(npx)_
-  </td>
-  <td>
-
-**Script** _(npm run)_
-</tr>
-<tr>
-  <td>Test</td>
-  <td>
-
-```bash
-1. $ npx test
-2. $ npx t
-```
-  </td>
-  <td>
-  
-```bash
-1. $ npm run test
-2. $ npm run t
-```
-  </td>
-</tr>
-<tr>
-  <td>Host</td>
-  <td>
-
-```bash
-1. $ npx host
-2. $ npx h
-```
-  </td>
-  <td>
-  
-```bash
-1. $ npm run host
-2. $ npm run h
-```
-  </td>
-</tr>
-</table>
-
-> **Note**
-> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
->
-> If you're not using Windows, change the ```./node_modules/electron-remote-control/client/package.json``` file accordingly to [this guide](https://www.electron.build/index.html/).
+> **Note**: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or run `node` from the command prompt.
 
 
 ## Download
 
-You can [download](https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0) the latest installable version of Remote Control for Windows, macOS and Linux.
+You can [download the latest installable](https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0) version of Remote Control for Windows, macOS and Linux.
 
 ## Credits
 
@@ -425,6 +203,7 @@ This software uses the following open source packages:
 - [Crossnote](https://github.com/shd101wyy/crossnote)
 
 ## Support
+If you find this project useful, consider supporting us on [Patreon](https://www.patreon.com/DinoscapeArmy).
 
 <a href="https://www.patreon.com/DinoscapeArmy">
 	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
@@ -440,7 +219,7 @@ This software uses the following open source packages:
 
 ## License
 
-[Apache-2.0](https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/master/LICENSE)
+This project is licensed under the Apache License, Version 2.0. See the [LICENSE](https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/master/LICENSE) file for more details.
 
 ---
 
