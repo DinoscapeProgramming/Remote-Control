@@ -72,7 +72,7 @@
 
       .hero h1 {
         font-size: 48px;
-        color: #024eff;
+        color: black;
       }
 
       .hero h2 {
@@ -147,7 +147,6 @@
 
       .newsletter input,
       .newsletter button {
-        width: 80%;
         padding: 15px;
         font-size: 16px;
         border-radius: 50px;
@@ -156,7 +155,13 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
 
+      .newsletter input {
+        width: calc(74.25vw - 32.5px);
+        height: 16.25px;
+      }
+
       .newsletter button {
+        width: 74.25vw;
         background-color: #024eff;
         color: white;
         cursor: pointer;
@@ -185,7 +190,7 @@
 
       .features li::before {
         content: "✓";
-        color: #00eeff;
+        color: #0064ff;
         margin-right: 10px;
       }
 
