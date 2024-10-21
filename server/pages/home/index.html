@@ -26,18 +26,6 @@
         margin: 0;
       }
 
-      header {
-        background-color: #024eff;
-        padding: 15px 60px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      header img {
-        width: 200px;
-      }
-
       nav {
         display: flex;
         gap: 20px;
@@ -54,13 +42,6 @@
 
       nav a:hover {
         background-color: rgba(255, 255, 255, 0.2);
-      }
-
-      .btn-download {
-        background-color: #00eeff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        color: #000;
       }
 
       .hero {
@@ -90,22 +71,22 @@
         transition: background-color 0.3s;
       }
 
-      .hero a.primary-btn {
+      .hero a.primaryButton {
         background-color: #024eff;
         color: white;
       }
 
-      .hero a.primary-btn:hover {
+      .hero a.primaryButton:hover {
         background-color: #0036cc;
       }
 
-      .hero a.secondary-btn {
+      .hero a.secondaryButton {
         background-color: white;
         color: #024eff;
         border: 1px solid #024eff;
       }
 
-      .hero a.secondary-btn:hover {
+      .hero a.secondaryButton:hover {
         background-color: #f0f0f0;
       }
 
@@ -203,11 +184,11 @@
     </style>
   </head>
   <body>
-    <div style="display: flex; flex-direction: row; padding: 27px">
+    <div style="display: flex; flex-direction: row; padding: 27px;">
       <a href="/" style="position: absolute">
         <img
           src="https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/main/docs/static/logo.svg"
-          style="width: 300px; margin-top: -13px; margin-left: 60px"
+          style="width: 300px; margin-top: -13px; margin-left: 60px;"
         />
       </a>
       <a
@@ -303,13 +284,13 @@
       <h2>Why pay if it can be done for free?</h2>
       <a
         href="https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0"
-        class="primary-btn"
+        class="primaryButton"
       >
         Download App
       </a>
       <a
         href="/self-hosting"
-        class="secondary-btn"
+        class="secondaryButton"
       >
         Self Hosting
       </a>
@@ -325,7 +306,7 @@
       <input
         type="email"
         placeholder="Enter your email"
-        style="width: calc(77% + 2.5px); height: 17.5px"
+        style="width: calc(77% + 2.5px); height: 17.5px;"
       />
       <button>Subscribe Now</button>
     </section>

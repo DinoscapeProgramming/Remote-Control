@@ -4,22 +4,149 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Remote Control - About Us</title>
-    <script defer src="/postHog.js"></script>
-    <script defer src="/pages/team/script.js"></script>
     <link rel="icon" href="/assets/favicon.ico" />
-  </head>
-  <body style="margin: 0;">
-    <div style="display: flex; flex-direction: row; padding: 27px">
-      <a href="/" style="position: absolute"
-        ><img
-          src="https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/main/docs/static/logo.svg"
-          style="width: 300px; margin-top: -13px; margin-left: 60px"
-      /></a>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Inter:wght@300;400;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        color: #333;
+        background-color: #f7f8fa;
+      }
 
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 60px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar img {
+        width: 200px;
+      }
+
+      .navbar a {
+        color: #585c67;
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        margin-right: 25px;
+      }
+
+      .navbar a:hover {
+        color: #024eff;
+      }
+
+      .navbar a.download {
+        background-color: #024eff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+      }
+
+      .navbar a.download:hover {
+        background-color: #023acc;
+      }
+
+      h1 {
+        font-size: 45px;
+        font-weight: 700;
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: -10px;
+        color: black;
+      }
+
+      h2 {
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 50px;
+        color: #585c67;
+      }
+
+      .teamContainer {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        margin: 0 60px;
+        flex-wrap: wrap;
+      }
+
+      .teamMember {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        padding: 20px;
+        border-radius: 12.5px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: -30px;
+      }
+
+      .teamMember img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .teamMember .content {
+        margin-left: 20px;
+      }
+
+      .teamMember h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0;
+        color: #333;
+      }
+
+      .teamMember p {
+        margin-top: 8px;
+        font-size: 16px;
+        color: #666;
+        line-height: 1.5;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 152.5px;
+        padding: 20px;
+        background-color: #f0f0f0;
+        font-size: 14px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        padding: 27px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <a href="/" style="position: absolute;">
+        <img
+          src="https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/main/docs/static/logo.svg"
+          style="width: 300px; margin-top: -13px; margin-left: 60px;"
+        />
+      </a>
       <a
         href="/"
         style="
-          color: #585c67;
+          color: black;
           font-size: 16px;
           font-weight: 500;
           font-family: system-ui;
@@ -27,20 +154,23 @@
           margin-left: 391px;
           margin-right: 32.5px;
         "
-        >Home</a
       >
+        Home
+      </a>
       <a
         href="/team"
         style="
-          color: black;
+          color: #585c67;
           font-size: 16px;
           font-weight: 500;
           font-family: system-ui;
           text-decoration: none;
           margin-right: 32.5px;
         "
-        >About us</a
-      ><a
+      >
+        About us
+      </a>
+      <a
         href="https://github.com/DinoscapeProgramming/Remote-Control/releases"
         style="
           color: #585c67;
@@ -50,8 +180,10 @@
           text-decoration: none;
           margin-right: 32.5px;
         "
-        >Changelog</a
-      ><a
+      >
+        Changelog
+      </a>
+      <a
         href="/open-source"
         style="
           color: #585c67;
@@ -61,8 +193,10 @@
           text-decoration: none;
           margin-right: 32.5px;
         "
-        >Open Source</a
-      ><a
+      >
+        Open Source
+      </a>
+      <a
         href="/docs"
         style="
           color: #585c67;
@@ -72,8 +206,9 @@
           text-decoration: none;
           margin-right: 32.5px;
         "
-        >Docs</a
       >
+        Docs
+      </a>
       <a
         href="https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0"
         style="
@@ -92,134 +227,38 @@
           padding-left: 18.5px;
           padding-right: 19.5px;
         "
-        >Download</a
       >
+        Download
+      </a>
     </div>
-    <div
-      style="
-        width: 100%;
-        height: 1px;
-        background-color: #bfbfbfd9;
-        opacity: 0.25;
-      "
-    ></div>
-    <h1
-      style="
-        font-size: 40px;
-        font-weight: 700;
-        font-family: system-ui;
-        margin-top: 45px;
-        margin-left: 65px;
-        margin-right: 65px;
-      "
-    >
-      About Us
-    </h1>
-    <h2
-      style="
-        font-size: 20px;
-        font-weight: 600;
-        font-family: system-ui;
-        margin-top: -15px;
-        margin-bottom: 57.5px;
-        margin-left: 65px;
-      "
-    >
-      Say hello to our amazing team of contributors. ;)
-    </h2>
-    <div style="display: flex; flex-direction: row; margin-left: 65px">
-      <img
-        src="https://avatars.githubusercontent.com/u/95239392?v=4"
-        style="width: 72.5px; height: 72.5px; border-radius: 50%"
-      />
-      <div
-        style="
-          display: flex;
-          flex-direction: column;
-          margin-top: -20px;
-          margin-left: 25px;
-        "
-      >
-        <h3
-          style="
-            font-size: 18px;
-            font-weight: 600;
-            font-family: system-ui;
-            opacity: 0.95;
-          "
-        >
-          Dinoscape
-        </h3>
-        <p style="font-family: system-ui; margin-top: -7.5px; opacity: 0.75">
-          Hi! I'm the core maintainer of Remote Control. Although I'm still just
-          13 years old, I have spent a lot of time trying to build an awesome
-          open source alternative to other conventional Remote Desktop solutions
-          because I couldn't find any myself. I'm hoping to find new
-          contributors soon because I'm still alone for now! :/
-        </p>
-        <p></p>
+    <h1>About Us</h1>
+    <h2>Say hello to our amazing team of contributors. 😉</h2>
+    <div class="teamContainer">
+      <div class="teamMember">
+        <img
+          src="https://avatars.githubusercontent.com/u/95239392?v=4"
+          alt="Dinoscape Profile"
+        />
+        <div class="content">
+          <h3>Dinoscape</h3>
+          <p>
+            Hi! I'm the core maintainer of Remote Control. Though I'm only 13,
+            I've spent a lot of time building an open-source remote desktop
+            solution. Looking for new contributors to join!
+          </p>
+        </div>
+      </div>
+      <div class="teamMember">
+        <img src="/assets/defaultProfilePictureMan.webp" alt="Default Male" />
+        <div class="content">
+          <h3>THIS COULD BE YOU!</h3>
+          <p>
+            Join our team and start contributing to our GitHub repository today!
+            We need passionate people like you to help us grow.
+          </p>
+        </div>
       </div>
     </div>
-
-    <div style="display: flex; flex-direction: row; margin-left: 65px">
-      <img
-        src="/assets/defaultProfilePictureMan.webp"
-        style="width: 72.5px; height: 72.5px; border-radius: 50%"
-      />
-      <div
-        style="
-          display: flex;
-          flex-direction: column;
-          margin-top: -20px;
-          margin-left: 25px;
-        "
-      >
-        <h3
-          style="
-            font-size: 18px;
-            font-weight: 600;
-            font-family: system-ui;
-            opacity: 0.95;
-          "
-        >
-          THIS COULD BE YOU!
-        </h3>
-        <p style="font-family: system-ui; margin-top: -7.5px; opacity: 0.75">
-          Join our amazing team of entrepreneurs and start contributing to our
-          GitHub repository today!
-        </p>
-        <p></p>
-      </div>
-    </div>
-    <div style="display: flex; flex-direction: row; margin-left: 65px">
-      <img
-        src="/assets/defaultProfilePictureWoman.webp"
-        style="width: 72.5px; height: 72.5px; border-radius: 50%"
-      />
-      <div
-        style="
-          display: flex;
-          flex-direction: column;
-          margin-top: -20px;
-          margin-left: 25px;
-        "
-      >
-        <h3
-          style="
-            font-size: 18px;
-            font-weight: 600;
-            font-family: system-ui;
-            opacity: 0.95;
-          "
-        >
-          THIS COULD BE YOUR FRIEND!
-        </h3>
-        <p style="font-family: system-ui; margin-top: -7.5px; opacity: 0.75">
-          Tell him to join our amazing team of entrepreneurs and start
-          contributing to our GitHub repository today!
-        </p>
-        <p></p>
-      </div>
-    </div>
+    <footer>© 2024 Remote Control - All Rights Reserved</footer>
   </body>
 </html>
