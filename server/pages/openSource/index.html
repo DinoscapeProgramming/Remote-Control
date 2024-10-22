@@ -21,6 +21,10 @@
         color: #333;
       }
 
+      .downloadButton:hover {
+        background-color: #0036cc !important;
+      }
+
       h1 {
         font-size: 40px;
         font-weight: 700;
@@ -171,7 +175,7 @@
         Docs
       </a>
       <a
-        href="https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0"
+        class="downloadButton"
         style="
           position: absolute;
           left: calc(100vw - 220px);
@@ -187,7 +191,9 @@
           padding-bottom: 13px;
           padding-left: 18.5px;
           padding-right: 19.5px;
+          transition: background-color 0.3s;
         "
+        href="https://github.com/DinoscapeProgramming/Remote-Control/releases/tag/v1.0.0"
       >
         Download
       </a>
