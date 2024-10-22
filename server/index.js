@@ -114,6 +114,7 @@ if (!fs.readdirSync("./").includes("apps")) fs.mkdirSync("./apps");
 if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Worker("./worker.js");
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/docs", expressDocs(app, {
   title: "Remote Control - Docs",
