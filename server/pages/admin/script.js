@@ -2,7 +2,7 @@ let newsletterContentEditor = ace.edit("newsletterContentEditor");
 newsletterContentEditor.setTheme("ace/theme/monokai");
 newsletterContentEditor.session.setMode(new (ace.require("ace/mode/html").Mode)());
 newsletterContentEditor.setOption("tabSize", 2);
-newsletterContentEditor.setValue(`<!DOCTYPE PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>\n<html xmlns="http://www.w3.org/1999/xhtml">  <head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width,initial-scale=1.0">\n    <title></title>\n  </head>\n  <body>\n  </body>\n</html>`);
+newsletterContentEditor.setValue(`<!DOCTYPE PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>\n<html xmlns="http://www.w3.org/1999/xhtml">  <head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width,initial-scale=1.0">\n    <title></title>\n  </head>\n  <body></body>\n</html>`);
 
 fetch("/api/v1/admin/verify")
 .then((response) => response.json())

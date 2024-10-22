@@ -259,7 +259,7 @@ app.get("/api/v1/admin/verify", (req, res) => {
   if (!req.cookies?.adminPassword) return res.status(404).json({ err: "Missing password", valid: false });
   res.status(200).json({
     err: null,
-    valid: (req.adminPookies?.password === process.env.ADMIN_PASSWORD)
+    valid: (req.cookies?.adminPassword === process.env.ADMIN_PASSWORD)
   });
 });
 
