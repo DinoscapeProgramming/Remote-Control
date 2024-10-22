@@ -113,9 +113,9 @@ io.on("connection", (socket) => {
 if (!fs.readdirSync("./").includes("apps")) fs.mkdirSync("./apps");
 if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Worker("./worker.js");
 
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use("/docs", expressDocs(app, {
   title: "Remote Control - Docs",
   favicon: path.resolve("./assets/favicon.ico"),
@@ -273,6 +273,12 @@ app.post("/api/v1/admin/login", (req, res) => {
     sameSite: "Strict"
   });
   res.status(200).json({ err: null });
+});
+
+app.all("/favicon.ico", (req, res) => {
+  res.sendFile("assets/favicon.ico", {
+    root: __dirname
+  });
 });
 
 const listen = http.listen(3000, () => {
