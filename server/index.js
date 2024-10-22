@@ -153,6 +153,12 @@ app.all("/help", (req, res) => {
   });
 });
 
+app.all("/admin", (req, res) => {
+  res.sendFile("pages/admin/index.html", {
+    root: __dirname
+  });
+});
+
 app.get("/api/v1/feedback/get", (req, res) => {
   res.json((JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").feedback || []).reduce((accumulator, { rating }) => accumulator.map((starCount, index) => starCount + ((index + 1) === rating)), [0, 0, 0, 0, 0]))
 });
