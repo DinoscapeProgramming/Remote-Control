@@ -17,6 +17,7 @@ const rateLimit = require("express-rate-limit");
 const expressDocs = require("express-documentation");
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const { Worker } = require("worker_threads");
 const keys = require("./keys.json");
 const nodemailer = require("nodemailer");
