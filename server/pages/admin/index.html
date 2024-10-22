@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Portal</title>
+    <title>Remote Control - Admin</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/ace-builds@1.12.5/src/ace.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/ace-builds@1.12.5/src/theme-monokai.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/ace-builds@1.12.5/src/mode-html.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" />
     <style>
@@ -47,7 +50,7 @@
         color: white;
       }
 
-      .main-content {
+      .mainContent {
         margin-left: 285px;
         padding-top: 50px;
         padding-left: 50px;
@@ -56,7 +59,7 @@
         min-height: calc(100vh - 50px);
       }
 
-      .main-content h1 {
+      .mainContent h1 {
         font-size: 35px;
         font-weight: 700;
         color: black;
@@ -83,22 +86,40 @@
         color: #333;
       }
 
-      .card input, .card textarea, .card button {
-        width: 100%;
+      .card input, .card select, .card textarea, .card button {
         margin-top: 7.5px;
         margin-bottom: 12.5px;
         padding: 12.5px;
         border-radius: 8px;
         border: 1px solid #ddd;
+        resize: vertical;
+      }
+
+      .card input {
+        font-family: inherit;
+        padding: 10px 12.5px 12.5px;
+        line-height: 17px;
+      }
+
+      .card input, .card textarea {
+        width: calc(100% - 27.5px);
       }
 
       .card input:focus, .card textarea:focus {
         outline: none;
-        border-color: #024eff;
+        border-width: 2px;
+        border-color: black;
+      }
+
+      .card select {
+        width: 100%;
+        font-size: 15px;
+        padding: 11px;
       }
 
       .card button {
-        margin-top: 0;
+        width: 100%;
+        margin-top: -6.5px;
         background-color: #024eff;
         color: white;
         font-size: 16px;
@@ -132,7 +153,7 @@
         background-color: #f9f9f9;
       }
 
-      .btn-link {
+      .buttonLink {
         background-color: #024eff;
         color: white;
         padding: 10px 15px;
@@ -141,8 +162,16 @@
         transition: background-color 0.3s;
       }
 
-      .btn-link:hover {
+      .buttonLink:hover {
         background-color: #023ac3;
+      }
+
+      .editor {
+        width: 100%;
+        height: 250px;
+        border-radius: 4px;
+        margin: 7.5px 0px;
+        resize: vertical;
       }
 
       @media (max-width: 768px) {
@@ -150,7 +179,7 @@
           width: 200px;
         }
 
-        .main-content {
+        .mainContent {
           margin-left: 200px;
           padding: 40px;
         }
@@ -161,7 +190,7 @@
           width: 180px;
         }
 
-        .main-content {
+        .mainContent {
           margin-left: 180px;
           padding: 30px;
         }
@@ -171,31 +200,47 @@
   <body>
     <div class="sidebar">
       <h2>Admin Portal</h2>
-      <a href="#newsletter" class="active"
-        ><i class="fas fa-paper-plane"></i> Send Newsletter</a
-      >
-      <a href="#contacts"><i class="fas fa-envelope"></i> Contact Messages</a>
-      <a href="#database"><i class="fas fa-database"></i> Manage Databases</a>
+      <a href="#newsletter" class="active">
+        <i class="fas fa-paper-plane" style="margin-right: 5px;"></i> Send Newsletter
+      </a>
+      <a href="#contacts">
+        <i class="fas fa-envelope" style="margin-right: 5px;"></i> Contact Messages
+      </a>
+      <a href="#database">
+        <i class="fas fa-database" style="margin-right: 5px;"></i> Manage Databases
+      </a>
     </div>
-    <div class="main-content">
+    <div class="mainContent">
       <div id="newsletter">
         <h1>Send Newsletter</h1>
         <div class="card">
           <h2>Create a New Post</h2>
           <form
-            action="/admin/send-newsletter"
+            id="newsletterForm"
             method="POST"
+            action="/api/v1/newsletter/send"
             style="margin-bottom: -15px"
           >
-            <label for="title">Post Title</label>
-            <input type="text" id="title" name="title" required="" />
-            <label for="content">Post Content</label>
+            <label for="newsletterSubjectInput">Post Subject</label>
+            <input type="text" id="newsletterSubjectInput" name="subject" required />
+            <label for="newsletterContentTypeInput">Content Type</label>
+            <select id="newsletterContentTypeInput" name="type" required>
+              <option value="text">Plain Text</option>
+              <option value="html">HTML</option>
+            </select>
+            <label id="newsletterContentLabel" for="newsletterContentInput">Post Content</label>
             <textarea
-              id="content"
-              name="content"
+              id="newsletterContentInput"
+              style="height: 250px;"
               rows="8"
-              required=""
+              required
             ></textarea>
+            <div
+              id="newsletterContentEditor"
+              class="editor"
+              style="display: none;"
+            ></div>
+            <input type="hidden" name="content" id="newsletterHiddenContentInput" />
             <button type="submit">Send Newsletter</button>
           </form>
         </div>
@@ -221,7 +266,7 @@
                 <td>&lt;%= contact.email %&gt;</td>
                 <td>&lt;%= contact.message %&gt;</td>
                 <td>
-                  <a href="/admin/reply/<%= contact.id %>" class="btn-link"
+                  <a href="/admin/reply/<%= contact.id %>" class="buttonLink"
                     >Reply</a
                   >
                 </td>
@@ -249,7 +294,7 @@
                 <td>&lt;%= db.name %&gt;</td>
                 <td>&lt;%= db.records %&gt;</td>
                 <td>
-                  <a href="/admin/database/<%= db.id %>" class="btn-link"
+                  <a href="/admin/database/<%= db.id %>" class="buttonLink"
                     >View/Edit</a
                   >
                 </td>
@@ -259,21 +304,5 @@
         </div>
       </div>
     </div>
-    <script>
-      document.querySelectorAll(".sidebar a").forEach((link) => {
-        link.addEventListener("click", function () {
-          document
-            .querySelectorAll(".main-content > div")
-            .forEach((section) => (section.style.display = "none"));
-          document
-            .querySelectorAll(".sidebar a")
-            .forEach((link) => link.classList.remove("active"));
-
-          this.classList.add("active");
-          document.querySelector(this.getAttribute("href")).style.display =
-            "block";
-        });
-      });
-    </script>
   </body>
 </html>

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const http = require("http").Server(app);
@@ -18,6 +19,14 @@ const fs = require("fs");
 const path = require("path");
 const { Worker } = require("worker_threads");
 const keys = require("./keys.json");
+const nodemailer = require("nodemailer");
+const emailTransport = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_ADDRESS,
+    pass: process.env.EMAIL_PASSWORD
+  }
+});
 
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ type, roomId, password } = {}) => {
@@ -222,7 +231,7 @@ app.post("/api/v1/newsletter/register", (req, res) => {
 
 app.post("/api/v1/newsletter/send", (req, res) => {
   if (!req.body?.password) return res.status(404).json({ err: "Missing password" });
-  if (req.body?.password !== process.env.ADMIN_PASSWORD) return res.status(422).json({ err: "Invalid password" });
+  if (req.body?.password !== process.env.ADMIN_PASSWORD) return res.status(418).json({ err: "I'm a teapot" });
   if (!req.body?.subject) return res.status(404).json({ err: "Missing subject" });
   if ((typeof req.body?.subject !== "string") || (req.body?.subject.length < 1)) return res.status(422).json({ err: "Invalid subject" });
   if (!req.body?.type) return res.status(404).json({ err: "Missing type" });
@@ -233,7 +242,7 @@ app.post("/api/v1/newsletter/send", (req, res) => {
     Array.from(Array(Math.ceil((JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").newsletter || []).length / 10))).map((_, index) => {
       return Promise.all((JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").newsletter || []).slice(index * 10, (index + 1) * 10).map((email) =>
         emailTransport.sendMail({
-          from: process.env.EMAIL,
+          from: process.env.EMAIL_ADDRESS,
           to: email,
           subject: req.body?.subject,
           [req.body?.type]: req.body?.content

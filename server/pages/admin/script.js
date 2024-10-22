@@ -1,0 +1,29 @@
+let HTMLMode = ace.require("ace/mode/html").Mode;
+let Mode = ace.require("ace/mode/json").Mode;
+
+let newsletterContentEditor = ace.edit("newsletterContentEditor");
+newsletterContentEditor.setTheme("ace/theme/monokai");
+newsletterContentEditor.session.setMode(new (ace.require("ace/mode/html").Mode)());
+newsletterContentEditor.setOption("tabSize", 2);
+newsletterContentEditor.setValue(`<!DOCTYPE PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>\n<html xmlns="http://www.w3.org/1999/xhtml">  <head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width,initial-scale=1.0">\n    <title></title>\n  </head>\n  <body>\n  </body>\n</html>`);
+
+document.querySelectorAll(".sidebar a").forEach((link) => {
+  link.addEventListener("click", ({ target }) => {
+    document.querySelectorAll(".main-content > div").forEach((section) => (section.style.display = "none"));
+    document.querySelectorAll(".sidebar a").forEach((link) => link.classList.remove("active"));
+    target.classList.add("active");
+    document.querySelector(target.getAttribute("href")).style.display = "block";
+  });
+});
+
+document.getElementById("newsletterContentTypeSelect").addEventListener("change", () => {
+  document.getElementById("newsletterContentLabel").htmlFor = ((document.getElementById("newsletterContentTypeSelect").value === "text") ? "newsletterContentInput" : "newsletterContentEditor");
+  ((document.getElementById("newsletterContentTypeSelect").value === "text") ? document.getElementById("newsletterContentEditor") : document.getElementById("newsletterContentInput")).style.display = "none";
+  ((document.getElementById("newsletterContentTypeSelect").value === "text") ? document.getElementById("newsletterContentInput") : document.getElementById("newsletterContentEditor")).style.display = "block";
+});
+
+document.getElementById("newsletterForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  document.getElementById("newsletterHiddenContentInput").value = ((document.getElementById("newsletterContentTypeSelect").value === "text") ? document.getElementById("newsletterContentInput").value : newsletterContentEditor.getValue());
+  event.target.submit();
+});
