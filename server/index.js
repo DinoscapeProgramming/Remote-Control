@@ -20,6 +20,13 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const { Worker } = require("worker_threads");
+const readDatabase = ([databaseName]) => import("jsonbin-io-api").then(({ JsonBinIoApi }) => (new JsonBinIoApi(process.env.DATABASE_KEY)).bins.read({
+  binId: process.env["DATABASE_" + databaseName.toUpperCase()]
+}));
+const updateDatabase = ([databaseName, databaseContent]) => import("jsonbin-io-api").then(({ JsonBinIoApi }) => (new JsonBinIoApi(process.env.DATABASE_KEY)).bins.update({
+  binId: process.env["DATABASE_" + databaseName.toUpperCase()],
+  record: databaseContent
+}));
 const keys = require("./keys.json");
 const nodemailer = require("nodemailer");
 const emailTransport = nodemailer.createTransport({
@@ -173,6 +180,9 @@ app.all("/admin", (req, res) => {
 });
 
 app.get("/api/v1/feedback/get", (req, res) => {
+  readDatabase("feedback").then((feedback = []) => {
+    res.json(feedback.reduce((accumulator, { rating }) => accumulator.map((starCount, index) => starCount + ((index + 1) === rating)), [0, 0, 0, 0, 0]));
+  });
   res.json((JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").feedback || []).reduce((accumulator, { rating }) => accumulator.map((starCount, index) => starCount + ((index + 1) === rating)), [0, 0, 0, 0, 0]))
 });
 
