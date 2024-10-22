@@ -253,7 +253,7 @@ app.post("/api/v1/newsletter/send", (req, res) => {
         }).catch(() => {})
       ));
     })
-  ).then(() => res.status(200).json({ err: null })).catch(() => res.status(500).json({ err: "Failed to send emails" }));
+  ).then(() => res.status(204).json({ err: null })).catch(() => res.status(500).json({ err: "Failed to send emails" }));
 });
 
 app.get("/api/v1/admin/verify", (req, res) => {
