@@ -13,6 +13,7 @@ const peerServer = ExpressPeerServer(http, {
   debug: true
 });
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
 const expressDocs = require("express-documentation");
 const fs = require("fs");
@@ -113,6 +114,7 @@ if (!fs.readdirSync("./").includes("apps")) fs.mkdirSync("./apps");
 if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Worker("./worker.js");
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use("/docs", expressDocs(app, {
   title: "Remote Control - Docs",
   favicon: path.resolve("./assets/favicon.ico"),
@@ -254,6 +256,7 @@ app.post("/api/v1/newsletter/send", (req, res) => {
 });
 
 app.get("/api/v1/admin/verify", (req, res) => {
+  console.log(req.cookies);
   if (!req.cookies?.password) return res.status(404).json({ err: "Missing password", valid: false });
   res.status(200).json({
     err: null,
