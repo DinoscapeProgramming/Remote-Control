@@ -20,7 +20,7 @@ document.getElementById("adminLoginForm").addEventListener("submit", (event) => 
     headers: {
       'Content-Type': 'application/json'
     },
-    body: new FormData(document.getElementById("adminLoginForm"))
+    body: JSON.stringify(Object.fromEntries(new FormData(document.getElementById("adminLoginForm")).entries()))
   })
   .then((response) => response.json())
   .then(({ err }) => {
