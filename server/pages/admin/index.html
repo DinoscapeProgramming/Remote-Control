@@ -199,110 +199,135 @@
       }
     </style>
   </head>
-  <body>
-    <div class="sidebar">
-      <h2>Admin Portal</h2>
-      <a href="#newsletter" class="active">
-        <i class="fas fa-paper-plane" style="margin-right: 5px;"></i> Send Newsletter
-      </a>
-      <a href="#contacts">
-        <i class="fas fa-envelope" style="margin-right: 5px;"></i> Contact Messages
-      </a>
-      <a href="#database">
-        <i class="fas fa-database" style="margin-right: 5px;"></i> Manage Databases
-      </a>
+  <body style="background-color: #0000ff1a;">
+    <div
+      id="adminLoginContainer"
+      style="
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+      "
+    >
+      <div class="card">
+        <h2>Admin Portal Login</h2>
+        <form id="adminLoginForm" method="POST" action="/api/v1/admin/login" style="margin-bottom: -15px;">
+          <label for="adminPasswordInput">Admin Password</label>
+          <input type="password" id="adminPasswordInput" name="password" required />
+          <button type="submit" style="margin-top: -2.5px;">Login</button>
+        </form>
+      </div>
     </div>
-    <div class="mainContent">
-      <div id="newsletter">
-        <h1>Send Newsletter</h1>
-        <div class="card">
-          <h2>Create a New Post</h2>
-          <form
-            id="newsletterForm"
-            method="POST"
-            action="/api/v1/newsletter/send"
-            style="margin-bottom: -15px"
-          >
-            <label for="newsletterSubjectInput">Post Subject</label>
-            <input type="text" id="newsletterSubjectInput" name="subject" required />
-            <label for="newsletterContentTypeInput">Content Type</label>
-            <select id="newsletterContentTypeInput" name="type" required>
-              <option value="text">Plain Text</option>
-              <option value="html">HTML</option>
-            </select>
-            <label id="newsletterContentLabel" for="newsletterContentInput">Post Content</label>
-            <textarea
-              id="newsletterContentInput"
-              style="height: 250px;"
-              rows="8"
-              required
-            ></textarea>
-            <div
-              id="newsletterContentEditor"
-              class="editor"
-              style="display: none;"
-            ></div>
-            <input type="hidden" name="content" id="newsletterHiddenContentInput" />
-            <button type="submit">Send Newsletter</button>
-          </form>
-        </div>
+    <div
+      id="adminPortalContainer"
+      style="display: none;"
+    >
+      <div class="sidebar">
+        <h2>Admin Portal</h2>
+        <a href="#newsletter" class="active">
+          <i class="fas fa-paper-plane" style="margin-right: 5px;"></i> Send Newsletter
+        </a>
+        <a href="#contacts">
+          <i class="fas fa-envelope" style="margin-right: 5px;"></i> Contact Messages
+        </a>
+        <a href="#database">
+          <i class="fas fa-database" style="margin-right: 5px;"></i> Manage Databases
+        </a>
       </div>
-      <div id="contacts" style="display: none">
-        <h1>Contact Messages</h1>
-        <div class="card">
-          <h2>Messages from Users</h2>
-
-          &lt;% contacts.forEach(contact =&gt; { %&gt; &lt;% }) %&gt;
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Message</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>&lt;%= contact.name %&gt;</td>
-                <td>&lt;%= contact.email %&gt;</td>
-                <td>&lt;%= contact.message %&gt;</td>
-                <td>
-                  <a href="/admin/reply/<%= contact.id %>" class="buttonLink"
-                    >Reply</a
-                  >
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="mainContent">
+        <div id="newsletter">
+          <h1>Send Newsletter</h1>
+          <div class="card">
+            <h2>Create a New Post</h2>
+            <form
+              id="newsletterForm"
+              method="POST"
+              action="/api/v1/newsletter/send"
+              style="margin-bottom: -15px"
+            >
+              <label for="newsletterSubjectInput">Post Subject</label>
+              <input type="text" id="newsletterSubjectInput" name="subject" required />
+              <label for="newsletterContentTypeInput">Content Type</label>
+              <select id="newsletterContentTypeInput" name="type" required>
+                <option value="text">Plain Text</option>
+                <option value="html">HTML</option>
+              </select>
+              <label id="newsletterContentLabel" for="newsletterContentInput">Post Content</label>
+              <textarea
+                id="newsletterContentInput"
+                style="height: 250px;"
+                rows="8"
+                required
+              ></textarea>
+              <div
+                id="newsletterContentEditor"
+                class="editor"
+                style="display: none;"
+              ></div>
+              <input type="hidden" name="content" id="newsletterHiddenContentInput" />
+              <button type="submit">Send Newsletter</button>
+            </form>
+          </div>
         </div>
-      </div>
-      <div id="database" style="display: none">
-        <h1>Manage Databases</h1>
-        <div class="card">
-          <h2>Databases Overview</h2>
+        <div id="contacts" style="display: none">
+          <h1>Contact Messages</h1>
+          <div class="card">
+            <h2>Messages from Users</h2>
 
-          &lt;% databases.forEach(db =&gt; { %&gt; &lt;% }) %&gt;
-          <table>
-            <thead>
-              <tr>
-                <th>Database Name</th>
-                <th>Records</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>&lt;%= db.name %&gt;</td>
-                <td>&lt;%= db.records %&gt;</td>
-                <td>
-                  <a href="/admin/database/<%= db.id %>" class="buttonLink"
-                    >View/Edit</a
-                  >
-                </td>
-              </tr>
-            </tbody>
-          </table>
+            &lt;% contacts.forEach(contact =&gt; { %&gt; &lt;% }) %&gt;
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Message</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>&lt;%= contact.name %&gt;</td>
+                  <td>&lt;%= contact.email %&gt;</td>
+                  <td>&lt;%= contact.message %&gt;</td>
+                  <td>
+                    <a href="/admin/reply/<%= contact.id %>" class="buttonLink"
+                      >Reply</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="database" style="display: none">
+          <h1>Manage Databases</h1>
+          <div class="card">
+            <h2>Databases Overview</h2>
+
+            &lt;% databases.forEach(db =&gt; { %&gt; &lt;% }) %&gt;
+            <table>
+              <thead>
+                <tr>
+                  <th>Database Name</th>
+                  <th>Records</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>&lt;%= db.name %&gt;</td>
+                  <td>&lt;%= db.records %&gt;</td>
+                  <td>
+                    <a href="/admin/database/<%= db.id %>" class="buttonLink"
+                      >View/Edit</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
