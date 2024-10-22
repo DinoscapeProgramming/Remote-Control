@@ -1,6 +1,3 @@
-let HTMLMode = ace.require("ace/mode/html").Mode;
-let Mode = ace.require("ace/mode/json").Mode;
-
 let newsletterContentEditor = ace.edit("newsletterContentEditor");
 newsletterContentEditor.setTheme("ace/theme/monokai");
 newsletterContentEditor.session.setMode(new (ace.require("ace/mode/html").Mode)());
