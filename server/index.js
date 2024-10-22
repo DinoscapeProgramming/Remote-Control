@@ -233,8 +233,8 @@ app.post("/api/v1/newsletter/register", (req, res) => {
 }); 
 
 app.post("/api/v1/newsletter/send", (req, res) => {
-  if (!req.cookies?.password) return res.status(404).json({ err: "Missing password" });
-  if (req.cookies?.password !== process.env.ADMIN_PASSWORD) return res.status(418).json({ err: "I'm a teapot" });
+  if (!req.cookies?.adminPassword) return res.status(404).json({ err: "Missing password" });
+  if (req.cookies?.adminPassword !== process.env.ADMIN_PASSWORD) return res.status(418).json({ err: "I'm a teapot" });
   if (!req.body?.subject) return res.status(404).json({ err: "Missing subject" });
   if ((typeof req.body?.subject !== "string") || (req.body?.subject.length < 1)) return res.status(422).json({ err: "Invalid subject" });
   if (!req.body?.type) return res.status(404).json({ err: "Missing type" });
@@ -256,18 +256,17 @@ app.post("/api/v1/newsletter/send", (req, res) => {
 });
 
 app.get("/api/v1/admin/verify", (req, res) => {
-  console.log(req.cookies);
-  if (!req.cookies?.password) return res.status(404).json({ err: "Missing password", valid: false });
+  if (!req.cookies?.adminPassword) return res.status(404).json({ err: "Missing password", valid: false });
   res.status(200).json({
     err: null,
-    valid: (req.cookies?.password === process.env.ADMIN_PASSWORD)
+    valid: (req.adminPookies?.password === process.env.ADMIN_PASSWORD)
   });
 });
 
 app.post("/api/v1/admin/login", (req, res) => {
   if (!req.body?.password) return res.status(404).json({ err: "Missing password" });
   if (crypto.createHash("sha256").update(req.body?.password).digest("hex") !== process.env.ADMIN_PASSWORD) return res.status(422).json({ err: "Invalid password" });
-  res.cookie("adminAuth", process.env.ADMIN_PASSWORD, {
+  res.cookie("adminPassword", process.env.ADMIN_PASSWORD, {
     httpOnly: true,
     secure: true,
     sameSite: "Strict"
