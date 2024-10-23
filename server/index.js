@@ -231,6 +231,7 @@ app.post("/api/v1/newsletter/register", (req, res) => {
   if (!req.body?.email) return res.status(404).json({ err: "Missing email" });
   if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi.test(req.body?.email)) return res.status(422).json({ err: "Invalid email" });
   readDatabase("newsletter").then(({ newsletter = [] }) => {
+    if (newsletter.includes(req.body?.email)) return res.status(409).json({ err: "Email address is already registered" });
     updateDatabase("newsletter", [
       ...newsletter,
       ...[
@@ -258,17 +259,17 @@ app.post("/api/v1/newsletter/send", (req, res) => {
   readDatabase("newsletter").then(({ newsletter = [] }) => {
     Promise.all(
       Array.from(Array(Math.ceil(newsletter.length / 10))).map((_, index) => {
-        return Promise.all(newsletter.slice(index * 10, (index + 1) * 10).map((email) =>
+        return Promise.all(newsletter.slice(index * 10, (index + 1) * 10).map((email) => {
           emailTransport.sendMail({
             from: process.env.EMAIL_ADDRESS,
             to: email,
             subject: req.body?.subject,
             [req.body?.type]: req.body?.content
-          }).catch(() => {})
-        ));
+          });
+        }));
       })
     )
-    .then(() =>{
+    .then(() => {
       res.status(204).json({ err: null })
     })
     .catch(() => {
