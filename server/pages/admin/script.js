@@ -8,7 +8,7 @@ fetch("/api/v1/admin/verify")
 .then((response) => response.json())
 .then(({ valid }) => {
   if (!valid) return;
-  document.body.backgroundColor = "white";
+  document.body.style.backgroundColor = "white";
   document.getElementById("adminLoginContainer").style.display = "none";
   document.getElementById("adminPortalContainer").style.display = "block";
 });
@@ -25,7 +25,7 @@ document.getElementById("adminLoginForm").addEventListener("submit", (event) => 
   .then((response) => response.json())
   .then(({ err }) => {
     if (err) return;
-    document.body.backgroundColor = "white";
+    document.body.style.backgroundColor = "white";
     document.getElementById("adminLoginContainer").style.display = "none";
     document.getElementById("adminPortalContainer").style.display = "block";
   });
@@ -33,7 +33,7 @@ document.getElementById("adminLoginForm").addEventListener("submit", (event) => 
 
 document.querySelectorAll(".sidebar a").forEach((link) => {
   link.addEventListener("click", ({ target }) => {
-    document.querySelectorAll(".main-content > div").forEach((section) => (section.style.display = "none"));
+    document.querySelectorAll(".mainContent > div").forEach((section) => (section.style.display = "none"));
     document.querySelectorAll(".sidebar a").forEach((link) => link.classList.remove("active"));
     target.classList.add("active");
     document.querySelector(target.getAttribute("href")).style.display = "block";

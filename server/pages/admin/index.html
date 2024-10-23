@@ -72,7 +72,6 @@
         background-color: white;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
-        padding: 30px;
         margin-bottom: 30px;
       }
 
@@ -123,9 +122,8 @@
       .card .editor {
         width: 100%;
         height: 250px;
-        margin-bottom: 15px;
-        border-radius: 4px;
-        margin: 7.5px 0px;
+        border-radius: 7.5px;
+        margin: 7.5px 0px 13.75px;
         resize: vertical;
       }
 
@@ -146,6 +144,7 @@
       .card button {
         width: 100%;
         margin-top: -6.5px;
+        margin-bottom: 0;
         background-color: #024eff;
         color: white;
         font-size: 16px;
@@ -256,35 +255,37 @@
         <div id="newsletter">
           <h1>Send Newsletter</h1>
           <div class="card">
-            <h2>Create a New Post</h2>
-            <form
-              id="newsletterForm"
-              method="POST"
-              action="/api/v1/newsletter/send"
-              style="margin-bottom: -15px"
-            >
-              <label for="newsletterSubjectInput">Post Subject</label>
-              <input type="text" id="newsletterSubjectInput" name="subject" required />
-              <label for="newsletterContentTypeSelect">Content Type</label>
-              <select id="newsletterContentTypeSelect" name="type" required>
-                <option value="text">Plain Text</option>
-                <option value="html">HTML</option>
-              </select>
-              <label id="newsletterContentLabel" for="newsletterContentInput">Post Content</label>
-              <textarea
-                id="newsletterContentInput"
-                rows="8"
-                required
-              ></textarea>
-              <div
-                id="newsletterContentEditor"
-                class="editor"
-                style="display: none;"
-              ></div>
-              <input type="hidden" name="content" id="newsletterHiddenContentInput" />
-              <button type="submit">Send Newsletter</button>
-            </form>
-          </div>
+            <div style="height: calc(100vh - 242.5px); padding: 30px; overflow-y: auto;">
+              <h2>Create a New Post</h2>
+              <form
+                id="newsletterForm"
+                method="POST"
+                action="/api/v1/newsletter/send"
+                style="margin-bottom: -15px"
+              >
+                <label for="newsletterSubjectInput">Post Subject</label>
+                <input type="text" id="newsletterSubjectInput" name="subject" required />
+                <label for="newsletterContentTypeSelect">Content Type</label>
+                <select id="newsletterContentTypeSelect" name="type" required>
+                  <option value="text">Plain Text</option>
+                  <option value="html">HTML</option>
+                </select>
+                <label id="newsletterContentLabel" for="newsletterContentInput">Post Content</label>
+                <textarea
+                  id="newsletterContentInput"
+                  rows="8"
+                  required
+                  style="display: block; height: 310px;"
+                ></textarea>
+                <div
+                  id="newsletterContentEditor"
+                  class="editor"
+                  style="display: none; height: 335px;"
+                ></div>
+                <input type="hidden" name="content" id="newsletterHiddenContentInput" />
+                <button type="submit">Send Newsletter</button>
+              </form>
+            </div>
         </div>
         <div id="contacts" style="display: none">
           <h1>Contact Messages</h1>

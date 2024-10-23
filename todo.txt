@@ -1,6 +1,6 @@
 - Finish remote printing
 - Add Wake on LAN
-- Add newsletter portal
-- Fix the website (a lot of work)
 - Make app runnable in the background
+- Finish Admin portal
+- Write documentation 🙄🙄🙄
 - Code sign my app (can't afford it yet)
