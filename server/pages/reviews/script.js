@@ -6,7 +6,7 @@
       datasets: [
         {
           label: "Reviews",
-          data: await (await fetch("/api/v1/feedback/get")).json().catch(() => {}),
+          data: await (await fetch("/api/v1/feedback/get")).json().then(({ feedback }) => feedback).catch(() => {}),
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
             "rgba(255, 159, 64, 0.2)",

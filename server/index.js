@@ -20,17 +20,11 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const { Worker } = require("worker_threads");
-const readDatabase = ([databaseName]) => import("jsonbin-io-api").then(({ JsonBinIoApi }) => (new JsonBinIoApi(process.env.DATABASE_KEY)).bins.read({
-  binId: process.env["DATABASE_" + databaseName.toUpperCase()]
-}));
-const updateDatabase = ([databaseName, databaseContent]) => import("jsonbin-io-api").then(({ JsonBinIoApi }) => (new JsonBinIoApi(process.env.DATABASE_KEY)).bins.update({
-  binId: process.env["DATABASE_" + databaseName.toUpperCase()],
-  record: databaseContent
-}));
+const { readDatabase, updateDatabase } = require("./database.js");
 const keys = require("./keys.json");
 const nodemailer = require("nodemailer");
 const emailTransport = nodemailer.createTransport({
-  service: "gmail",
+  service: process.env.EMAIL_PROVIDER,
   auth: {
     user: process.env.EMAIL_ADDRESS,
     pass: process.env.EMAIL_PASSWORD
@@ -180,67 +174,76 @@ app.all("/admin", (req, res) => {
 });
 
 app.get("/api/v1/feedback/get", (req, res) => {
-  readDatabase("feedback").then((feedback = []) => {
-    res.json(feedback.reduce((accumulator, { rating }) => accumulator.map((starCount, index) => starCount + ((index + 1) === rating)), [0, 0, 0, 0, 0]));
-  });
-  res.json((JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").feedback || []).reduce((accumulator, { rating }) => accumulator.map((starCount, index) => starCount + ((index + 1) === rating)), [0, 0, 0, 0, 0]))
+  readDatabase("feedback").then(({ feedback = [] }) => {
+    res.status(200).json({
+      err: null,
+      feedback: feedback.reduce((accumulator, { rating }) => accumulator.map((starCount, index) => starCount + ((index + 1) === rating)), [0, 0, 0, 0, 0])
+    });
+  }).catch(({ err }) => res.status(500).json({ err, feedback: null }));
 });
 
 app.post("/api/v1/feedback/send", (req, res) => {
   if (!req.body?.rating) return res.status(404).json({ err: "Missing rating" });
   if ((typeof req.body?.rating !== "number") || (req.body?.rating < 1) || (req.body?.rating > 5)) return res.status(422).json({ err: "Invalid rating" });
-  fs.writeFile("./data.json", JSON.stringify({
-    ...JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}"),
-    ...{
-      feedback: [
-        ...JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").feedback || [],
-        ...[
-          {
-            ...{
-              rating: req.body?.rating
-            },
-            ...(req.body?.comment && (typeof req.body?.comment === "string")) ? {
-              comment: req.body?.comment
-            } : {}
-          }
-        ]
+  readDatabase("feedback").then(({ feedback = [] }) => {
+    updateDatabase("feedback", [
+      ...feedback,
+      ...[
+        {
+          ...{
+            rating: req.body?.rating
+          },
+          ...(req.body?.comment && (typeof req.body?.comment === "string")) ? {
+            comment: req.body?.comment
+          } : {}
+        }
       ]
-    }
-  }), "utf8", () => {
-    res.status(200).json({ err: null });
-  });
+    ])
+    .then(() => {
+      res.status(200).json({ err: null })
+    })
+    .catch(({ err }) => {
+      res.status(500).json({ err })
+    });
+  }).catch(({ err }) => res.status(500).json({ err }));
 });
 
 app.get("/api/v1/apps/get", (req, res) => {
-  res.status(200).json(Object.entries(JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").apps || {}).reduce((accumulator, [appId, { iconExtension, name, description, verified }]) => ({
-    ...accumulator,
-    ...{
-      [appId]: {
-        iconExtension,
-        name,
-        description,
-        verified
-      }
-    }
-  }), {}));
+  readDatabase("apps").then(({ apps = {} }) => {
+    res.status(200).json({
+      err: null,
+      apps: Object.entries(apps).reduce((accumulator, [appId, { iconExtension, name, description, verified }]) => ({
+        ...accumulator,
+        ...{
+          [appId]: {
+            iconExtension,
+            name,
+            description,
+            verified
+          }
+        }
+      }), {})
+    });
+  }).catch(({ err }) => res.status(500).json({ err, apps: null }));
 });
 
 app.post("/api/v1/newsletter/register", (req, res) => {
   if (!req.body?.email) return res.status(404).json({ err: "Missing email" });
   if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi.test(req.body?.email)) return res.status(422).json({ err: "Invalid email" });
-  fs.writeFile("./data.json", JSON.stringify({
-    ...JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}"),
-    ...{
-      newsletter: [
-        ...JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").newsletter || [],
-        ...[
-          req.body?.email
-        ]
+  readDatabase("newsletter").then(({ newsletter = [] }) => {
+    updateDatabase("newsletter", [
+      ...newsletter,
+      ...[
+        req.body?.email
       ]
-    }
-  }), "utf8", () => {
-    res.status(200).json({ err: null });
-  });
+    ])
+    .then(() => {
+      res.status(200).json({ err: null });
+    })
+    .catch(({ err }) => {
+      res.status(500).json({ err })
+    });
+  }).catch(({ err }) => res.status(500).json({ err }));
 }); 
 
 app.post("/api/v1/newsletter/send", (req, res) => {
@@ -252,18 +255,26 @@ app.post("/api/v1/newsletter/send", (req, res) => {
   if (!["text", "html"].includes(req.body?.type)) return res.status(422).json({ err: "Invalid type" });
   if (!req.body?.content) return res.status(404).json({ err: "Missing content" });
   if ((typeof req.body?.content !== "string") || (req.body?.content.length < 1)) return res.status(422).json({ err: "Invalid content" });
-  Promise.all(
-    Array.from(Array(Math.ceil((JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").newsletter || []).length / 10))).map((_, index) => {
-      return Promise.all((JSON.parse(fs.readFileSync("./data.json", "utf8") || "{}").newsletter || []).slice(index * 10, (index + 1) * 10).map((email) =>
-        emailTransport.sendMail({
-          from: process.env.EMAIL_ADDRESS,
-          to: email,
-          subject: req.body?.subject,
-          [req.body?.type]: req.body?.content
-        }).catch(() => {})
-      ));
+  readDatabase("newsletter").then(({ newsletter = [] }) => {
+    Promise.all(
+      Array.from(Array(Math.ceil(newsletter.length / 10))).map((_, index) => {
+        return Promise.all(newsletter.slice(index * 10, (index + 1) * 10).map((email) =>
+          emailTransport.sendMail({
+            from: process.env.EMAIL_ADDRESS,
+            to: email,
+            subject: req.body?.subject,
+            [req.body?.type]: req.body?.content
+          }).catch(() => {})
+        ));
+      })
+    )
+    .then(() =>{
+      res.status(204).json({ err: null })
     })
-  ).then(() => res.status(204).json({ err: null })).catch(() => res.status(500).json({ err: "Failed to send emails" }));
+    .catch(() => {
+      res.status(500).json({ err: "Failed to send emails" })
+    });
+  }).catch(({ err }) => res.status(500).json({ err }));
 });
 
 app.get("/api/v1/admin/verify", (req, res) => {

@@ -382,7 +382,8 @@ document.getElementById("scriptEditorContainerBackButton").addEventListener("cli
 
 fetch(((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourceProtocol + "//" + JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourceHostname + ((JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourcePort) ? (":" + JSON.parse(fs.readFileSync(path.join(parent.process.resourcesPath, "customServer.json"), "utf8")).resourcePort) : "")) : (parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PROTOCOL + "//" + parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_HOSTNAME + ((parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PORT) ? (":" + parsedEnvironmentVariables.DEFAULT_RESOURCE_SERVER_PORT) : ""))) + "/api/v1/apps/get")
 .then((response) => response.json())
-.then((apps) => {
+.then(({ err, apps }) => {
+  if (err) return;
   Object.entries(apps || {}).sort((previousApp, nextApp) => nextApp[1].downloads - previousApp[1].downloads).forEach(([appId, { iconExtension, name, description, verified }]) => {
     let appContainer = document.createElement("div");
     appContainer.dataset.id = appId;
