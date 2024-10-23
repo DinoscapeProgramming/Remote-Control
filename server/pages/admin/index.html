@@ -288,62 +288,62 @@
             </div>
           </div>
         </div>
-        <div id="contacts" style="display: none">
+        <div id="contacts" style="display: none;">
           <h1>Contact Messages</h1>
           <div class="card">
-            <h2>Messages from Users</h2>
-
-            &lt;% contacts.forEach(contact =&gt; { %&gt; &lt;% }) %&gt;
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Message</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>&lt;%= contact.name %&gt;</td>
-                  <td>&lt;%= contact.email %&gt;</td>
-                  <td>&lt;%= contact.message %&gt;</td>
-                  <td>
-                    <a href="/admin/reply/<%= contact.id %>" class="buttonLink"
-                      >Reply</a
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="height: calc(100vh - 242.5px); padding: 30px; overflow-y: auto;">
+              <h2>Messages from Users</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>&lt;%= contact.name %&gt;</td>
+                    <td>&lt;%= contact.email %&gt;</td>
+                    <td>&lt;%= contact.message %&gt;</td>
+                    <td>
+                      <a href="/admin/reply/<%= contact.id %>" class="buttonLink"
+                        >Reply</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-        <div id="database" style="display: none">
+        <div id="database" style="display: none;">
           <h1>Manage Databases</h1>
           <div class="card">
-            <h2>Databases Overview</h2>
-
-            &lt;% databases.forEach(db =&gt; { %&gt; &lt;% }) %&gt;
-            <table>
-              <thead>
-                <tr>
-                  <th>Database Name</th>
-                  <th>Records</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>&lt;%= db.name %&gt;</td>
-                  <td>&lt;%= db.records %&gt;</td>
-                  <td>
-                    <a href="/admin/database/<%= db.id %>" class="buttonLink"
-                      >View/Edit</a
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="height: calc(100vh - 242.5px); padding: 30px; overflow-y: auto;"></div>
+              <h2>Databases Overview</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Database Name</th>
+                    <th>Records</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>&lt;%= db.name %&gt;</td>
+                    <td>&lt;%= db.records %&gt;</td>
+                    <td>
+                      <a href="/admin/database/<%= db.id %>" class="buttonLink"
+                        >View/Edit</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
