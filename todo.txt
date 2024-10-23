@@ -1,6 +1,6 @@
 - Finish remote printing
 - Add Wake on LAN
-- Make app runnable in the background
+- Make app runnable in the background (skipTaskbar, Tray)
 - Finish Admin portal
 - Write documentation 🙄🙄🙄
 - Code sign my app (can't afford it yet)
