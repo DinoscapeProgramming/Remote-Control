@@ -157,6 +157,18 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
   });
 });
 
+document.getElementById("autoLaunchSelect").value = (JSON.parse(localStorage.getItem("settings")) || {}).autoLaunchType || "foreground";
+
+document.getElementById("autoLaunchSelect").addEventListener("change", () => {
+  localStorage.setItem("settings", JSON.stringify({
+    ...JSON.parse(localStorage.getItem("settings")) || {},
+    ...{
+      autoLaunchType: document.getElementById("autoLaunchSelect").value
+    }
+  }));
+  fs.writeFileSync(path.join(parent.process.resourcesPath, "autoLaunchType.txt"), document.getElementById("autoLaunchSelect").value, "utf8");
+});
+
 if (parent.installingRemotePrintDriver || parent.uninstallingRemotePrintDriver) {
   let installRemotePrintDriverSpinnerIcon = document.createElement("i");
   installRemotePrintDriverSpinnerIcon.className = "fa fa-spinner fa-spin";
@@ -199,6 +211,7 @@ document.getElementById("installRemotePrintDriverButton").addEventListener("clic
 });
 
 window.addEventListener("message", ({ data: { type, installRemotePrintDriverButtonLabel } }) => {
+  if (type !== "installRemotePrintDriverButtonLabel") return;
   document.getElementById("installRemotePrintDriverButton").disabled = false;
   document.getElementById("installRemotePrintDriverButton").innerText = installRemotePrintDriverButtonLabel;
 });
