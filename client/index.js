@@ -8,7 +8,7 @@ if (!require("fs").readdirSync(process.resourcesPath).includes("prompt.vbs")) {
     require("fs").writeFileSync(require("path").join(process.resourcesPath, "nativePrompts/linux.sh"), `zenity --entry --title="$1" --text="$2" --entry-text="$3" ""`, "utf8");
   });
 };
-const { app, BrowserWindow, ipcMain, screen, dialog, clipboard, nativeImage } = require("electron");
+const { app, BrowserWindow, ipcMain, screen, dialog, clipboard, nativeImage, Tray } = require("electron");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");

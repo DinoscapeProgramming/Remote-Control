@@ -1,7 +1,9 @@
 - Finish Remote Printing
 - Add Wake on LAN
-- Make app runnable in the background (skipTaskbar, Tray)
 - Finish Admin portal
 - Add App Portal
+- Add contact section to website
 - Write Documentation 🙄🙄🙄
 - Code sign my app (can't afford it yet)
+- Get people to donate so I can upgrade my jsonbin subscription
+- Remove Herobrine
