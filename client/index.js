@@ -239,6 +239,7 @@ const createWindow = () => {
     });
 
     ipcMain.on("runInBackgroundOnClose", () => {
+      window.hide();
       window.setSkipTaskbar(true);
       let tray = new Tray(path.join(__dirname, "assets/favicon.ico"));
       tray.setToolTip("Remote Control");
