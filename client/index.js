@@ -42,7 +42,10 @@ const createWindow = () => {
     tray.setContextMenu(Menu.buildFromTemplate([
       {
         label: "Show",
-        click: () => window.show()
+        click: () => {
+          window.show();
+          tray.destroy();
+        }
       },
       {
         label: "Exit",
@@ -52,8 +55,9 @@ const createWindow = () => {
   };
 
   ipcMain.on("updateElectronApp", () => {
-    autoUpdateListener = updateElectronApp()
+    autoUpdateListener = updateElectronApp();
   });
+
   setTimeout(() => {
     window.webContents.send("debugLog", "Started App");
 
@@ -232,6 +236,25 @@ const createWindow = () => {
         if (canceled) return;
         fs.writeFileSync(filePath, fileText, "utf8");
       });
+    });
+
+    ipcMain.on("runInBackgroundOnClose", () => {
+      window.setSkipTaskbar(true);
+      let tray = new Tray(path.join(__dirname, "assets/favicon.ico"));
+      tray.setToolTip("Remote Control");
+      tray.setContextMenu(Menu.buildFromTemplate([
+        {
+          label: "Show",
+          click: () => {
+            window.show();
+            tray.destroy();
+          }
+        },
+        {
+          label: "Exit",
+          click: () => app.quit()
+        }
+      ]));
     });
 
     ipcMain.on("scriptError", (_, { language, err }) => {

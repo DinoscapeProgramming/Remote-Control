@@ -37,6 +37,13 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
         type: "autoLaunch",
         value: !slider.previousElementSibling.checked
       });
+    } else if (slider.parentElement.dataset.type === "runInBackgroundOnClose") {
+      localStorage.setItem("settings", JSON.stringify({
+        ...JSON.parse(localStorage.getItem("settings")) || {},
+        ...{
+          runInBackgroundOnClose: !slider.previousElementSibling.checked
+        }
+      }));
     } else if (slider.parentElement.dataset.type === "autoUpdate") {
       localStorage.setItem("settings", JSON.stringify({
         ...JSON.parse(localStorage.getItem("settings")) || {},

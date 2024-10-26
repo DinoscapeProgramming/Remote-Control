@@ -629,6 +629,12 @@ fs.readdirSync(path.join(process.resourcesPath, "appStartupCode")).forEach((appS
   };
 });
 
+window.addEventListener("beforeunload", (event) => {
+  if (!(JSON.parse(localStorage.getItem("settings")) || {}).runInBackgroundOnClose) return;
+  event.preventDefault();
+  ipcRenderer.send("runInBackgroundOnClose");
+});
+
 window.devTools = {
   left: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'left' });"),
   right: () => ipcRenderer.send("executeDebugCode", "window.webContents.closeDevTools(); window.webContents.openDevTools({ mode: 'right' });"),
