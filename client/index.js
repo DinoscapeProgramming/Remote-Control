@@ -19,6 +19,7 @@ const robot = require("@jitsi/robotjs");
 const { updateElectronApp } = require("update-electron-app");
 let systemUsageDataIntervals = {};
 let autoUpdateListener;
+let tray;
 
 const createWindow = () => {
   const window = new BrowserWindow({
@@ -36,8 +37,8 @@ const createWindow = () => {
   window.show();
   window.loadFile("pages/main/index.html");
 
-  if (app.getLoginItemSettings().wasOpenedAtLogin && ((fs.readFileSync(path.join(process.env.resourcesPath, "autoLaunchType.txt"), "utf8") || "foreground") === "background")) {
-    let tray = new Tray(path.join(__dirname, "assets/favicon.ico"));
+  if (!tray && app.getLoginItemSettings().wasOpenedAtLogin && ((fs.readFileSync(path.join(process.env.resourcesPath, "autoLaunchType.txt"), "utf8") || "foreground") === "background")) {
+    tray = new Tray(path.join(__dirname, "assets/favicon.ico"));
     tray.setToolTip("Remote Control");
     tray.setContextMenu(Menu.buildFromTemplate([
       {
@@ -45,11 +46,16 @@ const createWindow = () => {
         click: () => {
           window.show();
           tray.destroy();
+          tray = null;
         }
       },
       {
         label: "Exit",
-        click: () => app.quit()
+        click: () => {
+          app.quit();
+          tray.destroy();
+          tray = null;
+        }
       }
     ]));
   };
@@ -239,9 +245,10 @@ const createWindow = () => {
     });
 
     ipcMain.on("runInBackgroundOnClose", () => {
+      if (tray) return;
       window.hide();
       window.setSkipTaskbar(true);
-      let tray = new Tray(path.join(__dirname, "assets/favicon.ico"));
+      tray = new Tray(path.join(__dirname, "assets/favicon.ico"));
       tray.setToolTip("Remote Control");
       tray.setContextMenu(Menu.buildFromTemplate([
         {
@@ -249,11 +256,16 @@ const createWindow = () => {
           click: () => {
             window.show();
             tray.destroy();
+            tray = null;
           }
         },
         {
           label: "Exit",
-          click: () => app.quit()
+          click: () => {
+            app.quit();
+            tray.destroy();
+            tray = null;
+          }
         }
       ]));
     });
