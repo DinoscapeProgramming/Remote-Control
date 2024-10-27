@@ -114,7 +114,6 @@ io.on("connection", (socket) => {
 if (!fs.readdirSync("./").includes("apps")) fs.mkdirSync("./apps");
 if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Worker("./worker.js");
 
-app.enable("trust proxy");
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
