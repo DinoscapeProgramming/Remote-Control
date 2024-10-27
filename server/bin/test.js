@@ -1,4 +1,4 @@
 #! /usr/bin/env node
-const { hostServer } = require("../../package.js");
+console.log("Error: no test specified");
 
-hostServer();
+process.exit(1);
