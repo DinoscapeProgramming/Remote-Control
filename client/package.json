@@ -2,7 +2,7 @@
   "name": "remote-control-client",
   "productName": "Remote Control",
   "version": "1.0.0",
-  "description": "An advanced, but easy-to-use Remote Desktop Application Program which has cross-platform support",
+  "description": "An advanced but easy-to-use remote desktop application with cross-platform support",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

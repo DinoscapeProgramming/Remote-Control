@@ -123,6 +123,9 @@ app.use("/docs", expressDocs(app, {
   logo: path.resolve("./assets/logo.svg"),
   directory: path.resolve("./pages/docs"),
   options: {
+    customHTML: {
+      head: "<meta name='description' content='Get started with Remote Control by exploring our detailed documentation. Unlock the full potential of this advanced but easy-to-use, cross-platform remote desktop app.' />"
+    },
     customCode: fs.readFileSync("./data/postHog.js", "utf8") || (() => {}).toString()
   }
 }));

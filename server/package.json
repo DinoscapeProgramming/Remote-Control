@@ -2,7 +2,7 @@
   "name": "remote-control-server",
   "productName": "Remote Control Server",
   "version": "1.0.0",
-  "description": "An advanced, but easy-to-use Remote Desktop Application Program which has cross-platform support",
+  "description": "An advanced but easy-to-use remote desktop application program with cross-platform support",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -31,7 +31,7 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
-    "express-documentation": "^1.0.73",
+    "express-documentation": "^1.0.74",
     "express-rate-limit": "^7.2.0",
     "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.15",
