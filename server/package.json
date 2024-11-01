@@ -31,7 +31,7 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
-    "express-documentation": "^1.0.75",
+    "express-documentation": "^1.0.76",
     "express-rate-limit": "^7.2.0",
     "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.15",
