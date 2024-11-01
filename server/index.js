@@ -117,6 +117,11 @@ if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Work
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';");
+  res.removeHeader("X-Powered-By");
+  next();
+});
 app.use("/docs", expressDocs(app, {
   title: "Remote Control - Docs",
   favicon: path.resolve("./assets/favicon.ico"),
@@ -146,11 +151,6 @@ app.use(["/api/v1/feedback/send", "/api/v1/newsletter/register"], rateLimit({
   standardHeaders: "draft-7",
   legacyHeaders: false
 }));
-app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';");
-  res.removeHeader("X-Powered-By");
-  next();
-});
 app.use("/peer", peerServer);
 app.use("/apps", express.static("apps"));
 app.use("/assets", express.static("assets"));
