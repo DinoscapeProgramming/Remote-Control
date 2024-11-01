@@ -147,7 +147,7 @@ app.use(["/api/v1/feedback/send", "/api/v1/newsletter/register"], rateLimit({
   legacyHeaders: false
 }));
 app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "default-src 'self'");
+  res.setHeader("Content-Security-Policy", "default-src *");
   res.removeHeader("X-Powered-By");
   next();
 });
