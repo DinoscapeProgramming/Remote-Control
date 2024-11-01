@@ -146,6 +146,11 @@ app.use(["/api/v1/feedback/send", "/api/v1/newsletter/register"], rateLimit({
   standardHeaders: "draft-7",
   legacyHeaders: false
 }));
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "default-src 'self'");
+  res.removeHeader("X-Powered-By");
+  next();
+});
 app.use("/peer", peerServer);
 app.use("/apps", express.static("apps"));
 app.use("/assets", express.static("assets"));
