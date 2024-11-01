@@ -124,9 +124,21 @@ app.use("/docs", expressDocs(app, {
   directory: path.resolve("./pages/docs"),
   options: {
     customHTML: {
-      head: "<meta name='description' content='Get started with Remote Control by exploring our detailed documentation. Unlock the full potential of this advanced but easy-to-use, cross-platform remote desktop app.' />"
+      head: `
+        <meta name="description" content="Get started with Remote Control by exploring our detailed documentation. Unlock the full potential of this advanced but easy-to-use, cross-platform remote desktop app." />
+        <meta name="theme-color" content="#000000" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/assets/favicon.ico" />
+      `
     },
-    customCode: fs.readFileSync("./data/postHog.js", "utf8") || (() => {}).toString()
+    customCode: fs.readFileSync("./data/postHog.js", "utf8") || (() => {}).toString() + `
+      if (!["iPad Simulator", "iPhone Simulator", "iPod Simulator", "iPad", "iPhone", "iPod"].includes(navigator.platform) && !navigator.userAgent.includes("Mac") && !("ontouchend" in document)) {
+        let serviceWorkerRegistration = document.createElement("script");
+        serviceWorkerRegistration.setAttribute("defer", "");
+        serviceWorkerRegistration.setAttribute("src", "/pages/serviceWorker.js");
+        document.head.appendChild(serviceWorkerRegistration);
+      };
+    `
   }
 }));
 app.use(["/api/v1/feedback/send", "/api/v1/newsletter/register"], rateLimit({
