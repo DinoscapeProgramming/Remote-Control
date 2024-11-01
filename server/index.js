@@ -131,7 +131,7 @@ app.use("/docs", expressDocs(app, {
         <link rel="apple-touch-icon" href="/assets/favicon.ico" />
       `
     },
-    customCode: fs.readFileSync("./data/postHog.js", "utf8") || (() => {}).toString() + `
+    customCode: fs.readFileSync("./data/posthog.js", "utf8") || (() => {}).toString() + `
       if (!["iPad Simulator", "iPhone Simulator", "iPod Simulator", "iPad", "iPhone", "iPod"].includes(navigator.platform) && !navigator.userAgent.includes("Mac") && !("ontouchend" in document)) {
         let serviceWorkerRegistration = document.createElement("script");
         serviceWorkerRegistration.setAttribute("defer", "");
