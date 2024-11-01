@@ -1,7 +1,7 @@
 {
   "name": "electron-remote-control",
   "productName": "Remote Control Package",
-  "version": "1.1.3165",
+  "version": "1.1.3176",
   "description": "An advanced but easy-to-use remote desktop application with cross-platform support",
   "main": "package.js",
   "scripts": {
