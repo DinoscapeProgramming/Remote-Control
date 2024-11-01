@@ -147,7 +147,7 @@ app.use(["/api/v1/feedback/send", "/api/v1/newsletter/register"], rateLimit({
   legacyHeaders: false
 }));
 app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "default-src *");
+  res.setHeader("Content-Security-Policy", "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';");
   res.removeHeader("X-Powered-By");
   next();
 });
