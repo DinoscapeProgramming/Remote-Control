@@ -347,7 +347,7 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
       win32: () => {
         childProcess.exec("reg query HKCU\\Software\\PDFCreator.net", (err, stdout, stderr) => {
           if (!err && !stderr && stdout.includes("PDFCreator")) {
-            childProcess.exec("reg add 'HKCU\\Software\\PDFCreator.net\\Settings\\ApplicationSettings' /v Path /t REG_SZ /d '" + path.join(process.env.resourcesPath, "printJobs") + "' /f", (err, stdout, stderr) => {
+            childProcess.exec("reg add 'HKCU\\Software\\PDFCreator.net\\Settings\\ApplicationSettings' /v Path /t REG_SZ /d '" + path.join(process.resourcesPath, "printJobs") + "' /f", (err, stdout, stderr) => {
               window.installingRemotePrintDriver = false;
               document.getElementById("pageEmbed").contentWindow.postMessage({
                 type: "installRemotePrintDriverButtonLabel",
@@ -389,7 +389,7 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
                             err: err?.message || stderr || "Failed to install PDFCreator"
                           });
                         } else {
-                          childProcess.exec("reg add 'HKCU\\Software\\PDFCreator.net\\Settings\\ApplicationSettings' /v Path /t REG_SZ /d '" + path.join(process.env.resourcesPath, "printJobs") + "' /f", (err, stdout, stderr) => {
+                          childProcess.exec("reg add 'HKCU\\Software\\PDFCreator.net\\Settings\\ApplicationSettings' /v Path /t REG_SZ /d '" + path.join(process.resourcesPath, "printJobs") + "' /f", (err, stdout, stderr) => {
                             window.installingRemotePrintDriver = false;
                             document.getElementById("pageEmbed").contentWindow.postMessage({
                               type: "installRemotePrintDriverButtonLabel",

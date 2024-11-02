@@ -27,7 +27,7 @@ const createWindow = () => {
     title: "Remote Control",
     icon: path.join(__dirname, "assets/favicon.ico"),
     autoHideMenuBar: true,
-    skipTaskbar: (app.getLoginItemSettings().wasOpenedAtLogin && ((fs.readFileSync(path.join(process.env.resourcesPath, "autoLaunchType.txt"), "utf8") || "foreground") === "background")),
+    skipTaskbar: (app.getLoginItemSettings().wasOpenedAtLogin && ((fs.readFileSync(path.join(process.resourcesPath, "autoLaunchType.txt"), "utf8") || "foreground") === "background")),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -37,7 +37,7 @@ const createWindow = () => {
   window.show();
   window.loadFile("pages/main/index.html");
 
-  if (!tray && app.getLoginItemSettings().wasOpenedAtLogin && ((fs.readFileSync(path.join(process.env.resourcesPath, "autoLaunchType.txt"), "utf8") || "foreground") === "background")) {
+  if (!tray && app.getLoginItemSettings().wasOpenedAtLogin && ((fs.readFileSync(path.join(process.resourcesPath, "autoLaunchType.txt"), "utf8") || "foreground") === "background")) {
     tray = new Tray(path.join(__dirname, "assets/favicon.ico"));
     tray.setToolTip("Remote Control");
     tray.setContextMenu(Menu.buildFromTemplate([
