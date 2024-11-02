@@ -30,6 +30,7 @@ const createWindow = () => {
     skipTaskbar: (app.getLoginItemSettings().wasOpenedAtLogin && ((fs.readFileSync(path.join(process.resourcesPath, "autoLaunchType.txt"), "utf8") || "foreground") === "background")),
     webPreferences: {
       nodeIntegration: true,
+      nodeIntegrationInWorker: true,
       contextIsolation: false
     }
   });

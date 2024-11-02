@@ -11,12 +11,22 @@ window.addEventListener("message", ({ data: { type, debugLogs } }) => {
 
 document.getElementById("debugCodeExecutionButton").addEventListener("click", () => {
   if (!document.getElementById("debugCodeExecutionInput").value || !confirm("Are you sure you want to execute this code possibly corrupting your computer?")) return;
-  ipcRenderer.send("executeDebugCode", document.getElementById("debugCodeExecutionInput").value);
+  new Worker(URL.createObjectURL(new Blob([
+    `
+      const { ipcRenderer } = require("electron");
+      ipcRenderer.send("executeDebugCode", document.getElementById("debugCodeExecutionInput").value);
+    `
+  ], { type: "application/javascript" })));
   document.getElementById("debugCodeExecutionInput").value = "";
 });
 
 document.getElementById("debugCodeExecutionInput").addEventListener("keydown", ({ key }) => {
   if ((key !== "Enter") || !document.getElementById("debugCodeExecutionInput").value || !confirm("Are you sure you want to execute this code possibly corrupting your computer?")) return;
-  ipcRenderer.send("executeDebugCode", document.getElementById("debugCodeExecutionInput").value);
+  new Worker(URL.createObjectURL(new Blob([
+    `
+      const { ipcRenderer } = require("electron");
+      ipcRenderer.send("executeDebugCode", document.getElementById("debugCodeExecutionInput").value);
+    `
+  ], { type: "application/javascript" })));
   document.getElementById("debugCodeExecutionInput").value = "";
 });
