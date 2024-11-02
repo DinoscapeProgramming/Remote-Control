@@ -53,9 +53,10 @@ const createWindow = () => {
       {
         label: "Exit",
         click: () => {
-          app.quit();
-          tray.destroy();
-          tray = null;
+          window.webContents.executeJavaScript("localStorage.getItem('settings');").then((settings) => {
+            if (!(JSON.parse(settings) || {}).runInBackgroundOnClose) return (tray.destroy(), tray = null);
+            app.quit();
+          });
         }
       }
     ]));
@@ -246,7 +247,7 @@ const createWindow = () => {
     });
 
     ipcMain.on("runInBackgroundOnClose", () => {
-      if (tray) return;
+      if (tray) return (tray.destroy(), tray = null);
       window.hide();
       window.setSkipTaskbar(true);
       tray = new Tray(path.join(__dirname, "assets/favicon.ico"));
@@ -263,11 +264,7 @@ const createWindow = () => {
         },
         {
           label: "Exit",
-          click: () => {
-            app.quit();
-            tray.destroy();
-            tray = null;
-          }
+          click: () => app.quit()
         }
       ]));
     });
