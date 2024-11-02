@@ -45,6 +45,7 @@ const createWindow = () => {
         label: "Show",
         click: () => {
           window.show();
+          window.setSkipTaskbar(false);
           tray.destroy();
           tray = null;
         }
@@ -255,6 +256,7 @@ const createWindow = () => {
           label: "Show",
           click: () => {
             window.show();
+            window.setSkipTaskbar(false);
             tray.destroy();
             tray = null;
           }
