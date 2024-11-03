@@ -1,4 +1,15 @@
 const { ipcRenderer } = parent.require("electron");
+const worker = new Worker(URL.createObjectURL(new Blob([
+  `
+    self.addEventListener("message", ({ data }) => {
+      self.postMessage(data);
+    });
+  `
+], { type: "application/javascript" })));
+
+worker.addEventListener("message", ({ data }) => {
+  ipcRenderer.send("executeDebugCode", data);
+});
 
 parent.postMessage({
   type: "requestDebugLogs"
@@ -11,22 +22,12 @@ window.addEventListener("message", ({ data: { type, debugLogs } }) => {
 
 document.getElementById("debugCodeExecutionButton").addEventListener("click", () => {
   if (!document.getElementById("debugCodeExecutionInput").value || !confirm("Are you sure you want to execute this code possibly corrupting your computer?")) return;
-  new Worker(URL.createObjectURL(new Blob([
-    `
-      const { ipcRenderer } = require("electron");
-      ipcRenderer.send("executeDebugCode", document.getElementById("debugCodeExecutionInput").value);
-    `
-  ], { type: "application/javascript" })));
+  worker.postMessage(document.getElementById("debugCodeExecutionInput").value);
   document.getElementById("debugCodeExecutionInput").value = "";
 });
 
 document.getElementById("debugCodeExecutionInput").addEventListener("keydown", ({ key }) => {
   if ((key !== "Enter") || !document.getElementById("debugCodeExecutionInput").value || !confirm("Are you sure you want to execute this code possibly corrupting your computer?")) return;
-  new Worker(URL.createObjectURL(new Blob([
-    `
-      const { ipcRenderer } = require("electron");
-      ipcRenderer.send("executeDebugCode", document.getElementById("debugCodeExecutionInput").value);
-    `
-  ], { type: "application/javascript" })));
+  worker.postMessage(document.getElementById("debugCodeExecutionInput").value);
   document.getElementById("debugCodeExecutionInput").value = "";
 });
