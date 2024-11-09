@@ -1,0 +1,24 @@
+name: Repeat Publish
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  hourly_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Repeat publish 5 versions
+        run: npm run rp --amount=5

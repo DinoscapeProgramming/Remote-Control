@@ -18,8 +18,17 @@ try {
           darwin: "darwin.scpt",
           linux: "linux.sh"
         })[process.platform])
-      ]
-    ]);
+      ],
+      ...(process.argv.find((argument) => argument.startsWith("--amount="))) ? [
+        [
+          [
+            process.argv.find((argument) => argument.startsWith("--amount=")).split("=")[1]
+          ]
+        ]
+      ] : []
+    ], {
+      stdio: "inherit"
+    });
   };
 } catch (err) {
   throw new Error(err.message);
