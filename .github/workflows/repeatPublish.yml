@@ -18,4 +18,4 @@ jobs:
           node-version: '22.11.0'
 
       - name: Repeat publish 5 versions
-        run: npm run rp --amount=5
+        run: npm run rp -- --amount=5
