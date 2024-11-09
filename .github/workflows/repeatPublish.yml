@@ -5,7 +5,7 @@ on:
     - cron: '0 * * * *'
 
 jobs:
-  hourly_job:
+  repeat_publish:
     runs-on: ubuntu-latest
 
     steps:
