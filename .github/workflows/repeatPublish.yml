@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Record start time
+        run: echo "start_time=$(date +%s)" >> $GITHUB_ENV
+
       - name: Check out repository
         uses: actions/checkout@v3
 
@@ -19,3 +22,7 @@ jobs:
 
       - name: Repeat publish 5 versions
         run: npm run rp -- --amount=5
+
+      - name: Calculate and display duration
+        run: |
+          echo "Duration: $((($(date +%s) - $start_time) / 60)) minute(s) and $((($(date +%s) - $start_time) % 60)) second(s)"
