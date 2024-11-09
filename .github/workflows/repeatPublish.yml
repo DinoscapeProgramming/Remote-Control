@@ -15,10 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-
-      - name: Install dependencies
-        run: npm ci
+          node-version: '22.11.0'
 
       - name: Repeat publish 5 versions
         run: npm run rp --amount=5
