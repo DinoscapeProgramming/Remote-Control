@@ -1,7 +1,14 @@
 Dim count, shell, packagePath, npmCommand, i
 
 If WScript.Arguments.Count > 0 Then
-  count = WScript.Arguments(0)
+  Dim arg
+  arg = WScript.Arguments(0)
+    
+  If Left(arg, 9) = "--amount=" Then
+    count = Mid(arg, 10)
+  Else
+    count = ""
+  End If
 Else
   count = InputBox("Enter the number of ghost updates to publish:", "Ghost Updates")
 End If

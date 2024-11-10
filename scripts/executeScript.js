@@ -11,18 +11,18 @@ try {
       win32: "cscript",
       darwin: "osascript",
       linux: "bash"
-    })[process.platform], [
+    })[process.platform.replace("win32", "linux")], [
       [
-        path.join(process.cwd(), "scripts/" + process.argv[2].substring(2) + "/" + ({
+        "./scripts/" + process.argv[2].substring(2) + "/" + ({
           win32: "win32.vbs",
           darwin: "darwin.scpt",
           linux: "linux.sh"
-        })[process.platform])
+        })[process.platform.replace("win32", "linux")]
       ],
       ...(process.argv.find((argument) => argument.startsWith("--amount="))) ? [
         [
           [
-            process.argv.find((argument) => argument.startsWith("--amount=")).split("=")[1]
+            process.argv.find((argument) => argument.startsWith("--amount="))
           ]
         ]
       ] : []
