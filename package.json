@@ -42,5 +42,8 @@
     "hs": "bin/hostServer.js",
     "buildClient": "bin/buildClient.js",
     "bc": "bin/buildClient.js"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
