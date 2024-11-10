@@ -1,6 +1,21 @@
 #!/bin/bash
 
-read -p "Enter the number of ghost updates to publish: " count
+while [[ "$1" =~ ^-- ]]; do
+  case "$1" in
+    --amount=*)
+      count="${1#*=}"
+      ;;
+    *)
+      echo "Invalid argument: $1"
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+if [[ -z "$count" ]]; then
+  read -p "Enter the number of ghost updates to publish: " count
+fi
 
 if ! [[ "$count" =~ ^[0-9]+$ ]] || [ "$count" -le 0 ]; then
   echo "Please enter a valid positive number."
