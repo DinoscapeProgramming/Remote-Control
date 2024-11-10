@@ -23,7 +23,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Repeat publish 5 versions
-        run: npm -- run rp -- --amount=5
+        run: npm -- run rp -- --amount=15
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
