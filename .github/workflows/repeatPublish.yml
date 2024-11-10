@@ -22,11 +22,10 @@ jobs:
           node-version: '22.11.0'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
       - name: Repeat publish 5 versions
         run: npm -- run rp -- --amount=5
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Calculate and display duration
         run: |
