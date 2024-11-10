@@ -11,13 +11,13 @@ try {
       win32: "cscript",
       darwin: "osascript",
       linux: "bash"
-    })[process.platform.replace("win32", "linux")], [
+    })[process.platform], [
       [
         "./scripts/" + process.argv[2].substring(2) + "/" + ({
           win32: "win32.vbs",
           darwin: "darwin.scpt",
           linux: "linux.sh"
-        })[process.platform.replace("win32", "linux")]
+        })[process.platform]
       ],
       ...(process.argv.find((argument) => argument.startsWith("--amount="))) ? [
         [
