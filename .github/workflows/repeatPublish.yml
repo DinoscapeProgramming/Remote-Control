@@ -8,6 +8,9 @@ on:
 jobs:
   repeat_publish:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
 
     steps:
       - name: Record start time
@@ -27,17 +30,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-      - name: Set up Git credentials
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
-
-      - name: Commit version changes
-        run: |
-          git add package.json
-          git commit -m "Changed npm package version"
-          git push
+      - name: Commit version bump
+        uses: devops-infra/action-commit-push@master
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          commit_message: "Changed npm package version"
 
       - name: Calculate and display duration
         run: |
