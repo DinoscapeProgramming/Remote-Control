@@ -27,16 +27,18 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-      - name: Calculate and display duration
-        run: |
-          echo "Duration: $((($(date +%s) - $start_time) / 60)) minute(s) and $((($(date +%s) - $start_time) % 60)) second(s)"
-
-      - name: Commit version changes
+      - name: Set up Git credentials
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: Commit version changes
+        run: |
           git add package.json
-          git commit -m "Changed npm package version" || echo "No changes to commit"
-          git push origin ${{ github.ref }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git commit -m "Changed npm package version"
+          git push
+
+      - name: Calculate and display duration
+        run: |
+          echo "Duration: $((($(date +%s) - $start_time) / 60)) minute(s) and $((($(date +%s) - $start_time) % 60)) second(s)"
