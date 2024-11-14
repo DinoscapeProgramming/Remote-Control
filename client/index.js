@@ -27,7 +27,7 @@ const createWindow = () => {
     title: "Remote Control",
     icon: path.join(__dirname, "assets/favicon.ico"),
     autoHideMenuBar: true,
-    skipTaskbar: (app.getLoginItemSettings().wasOpenedAtLogin && ((fs.readFileSync(path.join(process.resourcesPath, "autoLaunchType.txt"), "utf8") || "foreground") === "background")),
+    skipTaskbar: ((app.getLoginItemSettings().wasOpenedAtLogin || process.argv.includes("--startup")) && ((fs.readFileSync(path.join(process.resourcesPath, "autoLaunchType.txt"), "utf8") || "foreground") === "background")),
     webPreferences: {
       nodeIntegration: true,
       nodeIntegrationInWorker: true,
@@ -281,7 +281,10 @@ const createWindow = () => {
             openAtLogin: value
           },
           ...(value) ? {
-            path: app.getPath("exe")
+            path: app.getPath("exe"),
+            args: [
+              "--startup"
+            ]
           } : {}
         });
       } else if (type === "autoUpdate") {
