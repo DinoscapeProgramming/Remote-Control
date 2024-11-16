@@ -65,12 +65,16 @@ self.addEventListener("install", (event) => {
           "/pages/team/script.js",
           "/pages/openSource/index.html",
           "/pages/openSource/script.js",
+          "/docs",
+          "/expressDocsAssets/script.js",
+          "/expressDocsAssets/customHTMLHead.html",
+          "/expressDocsAssets/customCode.js",
+          "/expressDocsAssets/logo.svg",
           "/assets/favicon.ico",
           "/assets/logo.svg",
           "/assets/defaultProfilePictureMan.webp",
           "/assets/defaultProfilePictureWoman.webp",
-          "/assets/placeholder.svg",
-          "/docs"
+          "/assets/placeholder.svg"
         ]),
       ),
   );
