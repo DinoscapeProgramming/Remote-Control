@@ -54,46 +54,41 @@ if (workbox) {
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches
-      .open("PWA-1.0.0")
-      .then((cache) =>
-        cache.addAll([
-          "/",
-          "/pages/home/index.html",
-          "/pages/home/script.js",
-          "/pages/team/index.html",
-          "/pages/team/script.js",
-          "/pages/openSource/index.html",
-          "/pages/openSource/script.js",
-          "/docs",
-          "/expressDocsAssets/script.js",
-          "/expressDocsAssets/customHTMLHead.html",
-          "/expressDocsAssets/customCode.js",
-          "/expressDocsAssets/logo.svg",
-          "/assets/favicon.ico",
-          "/assets/logo.svg",
-          "/assets/defaultProfilePictureMan.webp",
-          "/assets/defaultProfilePictureWoman.webp",
-          "/assets/placeholder.svg"
-        ]),
-      ),
+    caches.open("PWA-1.0.0").then((cache) =>
+      cache.addAll([
+        "/",
+        "/pages/home/index.html",
+        "/pages/home/script.js",
+        "/pages/team/index.html",
+        "/pages/team/script.js",
+        "/pages/openSource/index.html",
+        "/pages/openSource/script.js",
+        "/docs",
+        "/expressDocsAssets/script.js",
+        "/expressDocsAssets/customHTMLHead.html",
+        "/expressDocsAssets/customCode.js",
+        "/expressDocsAssets/logo.svg",
+        "/assets/favicon.ico",
+        "/assets/logo.svg",
+        "/assets/defaultProfilePictureMan.webp",
+        "/assets/defaultProfilePictureWoman.webp",
+        "/assets/placeholder.svg"
+      ])
+    )
   );
 });
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      if (response) {
+      if (response) return response;
+      return fetch(event.request).then((response) => {
+        let responseClone = response.clone();
+        caches.open("PWA-1.0.0").then((cache) => {
+          cache.put(event.request, responseClone);
+        });
         return response;
-      } else {
-        return fetch(event.request).then((response) => {
-          let responseClone = response.clone();
-          caches.open("PWA-1.0.0").then((cache) => {
-            cache.put(event.request, responseClone);
-          });
-          return response;
-        }).catch(() => caches.match("/assets/placeholder.svg"));
-      };
-    }),
+      }).catch(() => caches.match("/assets/placeholder.svg"));
+    })
   );
 });
