@@ -14,7 +14,8 @@ document.getElementById("newsletterButton").addEventListener("click", () => {
     .then(({ err }) => {
       if (err) return;
       document.getElementById("newsletterInput").value = "";
-    });
+    })
+    .catch(() => {});
   };
 });
 
