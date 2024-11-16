@@ -1,3 +1,4 @@
+console.log("Worker executed");
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/6.0.2/workbox-sw.js");
 
 if (workbox) {
@@ -7,7 +8,9 @@ if (workbox) {
     precache: "precache",
     runtime: "run-time",
   });
+
   workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
+
   workbox.routing.registerRoute(
     new RegExp("/pages/.*/index\\.html"),
     new workbox.strategies.StaleWhileRevalidate({
