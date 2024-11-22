@@ -385,6 +385,7 @@ fetch(((Object.keys(JSON.parse(fs.readFileSync(path.join(parent.process.resource
 .then(({ err, apps }) => {
   if (err) return;
   Object.entries(apps || {}).sort((previousApp, nextApp) => nextApp[1].downloads - previousApp[1].downloads).forEach(([appId, { iconExtension, name, description, verified }]) => {
+    if (document.getElementById("scriptStoreContainer").children[0].className === "scriptIcon") document.getElementById("scriptStoreContainer").innerHTML = "";
     let appContainer = document.createElement("div");
     appContainer.dataset.id = appId;
     appContainer.style.display = "flex";
