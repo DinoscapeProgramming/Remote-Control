@@ -235,6 +235,7 @@ document.getElementById("createScriptButton").addEventListener("click", () => {
       (script[0] === scriptId) ? target.value : script[1]
     ])));
   });
+  scriptContainerName.select();
   let scriptContainerButtonBox = document.createElement("div");
   scriptContainerButtonBox.style.display = "flex";
   scriptContainerButtonBox.style.flexDirection = "row";
