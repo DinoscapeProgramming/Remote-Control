@@ -1,7 +1,7 @@
 const fs = parent.require("fs");
 const path = parent.require("path");
 window.process = {
-  env: fs.readFileSync(path.join(parent.process.resourcesPath, "app.asar/.env"), "utf8").split("\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
+  env: fs.readFileSync(path.join(parent.process.resourcesPath, "app.asar/.env"), "utf8").split("\r\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
     ...data,
     ...{
       [accumulator[0]]: JSON.parse(accumulator[1])
