@@ -8,7 +8,7 @@ if (!require("fs").readdirSync(process.resourcesPath).includes("prompt.vbs")) {
     require("fs").writeFileSync(require("path").join(process.resourcesPath, "nativePrompts/linux.sh"), `zenity --entry --title="$1" --text="$2" --entry-text="$3" ""`, "utf8");
   });
 };
-const { app, BrowserWindow, ipcMain, screen, dialog, clipboard, nativeImage, Tray, Menu } = require("electron");
+const { app, BrowserWindow, ipcMain, screen, dialog, clipboard, nativeImage, Tray, Menu, autoUpdater } = require("electron");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
@@ -16,9 +16,7 @@ const childProcess = require("child_process");
 const { io } = require("socket.io-client");
 const socket = io((Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketProtocol + "//" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketHostname + ((JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) ? (":" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) : "")) : (process.env.DEFAULT_SOCKET_SERVER_PROTOCOL + "//" + process.env.DEFAULT_SOCKET_SERVER_HOSTNAME + ((process.env.DEFAULT_SOCKET_SERVER_PORT) ? (":" + process.env.DEFAULT_SOCKET_SERVER_PORT) : "")));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 const robot = require("@jitsi/robotjs");
-const { updateElectronApp } = require("update-electron-app");
 let systemUsageDataIntervals = {};
-let autoUpdateListener;
 let tray;
 
 const createWindow = () => {
@@ -64,7 +62,33 @@ const createWindow = () => {
   };
 
   ipcMain.on("updateElectronApp", () => {
-    autoUpdateListener = updateElectronApp();
+    autoUpdater.setFeedURL({
+      ...{
+        url: "https://update.electronjs.org" + (new URL(require("./package.json").repository)).pathname + "/" + process.platform + "-" + process.arch + "/" + app.getVersion() + ((process.platform === "darwin") ? "/RELEASES.json" : "")
+      },
+      ...(process.platform === "darwin") ? {
+        headers: {
+          'User-Agent': "update-electron-app/3.0.0 (" + os.platform() + ": " + os.arch() + ")"
+        },
+        serverType: "json"
+      } : {}
+    });
+
+    autoUpdater.on("update-downloaded", (_, releaseNotes, releaseName) => {
+      dialog.showMessageBox({
+        type: "info",
+        buttons: [
+          "Restart",
+          "Later"
+        ],
+        title: "Application Update",
+        message: (process.platform === "win32") ? releaseNotes : releaseName,
+        detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+      }).then((returnValue) => {
+        if (returnValue.response) return;
+        autoUpdater.quitAndInstall();
+      });
+    });
   });
 
   setTimeout(() => {
@@ -289,10 +313,35 @@ const createWindow = () => {
         });
       } else if (type === "autoUpdate") {
         if (value) {
-          updateElectronApp();
-        } else if (autoUpdateListener) {
-          autoUpdateListener.removeAllListeners();
-          autoUpdateListener = null;
+          autoUpdater.setFeedURL({
+            ...{
+              url: "https://update.electronjs.org" + (new URL(require("./package.json").repository)).pathname + "/" + process.platform + "-" + process.arch + "/" + app.getVersion() + ((process.platform === "darwin") ? "/RELEASES.json" : "")
+            },
+            ...(process.platform === "darwin") ? {
+              headers: {
+                'User-Agent': "update-electron-app/3.0.0 (" + os.platform() + ": " + os.arch() + ")"
+              },
+              serverType: "json"
+            } : {}
+          });
+          
+          autoUpdater.on("update-downloaded", (_, releaseNotes, releaseName) => {
+            dialog.showMessageBox({
+              type: "info",
+              buttons: [
+                "Restart",
+                "Later"
+              ],
+              title: "Application Update",
+              message: (process.platform === "win32") ? releaseNotes : releaseName,
+              detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+            }).then((returnValue) => {
+              if (returnValue.response) return;
+              autoUpdater.quitAndInstall();
+            });
+          });
+        } else {
+          autoUpdater.removeAllListeners();
         };
       } else if (type === "customServer") {
         socket.io.uri = (Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? (JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketProtocol + "//" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketHostname + ((JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) ? (":" + JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).socketPort) : "")) : (process.env.DEFAULT_SOCKET_SERVER_PROTOCOL + "//" + process.env.DEFAULT_SOCKET_SERVER_HOSTNAME + ((process.env.DEFAULT_SOCKET_SERVER_PORT) ? (":" + process.env.DEFAULT_SOCKET_SERVER_PORT) : ""));
