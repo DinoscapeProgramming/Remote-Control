@@ -3,7 +3,7 @@ const fs = parent.require("fs");
 const path = parent.require("path");
 const crypto = parent.require("crypto");
 window.process = {
-  env: fs.readFileSync(path.join(process.resourcesPath, "app.asar/.env"), "utf8").split("\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
+  env: fs.readFileSync(path.join(parent.process.resourcesPath, "app.asar/.env"), "utf8").split("\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
     ...data,
     ...{
       [accumulator[0]]: accumulator[1]
