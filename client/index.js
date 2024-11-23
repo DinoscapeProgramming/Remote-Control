@@ -1,7 +1,7 @@
-Object.assign(process.env, require("fs").readFileSync(require("path").join(process.resourcesPath, "app.asar/.env"), "utf8").split("\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
+Object.assign(process.env, require("fs").readFileSync(require("path").join(process.resourcesPath, "app.asar/.env"), "utf8").split("\r\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
   ...data,
   ...{
-    [accumulator[0]]: accumulator[1]
+    [accumulator[0]]: JSON.parse(accumulator[1])
   }
 }), {}));
 if (!require("fs").readdirSync(process.resourcesPath).includes("autoLaunchType.txt")) require("fs").writeFileSync(require("path").join(process.resourcesPath, "autoLaunchType.txt"), "foreground");
