@@ -1,4 +1,9 @@
-require("dotenv").config({ path: require("path").join(process.resourcesPath, "app.asar/.env") });
+Object.assign(process.env, require("fs").readFileSync(require("path").join(process.resourcesPath, "app.asar/.env"), "utf8").split("\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
+  ...data,
+  ...{
+    [accumulator[0]]: accumulator[1]
+  }
+}), {}));
 const { ipcRenderer } = require("electron");
 const fs = require("fs");
 const path = require("path");

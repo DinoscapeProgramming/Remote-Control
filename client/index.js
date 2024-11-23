@@ -1,4 +1,9 @@
-require("dotenv").config({ path: require("path").join(process.resourcesPath, "app.asar/.env") });
+Object.assign(process.env, require("fs").readFileSync(require("path").join(process.resourcesPath, "app.asar/.env"), "utf8").split("\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
+  ...data,
+  ...{
+    [accumulator[0]]: accumulator[1]
+  }
+}), {}));
 if (!require("fs").readdirSync(process.resourcesPath).includes("autoLaunchType.txt")) require("fs").writeFileSync(require("path").join(process.resourcesPath, "autoLaunchType.txt"), "foreground");
 if (!require("fs").readdirSync(process.resourcesPath).includes("customServer.json")) require("fs").writeFileSync(require("path").join(process.resourcesPath, "customServer.json"), "{}");
 if (!require("fs").readdirSync(process.resourcesPath).includes("prompt.vbs")) {

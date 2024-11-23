@@ -2,7 +2,14 @@ const { ipcRenderer } = parent.require("electron");
 const fs = parent.require("fs");
 const path = parent.require("path");
 const childProcess = parent.require("child_process");
-const parsedEnvironmentVariables = parent.require("dotenv").config({ path: parent.require("path").join(parent.process.resourcesPath, "app.asar/.env") }).parsed;
+window.process = {
+  env: fs.readFileSync(path.join(process.resourcesPath, "app.asar/.env"), "utf8").split("\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
+    ...data,
+    ...{
+      [accumulator[0]]: accumulator[1]
+    }
+  }), {})
+};
 
 Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
   slider.previousElementSibling.checked = (JSON.parse(localStorage.getItem("settings")) || {})[slider.parentElement.dataset.type] ?? ({

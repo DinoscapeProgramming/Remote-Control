@@ -28,7 +28,6 @@
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.7",
     "crossnote": "^0.9.9",
-    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-documentation": "^1.0.80",

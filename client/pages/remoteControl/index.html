@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Remote Control</title>
     <script defer>
-      require("dotenv").config({
-        path: require("path").join(process.resourcesPath, "app.asar/.env"),
-      });
+      Object.assign(process.env, require("fs").readFileSync(require("path").join(process.resourcesPath, "app.asar/.env"), "utf8").split("\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
+        ...data,
+        ...{
+          [accumulator[0]]: accumulator[1]
+        }
+      }), {}));
       let socketScriptElement = document.createElement("script");
       socketScriptElement.defer = true;
       socketScriptElement.src =
