@@ -32,6 +32,8 @@
 
 ![screenshot](https://raw.githubusercontent.com/DinoscapeProgramming/Remote-Control/master/docs/static/demonstration.gif)
 
+_<h6>Feel free to give us a ⭐ on our [GitHub repository](https://github.com/DinoscapeProgramming/Remote-Control)!</h6>_
+
 ## Key Features
 
 * Instant Connection
