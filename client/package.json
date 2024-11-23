@@ -50,6 +50,19 @@
       "output": "build"
     },
     "icon": "assets/favicon.ico",
+    "files": [
+      "**/*",
+      "!./bin/**",
+      "!**/*.md",
+      "!**/test/*",
+      "!**/example/*",
+      "!**/LICENSE",
+      "!**/license",
+      "!**/.github/*",
+      "!**/*.bak",
+      "!**/*.txt",
+      "!**/.vscode/*"
+    ],
     "nsis": {
       "installerIcon": "assets/favicon.ico",
       "installerHeaderIcon": "assets/favicon.ico",
