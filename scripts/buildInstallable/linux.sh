@@ -11,4 +11,4 @@ fi
 
 cd "$CLIENT_DIR" || exit
 npm install
-npm run buildLinux
+npm run buildLinux --prod

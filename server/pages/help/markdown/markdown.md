@@ -77,7 +77,7 @@ $ cd Remote-Control/client
 $ npm install
 
 # Build the app
-$ npm run build
+$ npm run build --prod
 
 # Install the app
 $ ./build/*.exe
