@@ -17,7 +17,6 @@ const { ExpressPeerServer } = require("peer");
 const peerServer = ExpressPeerServer(http, {
   debug: true
 });
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
 const expressDocs = require("express-documentation");
@@ -120,8 +119,8 @@ if (!fs.readdirSync("./").includes("apps")) fs.mkdirSync("./apps");
 if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Worker("./worker.js");
 
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';");
   res.removeHeader("X-Powered-By");
