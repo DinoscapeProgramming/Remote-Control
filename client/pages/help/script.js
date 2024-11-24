@@ -17,5 +17,5 @@ document.getElementById("markdownEmbed").addEventListener("error", () => {
   document.getElementById("markdownEmbed").contentWindow.document.body.style.justifyContent = "center";
   document.getElementById("markdownEmbed").contentWindow.document.body.style.alignItems = "center";
   document.getElementById("markdownEmbed").contentWindow.document.body.style.marginBottom = "20px";
-  document.getElementById("markdownEmbed").appendChild(errorImage);
+  document.getElementById("markdownEmbed").contentWindow.document.appendChild(errorImage);
 });
