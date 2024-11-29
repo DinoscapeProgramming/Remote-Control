@@ -18,7 +18,6 @@ const peerServer = ExpressPeerServer(http, {
   debug: true
 });
 const cookieParser = require("cookie-parser");
-const rateLimit = require("express-rate-limit");
 const expressDocs = require("express-documentation");
 const fs = require("fs");
 const path = require("path");
@@ -34,6 +33,7 @@ const emailTransport = nodemailer.createTransport({
     pass: process.env.EMAIL_PASSWORD
   }
 });
+let rateLimits = {};
 
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ type, roomId, password } = {}) => {
@@ -145,11 +145,21 @@ app.use("/docs", expressDocs(app, {
     `
   }
 }));
-app.use(["/api/v1/feedback/send", "/api/v1/newsletter/register"], rateLimit({
-  limit: 1,
-  standardHeaders: "draft-7",
-  legacyHeaders: false
-}));
+app.use(["/api/v1/feedback/send", "/api/v1/newsletter/register"], (req, res, next) => {
+  if (Date.now() - (((rateLimits || {})[req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress] || {})[req.path] || 0) < 600000) return next();
+  rateLimits = {
+    ...rateLimits || {},
+    ...{
+      [req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress]: {
+        ...(rateLimits || {})[req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress] || {},
+        ...{
+          [req.path]: Date.now()
+        }
+      }
+    }
+  };
+  next();
+});
 app.use("/peer", peerServer);
 app.use("/apps", express.static("apps"));
 app.use("/assets", express.static("assets"));
