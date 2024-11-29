@@ -1,7 +1,7 @@
-Object.assign(process.env, require("fs").readFileSync("./.env", "utf8").split("\n").filter((line) => !line.startsWith("#") && (line.split("=").length > 1)).map((line) => line.split("\r")[0].split("#")[0].split("=")).reduce((data, accumulator) => ({
+Object.assign(process.env, require("fs").readFileSync("./.env", "utf8").split("\n").filter((line) => !line.startsWith("#") && (line.split("=").length > 1)).map((line) => line.trim().split("#")[0].split("=")).reduce((data, accumulator) => ({
   ...data,
   ...{
-    [accumulator[0]]: JSON.parse(accumulator[1])
+    [accumulator[0]]: JSON.parse(accumulator[1].trim())
   }
 }), {}));
 const express = require("express");
@@ -17,7 +17,6 @@ const { ExpressPeerServer } = require("peer");
 const peerServer = ExpressPeerServer(http, {
   debug: true
 });
-const cookieParser = require("cookie-parser");
 const expressDocs = require("express-documentation");
 const fs = require("fs");
 const path = require("path");
@@ -118,7 +117,6 @@ io.on("connection", (socket) => {
 if (!fs.readdirSync("./").includes("apps")) fs.mkdirSync("./apps");
 if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Worker("./worker.js");
 
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
@@ -277,6 +275,12 @@ app.post("/api/v1/newsletter/register", (req, res) => {
 }); 
 
 app.post("/api/v1/newsletter/send", (req, res) => {
+  req.cookies = req.headers.cookie.split(";").map((cookie) => cookie.trim().split("=")).reduce((data, accumulator) => ({
+    ...data,
+    ...{
+      [accumulator[0]]: decodeURIComponent(accumulator[1])
+    }
+  }), {});
   if (!req.cookies?.adminPassword) return res.status(404).json({ err: "Missing password" });
   if (req.cookies?.adminPassword !== process.env.ADMIN_PASSWORD) return res.status(418).json({ err: "I'm a teapot" });
   if (!req.body?.subject) return res.status(404).json({ err: "Missing subject" });
@@ -308,6 +312,12 @@ app.post("/api/v1/newsletter/send", (req, res) => {
 });
 
 app.get("/api/v1/admin/verify", (req, res) => {
+  req.cookies = req.headers.cookie.split(";").map((cookie) => cookie.trim().split("=")).reduce((data, accumulator) => ({
+    ...data,
+    ...{
+      [accumulator[0]]: decodeURIComponent(accumulator[1])
+    }
+  }), {});
   if (!req.cookies?.adminPassword) return res.status(404).json({ err: "Missing password", valid: false });
   res.status(200).json({
     err: null,

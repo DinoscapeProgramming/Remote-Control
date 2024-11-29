@@ -1,7 +1,7 @@
-Object.assign(process.env, require("fs").readFileSync("./.env", "utf8").split("\n").filter((line) => !line.startsWith("#") && (line.split("=").length > 1)).map((line) => line.split("\r")[0].split("#")[0].split("=")).reduce((data, accumulator) => ({
+Object.assign(process.env, require("fs").readFileSync("./.env", "utf8").split("\n").filter((line) => !line.startsWith("#") && (line.split("=").length > 1)).map((line) => line.trim().split("#")[0].split("=")).reduce((data, accumulator) => ({
   ...data,
   ...{
-    [accumulator[0]]: JSON.parse(accumulator[1])
+    [accumulator[0]]: JSON.parse(accumulator[1].trim())
   }
 }), {}));
 const https = require("https");
@@ -13,11 +13,18 @@ const fetch = (url, { method = "GET", headers = {}, body } = {}) => new Promise(
     let data = "";
     response.on("data", (chunk) => data += chunk);
     response.on("end", () => {
-      try {
-        resolve(JSON.parse(data));
-      } catch (err) {
-        reject("Invalid JSON response");
-      };
+      resolve({
+        statusCode: response.statusCode,
+        headers: response.headers,
+        json: new Promise((resolve, reject) => {
+          try {
+            resolve(JSON.parse(data))
+          } catch {
+            reject("Invalid JSON response");
+          };
+        }),
+        text: new Promise((resolve, reject) => resolve(data))
+      });
     });
   });
   request.on("error", (err) => reject(err));
