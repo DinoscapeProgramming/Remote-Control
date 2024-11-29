@@ -19,19 +19,12 @@ const peerServer = ExpressPeerServer(http, {
 });
 const expressDocs = require("express-documentation");
 const fs = require("fs");
+const tls = require("tls");
 const path = require("path");
 const crypto = require("crypto");
 const { Worker } = require("worker_threads");
 const { readDatabase, updateDatabase } = require("./database.js");
 const keys = require("./keys.json");
-const nodemailer = require("nodemailer");
-const emailTransport = nodemailer.createTransport({
-  service: process.env.EMAIL_PROVIDER,
-  auth: {
-    user: process.env.EMAIL_ADDRESS,
-    pass: process.env.EMAIL_PASSWORD
-  }
-});
 let rateLimits = {};
 
 io.on("connection", (socket) => {
@@ -120,7 +113,6 @@ if (!fs.readdirSync("./pages/help/markdown").includes("markdown.html")) new Work
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';");
   res.removeHeader("X-Powered-By");
   next();
 });
@@ -290,14 +282,70 @@ app.post("/api/v1/newsletter/send", (req, res) => {
   if (!req.body?.content) return res.status(404).json({ err: "Missing content" });
   if ((typeof req.body?.content !== "string") || (req.body?.content.length < 1)) return res.status(422).json({ err: "Invalid content" });
   readDatabase("newsletter").then(({ newsletter = [] }) => {
+    console.log(newsletter);
     Promise.all(
       Array.from(Array(Math.ceil(newsletter.length / 10))).map((_, index) => {
         return Promise.all(newsletter.slice(index * 10, (index + 1) * 10).map((email) => {
-          emailTransport.sendMail({
-            from: process.env.EMAIL_ADDRESS,
-            to: email,
-            subject: req.body?.subject,
-            [req.body?.type]: req.body?.content
+          let client = tls.connect(465, "smtp.gmail.com", {
+            rejectUnauthorized: false
+          }, () => client.write("EHLO localhost\r\n"));
+          let step = 0;
+
+          client.on("data", (data) => {
+            switch (step) {
+              case 0:
+                if (data.toString().startsWith("250")) {
+                  client.write("AUTH LOGIN\r\n");
+                  step++;
+                };
+                break;
+        
+              case 1:
+                if (data.toString().startsWith("334")) {
+                  client.write(Buffer.from(process.env.EMAIL_ADDRESS).toString("base64") + "\r\n");
+                  step++;
+                };
+                break;
+        
+              case 2:
+                if (data.toString().startsWith("334")) {
+                  client.write(Buffer.from(process.env.EMAIL_PASSWORD).toString("base64") + "\r\n");
+                  step++;
+                };
+                break;
+        
+              case 3:
+                if (data.toString().startsWith("235")) {
+                  client.write("MAIL FROM: <" + process.env.EMAIL_ADDRESS + ">\r\n");
+                  step++;
+                };
+                break;
+        
+              case 4:
+                if (data.toString().startsWith("250")) {
+                  client.write("RCPT TO: <" + email + ">\r\n");
+                  step++;
+                };
+                break;
+        
+              case 5:
+                if (data.toString().startsWith("250")) {
+                  client.write("DATA\r\n");
+                  step++;
+                };
+                break;
+        
+              case 6:
+                if (data.toString().startsWith("354")) {
+                  client.write((req.body?.type === "html") ? ("Content-Type: text/html; charset=utf-8\r\nSubject: " + req.body?.subject + "\r\n\r\n" + req.body?.content + "\r\n.\r\n") : ("Subject: " + req.body?.subject + "\r\n\r\n" + req.body?.content + "\r\n.\r\n"));
+                  step++;
+                };
+                break;
+        
+              case 7:
+                if (data.toString().startsWith("250")) client.end();
+                break;
+            };
           });
         }));
       })

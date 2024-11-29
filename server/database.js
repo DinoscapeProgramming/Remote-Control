@@ -10,20 +10,20 @@ const fetch = (url, { method = "GET", headers = {}, body } = {}) => new Promise(
     method,
     headers
   }, (response) => {
-    let data = "";
-    response.on("data", (chunk) => data += chunk);
+    let responseData = "";
+    response.on("data", (chunk) => responseData += chunk);
     response.on("end", () => {
       resolve({
         statusCode: response.statusCode,
         headers: response.headers,
-        json: new Promise((resolve, reject) => {
+        json: () => new Promise((resolve, reject) => {
           try {
-            resolve(JSON.parse(data))
+            resolve(JSON.parse(responseData))
           } catch {
             reject("Invalid JSON response");
           };
         }),
-        text: new Promise((resolve, reject) => resolve(data))
+        text: () => new Promise((resolve, reject) => resolve(responseData))
       });
     });
   });
