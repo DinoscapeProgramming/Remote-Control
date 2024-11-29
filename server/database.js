@@ -4,7 +4,26 @@ Object.assign(process.env, require("fs").readFileSync("./.env", "utf8").split("\
     [accumulator[0]]: JSON.parse(accumulator[1])
   }
 }), {}));
-const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
+const https = require("https");
+const fetch = (url, { method = "GET", headers = {}, body } = {}) => new Promise((resolve, reject) => {
+  let request = https.request(url, {
+    method,
+    headers
+  }, (response) => {
+    let data = "";
+    response.on("data", (chunk) => data += chunk);
+    response.on("end", () => {
+      try {
+        resolve(JSON.parse(data));
+      } catch (err) {
+        reject("Invalid JSON response");
+      };
+    });
+  });
+  request.on("error", (err) => reject(err));
+  if (body) request.write((typeof body === "string") ? body : JSON.stringify(body));
+  request.end();
+});
 let databaseCache = {};
 
 module.exports = {
@@ -38,7 +57,7 @@ module.exports = {
         'Content-Type': 'application/json',
         'X-Master-Key': process.env.DATABASE_KEY
       },
-      body: JSON.stringify(databaseContent)
+      body: databaseContent
     })
     .then((response) => response.json())
     .then(({ message }) => {
