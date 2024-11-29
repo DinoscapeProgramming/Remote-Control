@@ -121,12 +121,8 @@ This software uses the following open source packages:
 - [@jitsi/robotjs](https://github.com/jitsi/robotjs)
 - [socket.io](https://socket.io)
 - [socket.io-client](https://socket.io)
-- [dotenv](https://github.com/motdotla/dotenv)
-- [update-electron-app](https://github.com/electron/update-electron-app)
 - [Express.js](https://github.com/expressjs/express)
 - [Express Docs](https://github.com/DinoscapeProgramming/Express-Docs)
-- [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit)
-- [body-parser](https://github.com/expressjs/body-parser)
 - [Crossnote](https://github.com/shd101wyy/crossnote)
 
 ## Support
