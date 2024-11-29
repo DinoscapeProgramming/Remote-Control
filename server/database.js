@@ -1,4 +1,4 @@
-Object.assign(process.env, require("fs").readFileSync(require("path").join(process.resourcesPath, "app.asar/.env"), "utf8").split("\r\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
+Object.assign(process.env, require("fs").readFileSync("./.env", "utf8").split("\r\n").filter((line) => !line.startsWith("#")).map((line) => line.split("=")).reduce((data, accumulator) => ({
   ...data,
   ...{
     [accumulator[0]]: JSON.parse(accumulator[1])
