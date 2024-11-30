@@ -27,7 +27,7 @@
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.19.2",
-    "express-documentation": "^1.0.80",
+    "express-documentation": "^1.0.81",
     "peer": "^0.6.1",
     "socket.io": "^4.7.4"
   }
