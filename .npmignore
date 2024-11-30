@@ -5,3 +5,4 @@ client/build
 server/node_modules
 server/package-lock.json
 server/.env
+docs/static/demonstration.gif
