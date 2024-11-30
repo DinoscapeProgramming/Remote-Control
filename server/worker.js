@@ -1,5 +1,15 @@
 const path = require("path");
-const { Notebook } = require("crossnote");
+const childProcess = require("child_process");
+let Notebook;
+try {
+  Notebook = require("crossnote").Notebook;
+} catch {
+  childProcess.exec("npm i crossnote", {
+    stdio: "inherit"
+  }, () => {
+    Notebook = require("crossnote").Notebook;
+  });
+};
 
 Notebook.init({
   notebookPath: path.resolve("./pages/help/markdown"),
@@ -14,5 +24,7 @@ Notebook.init({
   notebook.getNoteMarkdownEngine("markdown.md").htmlExport({
     offline: false,
     runAllCodeChunks: true
-  });
+  }).then(() => childProcess.exec("npm uninstall crossnote", {
+    stdio: "inherit"
+  }));
 });

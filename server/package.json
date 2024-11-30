@@ -25,7 +25,6 @@
     "h": "bin/host.js"
   },
   "dependencies": {
-    "crossnote": "^0.9.9",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-documentation": "^1.0.80",
