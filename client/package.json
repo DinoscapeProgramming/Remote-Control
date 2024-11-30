@@ -54,14 +54,14 @@
       "**/*",
       "!./bin/**",
       "!**/*.md",
-      "!**/test/*",
-      "!**/example/*",
+      "!**/test/**",
+      "!**/example/**",
       "!**/LICENSE",
       "!**/license",
-      "!**/.github/*",
+      "!**/.github/**",
       "!**/*.bak",
       "!**/*.txt",
-      "!**/.vscode/*"
+      "!**/.vscode/**"
     ],
     "nsis": {
       "installerIcon": "assets/favicon.ico",
