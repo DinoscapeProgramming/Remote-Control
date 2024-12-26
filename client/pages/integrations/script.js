@@ -1,5 +1,6 @@
 const { shell } = parent.require("electron");
 const fs = parent.require("fs");
+const path = parent.require("path");
 const crypto = parent.require("crypto");
 let discordBotEditor = ace.edit("discordBotEditor");
 discordBotEditor.setTheme("ace/theme/monokai");
@@ -159,7 +160,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
         integrationIconPlacementContainer.style.display = "flex";
         integrationIconPlacementContainer.style.justifyContent = "center";
         integrationIconPlacementContainer.style.alignItems = "center";
-        integrationIconPlacementContainer.style.marginTop = "37.5px";
+        integrationIconPlacementContainer.style.marginTop = "25px";
         integrationIconPlacementContainer.style.marginBottom = "25px";
         let integrationIconContainer = document.createElement("div");
         integrationIconContainer.style.display = "flex";
@@ -310,7 +311,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
         integrationIconPlacementContainer.style.display = "flex";
         integrationIconPlacementContainer.style.justifyContent = "center";
         integrationIconPlacementContainer.style.alignItems = "center";
-        integrationIconPlacementContainer.style.marginTop = "37.5px";
+        integrationIconPlacementContainer.style.marginTop = "25px";
         integrationIconPlacementContainer.style.marginBottom = "25px";
         let integrationIconContainer = document.createElement("div");
         integrationIconContainer.style.display = "flex";
@@ -497,7 +498,7 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
         integrationIconPlacementContainer.style.display = "flex";
         integrationIconPlacementContainer.style.justifyContent = "center";
         integrationIconPlacementContainer.style.alignItems = "center";
-        integrationIconPlacementContainer.style.marginTop = "37.5px";
+        integrationIconPlacementContainer.style.marginTop = "25px";
         integrationIconPlacementContainer.style.marginBottom = "25px";
         let integrationIconContainer = document.createElement("div");
         integrationIconContainer.style.display = "flex";
@@ -663,7 +664,7 @@ document.getElementById("connectToDiscordBotButton").addEventListener("click", (
         integrationIconPlacementContainer.style.display = "flex";
         integrationIconPlacementContainer.style.justifyContent = "center";
         integrationIconPlacementContainer.style.alignItems = "center";
-        integrationIconPlacementContainer.style.marginTop = "37.5px";
+        integrationIconPlacementContainer.style.marginTop = "25px";
         integrationIconPlacementContainer.style.marginBottom = "25px";
         let integrationIconContainer = document.createElement("div");
         integrationIconContainer.style.display = "flex";
