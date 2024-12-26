@@ -6,7 +6,7 @@ const crypto = parent.require("crypto");
 let scriptEditor = ace.edit("scriptEditor");
 scriptEditor.setTheme("ace/theme/monokai");
 scriptEditor.session.setUseWorker(false);
-scriptEditor.session.setMode(new (ace.require('ace/mode/javascript')).Mode());
+scriptEditor.session.setMode(new (ace.require("ace/mode/javascript")).Mode());
 scriptEditor.setOption("tabSize", 2);
 scriptEditor.on("change", () => {
   fs.writeFileSync(path.join(parent.process.resourcesPath, "scripts/" + document.getElementById("scriptEditorContainer").dataset.id + ".js"), scriptEditor.getValue(), "utf8");
@@ -329,7 +329,7 @@ document.getElementById("createScriptButton").addEventListener("click", () => {
   scriptContainerDeleteButton.style.justifyContent = "center";
   scriptContainerDeleteButton.style.alignItems = "center";
   scriptContainerDeleteButton.addEventListener("click", () => {
-    if (!confirm("Are you sure you want to irreversibly delete this script containing its content?")) return;
+    if (!confirm("Are you sure you want to irreversibly delete this script containing its code?")) return;
     scriptContainer.remove();
     if (!document.getElementById("scriptViewContainer").children.length) {
       let scriptIconPlacementContainer = document.createElement("div");

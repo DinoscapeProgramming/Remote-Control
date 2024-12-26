@@ -4,6 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Remote Control</title>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/ace-builds@1.12.5/src/ace.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/ace-builds@1.12.5/src/theme-monokai.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/ace-builds@1.12.5/src/mode-javascript.min.js"
+    ></script>
     <script defer src="script.js"></script>
     <link
       rel="stylesheet"
@@ -98,246 +110,197 @@
         opacity: 0.75;
       "
     ></div>
-    <div
-      id="integrationContainer"
-      style="
-        width: calc(100% - 64px);
-        background-color: #f5f7f9;
-        margin-left: 35.25px;
-        border-radius: 12.5px;
-        margin-top: 35px;
-        margin-bottom: 32.5px;
-        border: 0.5px solid #bfbfbf1c;
-      "
-    >
-      <div style="
-        display: flex;
-        flex-direction: row;
-      ">
-        <button
-          id="createThrowAwayPasswordButton"
-          class="createThrowAwayPasswordButton"
-          style="
-            width: 50%;
-            height: 27.5px;
-            font-family: system-ui;
-            border: none;
-            border-radius: 7.5px;
-            background-color: #155de1;
-            color: white;
-            padding: 15px;
-            padding-top: 7.5px;
-            padding-bottom: 25px;
-            margin-top: 10px;
-            margin-left: 15px;
-            margin-right: 3.75px;
-            cursor: pointer;
-          "
-        >
-          <i class="fa fa-user-secret" aria-hidden="true" style="margin-right: 2px"></i>
-          Create Throw-Away Password
-        </button>
-        <button
-          id="connectToDiscordBotButton"
-          class="connectToDiscordBotButton"
-          style="
-            width: 50%;
-            height: 27.5px;
-            font-family: system-ui;
-            border: none;
-            border-radius: 7.5px;
-            background-color: #155de1;
-            color: white;
-            padding: 15px;
-            padding-top: 7.5px;
-            padding-bottom: 25px;
-            margin-top: 10px;
-            margin-left: 3.75px;
-            margin-right: 15px;
-            cursor: pointer;
-          "
-        >
-          <i class="fa fa-android" aria-hidden="true" style="margin-right: 2px"></i>
-          Connect to Discord Bot
-        </button>
-      </div>
+    <div style="
+      width: calc(100% - 64px);
+      background-color: #f5f7f9;
+      margin-left: 35.25px;
+      border-radius: 12.5px;
+      margin-top: 35px;
+      margin-bottom: 32.5px;
+      border: 0.5px solid #bfbfbf1c;
+    ">
       <div
-        class="integrationIcon"
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 37.5px;
-          margin-bottom: 25px;
-        "
+        id="integrationContainer"
+        style="display: block;"
       >
         <div style="
           display: flex;
-          justify-content: center;
-          width: 8.75%;
-          aspect-ratio: 1 / 1;
-          border-radius: 15px;
-          background-color: rgb(29, 225, 158);
+          flex-direction: row;
         ">
-          <i
-            class="fa fa-chain-broken"
-            aria-hidden="true"
+          <button
+            id="createThrowAwayPasswordButton"
+            class="createThrowAwayPasswordButton"
             style="
-              font-size: 3.675vw;
+              width: 50%;
+              height: 27.5px;
+              font-family: system-ui;
+              border: none;
+              border-radius: 7.5px;
+              background-color: #155de1;
               color: white;
-              margin: auto 0px;
+              padding: 15px;
+              padding-top: 7.5px;
+              padding-bottom: 25px;
+              margin-top: 10px;
+              margin-left: 15px;
+              margin-right: 3.75px;
+              cursor: pointer;
             "
-          ></i>
+          >
+            <i class="fa fa-user-secret" aria-hidden="true" style="margin-right: 2px"></i>
+            Create Throw-Away Password
+          </button>
+          <button
+            id="connectToDiscordBotButton"
+            class="connectToDiscordBotButton"
+            style="
+              width: 50%;
+              height: 27.5px;
+              font-family: system-ui;
+              border: none;
+              border-radius: 7.5px;
+              background-color: #155de1;
+              color: white;
+              padding: 15px;
+              padding-top: 7.5px;
+              padding-bottom: 25px;
+              margin-top: 10px;
+              margin-left: 3.75px;
+              margin-right: 15px;
+              cursor: pointer;
+            "
+          >
+            <i class="fa fa-android" aria-hidden="true" style="margin-right: 2px"></i>
+            Connect to Discord Bot
+          </button>
         </div>
-      </div>
-      <p
-        id="throwAwayPasswordCategoryText"
-        style="
-          display: flex;
-          color: #141414;
-          font-family: system-ui;
-          font-size: 11px;
-          margin-left: 15px;
-          margin-bottom: 2.5px;
-        "
-      >
-        Throw-Away Passwords
-      </p>
-      <div
-        id="throwAwayPasswordCategorySeparationLine"
-        style="
-          display: flex;
-          width: calc(100% - 30px);
-          height: 1px;
-          margin-left: 15px;
-          background-color: #141414b0;
-          opacity: 0.5;
-        "
-      ></div>
-      <div
-        id="throwAwayPasswordContainer"
-        style="display: none;"
-      ></div>
-      <p style="
-        color: #141414;
-        font-family: system-ui;
-        font-size: 11px;
-        margin-left: 15px;
-        margin-bottom: 2.5px;
-      ">
-        Discord Bots
-      </p>
-      <div style="
-        width: calc(100% - 30px);
-        height: 1px;
-        margin-left: 15px;
-        background-color: #141414b0;
-        opacity: 0.5;
-      "></div>
-      <div
-        id="discordBotContainer"
-        style="margin-bottom: 12.5px;"
-      >
         <div
-          data-id="e221070e"
+          class="integrationIcon"
           style="
             display: flex;
-            flex-direction: row;
+            justify-content: center;
             align-items: center;
-            width: calc(100% - 30px);
-            height: 47.5px;
-            margin-top: 7.5px;
-            margin-left: 15px;
-            background-color: white;
-            border-radius: 7.5px;
-            font-family: system-ui;
+            margin-top: 37.5px;
+            margin-bottom: 25px;
           "
         >
-          <input style="
-            margin-left: 6.5px;
-            font-size: 15px;
-            font-weight: 400;
-            border: none;
-            padding: 8.5px;
-            width: calc(6ch - 5px);
-          ">
           <div style="
             display: flex;
-            flex-direction: row;
-            position: absolute;
-            right: 52.5px;
+            justify-content: center;
+            width: 8.75%;
+            aspect-ratio: 1 / 1;
+            border-radius: 15px;
+            background-color: rgb(29, 225, 158);
           ">
-            <div
-              class="discordBotContainerButton"
+            <i
+              class="fa fa-chain-broken"
+              aria-hidden="true"
               style="
-                cursor: pointer;
-                width: 75px;
-                height: 30.5px;
+                font-size: 3.675vw;
                 color: white;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-right: 5px;
-                text-align: center;
+                margin: auto 0px;
               "
-            >
-              <p style="
-                font-size: 15.25px;
-                margin-top: 5px;
-              ">
-                Edit
-              </p>
-            </div>
-            <div
-              class="discordBotContainerButton"
-              style="
-                cursor: pointer;
-                width: 82.5px;
-                height: 30.5px;
-                color: white;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-right: 5px;
-                text-align: center;
-                border: none;
-              "
-            >
-              <p style="
-                font-size: 14.25px;
-                margin-top: 5px;
-              ">Terminal</p>
-            </div>
-            <div style="
-              width: 1px;
-              height: 30.5px;
-              background-color: rgba(191, 191, 191, 0.85);
-              opacity: 0.75;
-              margin-left: 5px;
-            "></div>
-            <div
-              class="discordBotContainerButton"
-              style="
-                cursor: pointer;
-                width: 30.5px;
-                height: 30.5px;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-left: 7.5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <i
-                class="fa fa-trash"
-                aria-hidden="true"
-                style="
-                  color: white;
-                  font-size: 19px;
-                "
-              ></i>
-            </div>
+            ></i>
           </div>
         </div>
+        <p
+          id="throwAwayPasswordCategoryText"
+          style="
+            display: none;
+            color: #141414;
+            font-family: system-ui;
+            font-size: 11px;
+            margin-left: 15px;
+            margin-bottom: 2.5px;
+          "
+        >
+          Throw-Away Passwords
+        </p>
+        <div
+          id="throwAwayPasswordCategorySeparationLine"
+          style="
+            display: none;
+            width: calc(100% - 30px);
+            height: 1px;
+            margin-left: 15px;
+            background-color: #141414b0;
+            opacity: 0.5;
+          "
+        ></div>
+        <div
+          id="throwAwayPasswordContainer"
+          style="display: none;"
+        ></div>
+        <p
+          id="discordBotCategoryText"
+          style="
+            display: none;
+            color: #141414;
+            font-family: system-ui;
+            font-size: 11px;
+            margin-left: 15px;
+            margin-bottom: 2.5px;
+          "
+        >
+          Discord Bots
+        </p>
+        <div
+          id="discordBotCategorySeparationLine"
+          style="
+            display: none;
+            width: calc(100% - 30px);
+            height: 1px;
+            margin-left: 15px;
+            background-color: #141414b0;
+            opacity: 0.5;
+          "
+        ></div>
+        <div
+          id="discordBotContainer"
+          style="
+            display: none;
+            margin-bottom: 12.5px;
+          "
+        ></div>
+      </div>
+      <div
+        id="discordBotEditorContainer"
+        style="display: none;"
+      >
+        <div style="
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        ">
+          <div id="discordBotEditorContainerBackButton" class="discordBotEditorContainerBackButton" style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 22.5px;
+            margin-left: 12.5px;
+            border-radius: 5px;
+            background-color: #8d8d8d1c;
+            border: 0.25px solid transparent;
+            cursor: pointer;
+          ">
+            <i class="fa fa-arrow-left" aria-hidden="true" style="color: #000000a6; margin-bottom: 1px; margin-right: 0.5px; -webkit-text-stroke: 0.5px white;"></i>
+          </div>
+          <h3 id="discordBotEditorContainerName" style="
+            font-family: system-ui;
+            font-size: 20px;
+            font-weight: 600;
+            color: #000000cc;
+            margin: 12.25px 10px 14.5px;
+          "></h3>
+        </div>
+        <div id="discordBotEditor" class="discordBotEditor" style="
+          width: 100%;
+          height: 457.5px;
+          max-height: calc(100vh - 242.5px);
+          resize: vertical;
+          border-radius: 7.5px;
+        "></div>
       </div>
     </div>
   </body>
