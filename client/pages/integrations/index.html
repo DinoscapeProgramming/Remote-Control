@@ -9,6 +9,43 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <style>
+      .createThrowAwayPasswordButton:hover, .connectToDiscordBotButton:hover {
+        background-color: #155ce1f2 !important;
+      }
+
+      .throwAwayPasswordButton:hover, .discordBotButton:hover {
+        background-color: #1c9addf3 !important;
+      }
+
+      .discordBotEditorContainerBackButton:hover {
+        background-color: #5451511c !important;
+      }
+
+      .ace_scrollbar::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+
+      .ace_scrollbar::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 5px;
+      }
+
+      .ace_scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        img {
+          filter: invert(95%) hue-rotate(180deg);
+        }
+
+        .discordBotEditor {
+          filter: invert(95%) hue-rotate(180deg) brightness(1.275);
+        }
+      }
+    </style>
   </head>
   <body style="margin: 0;">
     <div style="display: flex; flex-direction: row; width: 100vw; height: 60px">
@@ -61,22 +98,25 @@
         opacity: 0.75;
       "
     ></div>
-    <div style="
-      width: calc(100% - 64px);
-      background-color: #f5f7f9;
-      margin-left: 35.25px;
-      border-radius: 12.5px;
-      margin-top: 35px;
-      margin-bottom: 32.5px;
-      border: 0.5px solid #bfbfbf1c;
-    ">
+    <div
+      id="integrationContainer"
+      style="
+        width: calc(100% - 64px);
+        background-color: #f5f7f9;
+        margin-left: 35.25px;
+        border-radius: 12.5px;
+        margin-top: 35px;
+        margin-bottom: 32.5px;
+        border: 0.5px solid #bfbfbf1c;
+      "
+    >
       <div style="
         display: flex;
         flex-direction: row;
       ">
         <button
-          id="createScriptButton"
-          class="createScriptButton"
+          id="createThrowAwayPasswordButton"
+          class="createThrowAwayPasswordButton"
           style="
             width: 50%;
             height: 27.5px;
@@ -98,8 +138,8 @@
           Create Throw-Away Password
         </button>
         <button
-          id="createScriptButton"
-          class="createScriptButton"
+          id="connectToDiscordBotButton"
+          class="connectToDiscordBotButton"
           style="
             width: 50%;
             height: 27.5px;
@@ -121,258 +161,63 @@
           Connect to Discord Bot
         </button>
       </div>
-      <p style="
-        color: #141414;
-        font-family: system-ui;
-        font-size: 11px;
-        margin-left: 15px;
-        margin-bottom: 2.5px;
-      ">
-        Throw-Away Passwords
-      </p>
-      <div style="
-        width: calc(100% - 30px);
-        height: 1px;
-        margin-left: 15px;
-        background-color: #141414b0;
-        opacity: 0.5;
-      "></div>
-      <div>
-        <div
-          data-id="e221070e"
-          style="
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: calc(100% - 30px);
-            height: 47.5px;
-            margin-top: 7.5px;
-            margin-left: 15px;
-            background-color: white;
-            border-radius: 7.5px;
-            font-family: system-ui;
-          "
-        >
-          <input style="
-            margin-left: 6.5px;
-            font-size: 15px;
-            font-weight: 400;
-            border: none;
-            padding: 8.5px;
-            width: calc(6ch - 5px);
-          ">
-          <div style="
-            display: flex;
-            flex-direction: row;
-            position: absolute;
-            right: 52.5px;
-          ">
-            <div
-              class="scriptContainerButton"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 82.5px;
-                height: 30.5px;
-                color: white;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-right: 5px;
-                text-align: center;
-                border: none;
-              "
-            >
-              <input style="
-                width: calc(2ch + 1px);
-                border: none;
-                color: white;
-                background-color: transparent;
-                font-size: 12.5px;
-                font-family: system-ui;
-                margin-bottom: 0.75px;
-                margin-right: 1px;
-              ">
-              <span style="
-                font-size: 12.25px;
-                margin-bottom: 2px;
-                margin-right: 0.5px;
-              "> uses left</span>
-            </div>
-            <div style="
-              width: 1px;
-              height: 30.5px;
-              background-color: rgba(191, 191, 191, 0.85);
-              opacity: 0.75;
-              margin-left: 5px;
-            "></div>
-            <div
-              class="scriptContainerButton"
-              style="
-                cursor: pointer;
-                width: 30.5px;
-                height: 30.5px;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-left: 7.5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <i
-                class="fa fa-clipboard"
-                aria-hidden="true"
-                style="
-                  color: white;
-                  font-size: 14px;
-                  margin-left: 1px;
-                "
-              ></i>
-            </div>
-            <div
-              class="scriptContainerButton"
-              style="
-                cursor: pointer;
-                width: 30.5px;
-                height: 30.5px;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-left: 5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <i
-                class="fa fa-trash"
-                aria-hidden="true"
-                style="
-                  color: white;
-                  font-size: 19px;
-                "
-              ></i>
-            </div>
-          </div>
-        </div>
-        <div
-          data-id="e221070e"
-          style="
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: calc(100% - 30px);
-            height: 47.5px;
-            margin-top: 7.5px;
-            margin-left: 15px;
-            background-color: white;
-            border-radius: 7.5px;
-            font-family: system-ui;
-          "
-        >
-          <input style="
-            margin-left: 6.5px;
-            font-size: 15px;
-            font-weight: 400;
-            border: none;
-            padding: 8.5px;
-            width: calc(6ch - 5px);
-          ">
-          <div style="
-            display: flex;
-            flex-direction: row;
-            position: absolute;
-            right: 52.5px;
-          ">
-            <div
-              class="scriptContainerButton"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 82.5px;
-                height: 30.5px;
-                color: white;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-right: 5px;
-                text-align: center;
-                border: none;
-              "
-            >
-              <input style="
-                width: calc(2ch + 1px);
-                border: none;
-                color: white;
-                background-color: transparent;
-                font-size: 12.5px;
-                font-family: system-ui;
-                margin-bottom: 0.75px;
-                margin-right: 1px;
-              ">
-              <span style="
-                font-size: 12.25px;
-                margin-bottom: 2px;
-                margin-right: 0.5px;
-              "> uses left</span>
-            </div>
-            <div style="
-              width: 1px;
-              height: 30.5px;
-              background-color: rgba(191, 191, 191, 0.85);
-              opacity: 0.75;
-              margin-left: 5px;
-            "></div>
-            <div
-              class="scriptContainerButton"
-              style="
-                cursor: pointer;
-                width: 30.5px;
-                height: 30.5px;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-left: 7.5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <i
-                class="fa fa-clipboard"
-                aria-hidden="true"
-                style="
-                  color: white;
-                  font-size: 14px;
-                  margin-left: 1px;
-                "
-              ></i>
-            </div>
-            <div
-              class="scriptContainerButton"
-              style="
-                cursor: pointer;
-                width: 30.5px;
-                height: 30.5px;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-left: 5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <i
-                class="fa fa-trash"
-                aria-hidden="true"
-                style="
-                  color: white;
-                  font-size: 19px;
-                "
-              ></i>
-            </div>
-          </div>
+      <div
+        class="integrationIcon"
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 37.5px;
+          margin-bottom: 25px;
+        "
+      >
+        <div style="
+          display: flex;
+          justify-content: center;
+          width: 8.75%;
+          aspect-ratio: 1 / 1;
+          border-radius: 15px;
+          background-color: rgb(29, 225, 158);
+        ">
+          <i
+            class="fa fa-chain-broken"
+            aria-hidden="true"
+            style="
+              font-size: 3.675vw;
+              color: white;
+              margin: auto 0px;
+            "
+          ></i>
         </div>
       </div>
+      <p
+        id="throwAwayPasswordCategoryText"
+        style="
+          display: flex;
+          color: #141414;
+          font-family: system-ui;
+          font-size: 11px;
+          margin-left: 15px;
+          margin-bottom: 2.5px;
+        "
+      >
+        Throw-Away Passwords
+      </p>
+      <div
+        id="throwAwayPasswordCategorySeparationLine"
+        style="
+          display: flex;
+          width: calc(100% - 30px);
+          height: 1px;
+          margin-left: 15px;
+          background-color: #141414b0;
+          opacity: 0.5;
+        "
+      ></div>
+      <div
+        id="throwAwayPasswordContainer"
+        style="display: none;"
+      ></div>
       <p style="
         color: #141414;
         font-family: system-ui;
@@ -389,7 +234,10 @@
         background-color: #141414b0;
         opacity: 0.5;
       "></div>
-      <div style="margin-bottom: 12.5px;">
+      <div
+        id="discordBotContainer"
+        style="margin-bottom: 12.5px;"
+      >
         <div
           data-id="e221070e"
           style="
@@ -420,7 +268,7 @@
             right: 52.5px;
           ">
             <div
-              class="scriptContainerButton"
+              class="discordBotContainerButton"
               style="
                 cursor: pointer;
                 width: 75px;
@@ -440,7 +288,7 @@
               </p>
             </div>
             <div
-              class="scriptContainerButton"
+              class="discordBotContainerButton"
               style="
                 cursor: pointer;
                 width: 82.5px;
@@ -466,107 +314,7 @@
               margin-left: 5px;
             "></div>
             <div
-              class="scriptContainerButton"
-              style="
-                cursor: pointer;
-                width: 30.5px;
-                height: 30.5px;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-left: 7.5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <i
-                class="fa fa-trash"
-                aria-hidden="true"
-                style="
-                  color: white;
-                  font-size: 19px;
-                "
-              ></i>
-            </div>
-          </div>
-        </div>
-        <div
-          data-id="e221070e"
-          style="
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: calc(100% - 30px);
-            height: 47.5px;
-            margin-top: 7.5px;
-            margin-left: 15px;
-            background-color: white;
-            border-radius: 7.5px;
-            font-family: system-ui;
-          "
-        >
-          <input style="
-            margin-left: 6.5px;
-            font-size: 15px;
-            font-weight: 400;
-            border: none;
-            padding: 8.5px;
-            width: calc(6ch - 5px);
-          ">
-          <div style="
-            display: flex;
-            flex-direction: row;
-            position: absolute;
-            right: 52.5px;
-          ">
-            <div
-              class="scriptContainerButton"
-              style="
-                cursor: pointer;
-                width: 75px;
-                height: 30.5px;
-                color: white;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-right: 5px;
-                text-align: center;
-              "
-            >
-              <p style="
-                font-size: 15.25px;
-                margin-top: 5px;
-              ">
-                Edit
-              </p>
-            </div>
-            <div
-              class="scriptContainerButton"
-              style="
-                cursor: pointer;
-                width: 82.5px;
-                height: 30.5px;
-                color: white;
-                background-color: rgb(21, 155, 225);
-                border-radius: 7.5px;
-                margin-right: 5px;
-                text-align: center;
-                border: none;
-              "
-            >
-              <p style="
-                font-size: 14.25px;
-                margin-top: 5px;
-              ">Terminal</p>
-            </div>
-            <div style="
-              width: 1px;
-              height: 30.5px;
-              background-color: rgba(191, 191, 191, 0.85);
-              opacity: 0.75;
-              margin-left: 5px;
-            "></div>
-            <div
-              class="scriptContainerButton"
+              class="discordBotContainerButton"
               style="
                 cursor: pointer;
                 width: 30.5px;
