@@ -73,7 +73,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   throwAwayPasswordContainerUseDisplay.style.display = "flex";
   throwAwayPasswordContainerUseDisplay.style.justifyContent = "center";
   throwAwayPasswordContainerUseDisplay.style.alignItems = "center";
-  throwAwayPasswordContainerUseDisplay.style.width = "82.5px";
+  throwAwayPasswordContainerUseDisplay.style.width = "72.5px";
   throwAwayPasswordContainerUseDisplay.style.height = "30.5px";
   throwAwayPasswordContainerUseDisplay.style.color = "white";
   throwAwayPasswordContainerUseDisplay.style.backgroundColor = "rgb(21, 155, 225)";
@@ -84,6 +84,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   let throwAwayPasswordContainerUseDisplayInput = document.createElement("input");
   throwAwayPasswordContainerUseDisplayInput.value = throwAwayPasswordUses.toString();
   throwAwayPasswordContainerUseDisplayInput.type = "number";
+  throwAwayPasswordContainerUseDisplayInput.className = "throwAwayPasswordContainerUseDisplayInput";
   throwAwayPasswordContainerUseDisplayInput.style.width = "calc(1ch + 1px)";
   throwAwayPasswordContainerUseDisplayInput.style.border = "none";
   throwAwayPasswordContainerUseDisplayInput.style.color = "white";
@@ -93,6 +94,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   throwAwayPasswordContainerUseDisplayInput.style.marginBottom = "0.75px";
   throwAwayPasswordContainerUseDisplayInput.style.marginRight = "1px";
   throwAwayPasswordContainerUseDisplayInput.addEventListener("input", ({ target }) => {
+    throwAwayPasswordContainerUseDisplay.style.width = "calc(72.5px + " + (target.value.length - 1).toString() + "ch)";
     throwAwayPasswordContainerUseDisplayInput.style.width = "calc(" + target.value.length.toString() + "ch + 1px)";
     throwAwayPasswordContainerUseDisplayInput.nextElementSibling.innerText = " use" + ((target.value.length - 1) ? "s" : "") + " left";
   });
@@ -108,7 +110,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   let throwAwayPasswordContainerUseDisplayText = document.createElement("span");
   throwAwayPasswordContainerUseDisplayText.style.fontSize = "12.25px";
   throwAwayPasswordContainerUseDisplayText.style.marginBottom = "2px";
-  throwAwayPasswordContainerUseDisplayText.style.marginRight = "0.5px";
+  throwAwayPasswordContainerUseDisplayText.style.marginRight = "calc(1.5px + 0.25ch)";
   throwAwayPasswordContainerUseDisplayText.innerText = " use left";
   let throwAwayPasswordContainerButtonSeparationLine = document.createElement("div");
   throwAwayPasswordContainerButtonSeparationLine.style.width = "1px";
@@ -411,7 +413,7 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
   throwAwayPasswordContainerUseDisplay.style.display = "flex";
   throwAwayPasswordContainerUseDisplay.style.justifyContent = "center";
   throwAwayPasswordContainerUseDisplay.style.alignItems = "center";
-  throwAwayPasswordContainerUseDisplay.style.width = "82.5px";
+  throwAwayPasswordContainerUseDisplay.style.width = "72.5px";
   throwAwayPasswordContainerUseDisplay.style.height = "30.5px";
   throwAwayPasswordContainerUseDisplay.style.color = "white";
   throwAwayPasswordContainerUseDisplay.style.backgroundColor = "rgb(21, 155, 225)";
@@ -422,6 +424,7 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
   let throwAwayPasswordContainerUseDisplayInput = document.createElement("input");
   throwAwayPasswordContainerUseDisplayInput.value = "1";
   throwAwayPasswordContainerUseDisplayInput.type = "number";
+  throwAwayPasswordContainerUseDisplayInput.className = "throwAwayPasswordContainerUseDisplayInput";
   throwAwayPasswordContainerUseDisplayInput.style.width = "calc(1ch + 1px)";
   throwAwayPasswordContainerUseDisplayInput.style.border = "none";
   throwAwayPasswordContainerUseDisplayInput.style.color = "white";
@@ -431,6 +434,7 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
   throwAwayPasswordContainerUseDisplayInput.style.marginBottom = "0.75px";
   throwAwayPasswordContainerUseDisplayInput.style.marginRight = "1px";
   throwAwayPasswordContainerUseDisplayInput.addEventListener("input", ({ target }) => {
+    throwAwayPasswordContainerUseDisplay.style.width = "calc(72.5px + " + (target.value.length - 1).toString() + "ch)";
     throwAwayPasswordContainerUseDisplayInput.style.width = "calc(" + target.value.length.toString() + "ch + 1px)";
     throwAwayPasswordContainerUseDisplayInput.nextElementSibling.innerText = " use" + ((target.value.length - 1) ? "s" : "") + " left";
   });
@@ -446,7 +450,7 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
   let throwAwayPasswordContainerUseDisplayText = document.createElement("span");
   throwAwayPasswordContainerUseDisplayText.style.fontSize = "12.25px";
   throwAwayPasswordContainerUseDisplayText.style.marginBottom = "2px";
-  throwAwayPasswordContainerUseDisplayText.style.marginRight = "0.5px";
+  throwAwayPasswordContainerUseDisplayText.style.marginRight = "calc(1.5px + 0.25ch)";
   throwAwayPasswordContainerUseDisplayText.innerText = " use left";
   let throwAwayPasswordContainerButtonSeparationLine = document.createElement("div");
   throwAwayPasswordContainerButtonSeparationLine.style.width = "1px";
