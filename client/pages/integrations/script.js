@@ -277,7 +277,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   discordBotContainerInviteButton.style.marginRight = "5px";
   discordBotContainerInviteButton.style.textAlign = "center";
   discordBotContainerInviteButton.addEventListener("click", () => {
-    shell.openExternal("https://discord.com/oauth2/authorize?client_id=" + (((localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].CLIENT_ID || "") + "&permissions=8&scope=bot");
+    shell.openExternal("https://discord.com/oauth2/authorize?client_id=" + (JSON.parse((localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].CLIENT_ID || "") + "&permissions=8&scope=bot");
   });
   let discordBotContainerInviteButtonText = document.createElement("p");
   discordBotContainerInviteButtonText.style.fontSize = "15.25px";
@@ -632,7 +632,7 @@ document.getElementById("connectToDiscordBotButton").addEventListener("click", (
   discordBotContainerInviteButton.style.marginRight = "5px";
   discordBotContainerInviteButton.style.textAlign = "center";
   discordBotContainerInviteButton.addEventListener("click", () => {
-    shell.openExternal("https://discord.com/oauth2/authorize?client_id=" + (((localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].CLIENT_ID || "") + "&permissions=8&scope=bot");
+    shell.openExternal("https://discord.com/oauth2/authorize?client_id=" + (JSON.parse((localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].CLIENT_ID || "") + "&permissions=8&scope=bot");
   });
   let discordBotContainerInviteButtonText = document.createElement("p");
   discordBotContainerInviteButtonText.style.fontSize = "15.25px";
