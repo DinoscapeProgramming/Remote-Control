@@ -158,7 +158,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
         integrationIconPlacementContainer.style.display = "flex";
         integrationIconPlacementContainer.style.justifyContent = "center";
         integrationIconPlacementContainer.style.alignItems = "center";
-        integrationIconPlacementContainer.style.marginTop = "25px";
+        integrationIconPlacementContainer.style.marginTop = "37.5px";
         integrationIconPlacementContainer.style.marginBottom = "25px";
         let integrationIconContainer = document.createElement("div");
         integrationIconContainer.style.display = "flex";
@@ -271,7 +271,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   discordBotContainerInviteButton.style.marginRight = "5px";
   discordBotContainerInviteButton.style.textAlign = "center";
   discordBotContainerInviteButton.addEventListener("click", () => {
-    shell.openExternal("https://discord.com/oauth2/authorize?client_id=" + (JSON.parse((localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].CLIENT_ID || "") + "&permissions=8&scope=bot");
+    shell.openExternal("https://discord.com/oauth2/authorize?client_id=" + (JSON.parse((localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[1] === discordBotId)[2].CLIENT_ID || "") + "&permissions=8&scope=bot");
   });
   let discordBotContainerInviteButtonText = document.createElement("p");
   discordBotContainerInviteButtonText.style.fontSize = "15.25px";
@@ -307,7 +307,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
         integrationIconPlacementContainer.style.display = "flex";
         integrationIconPlacementContainer.style.justifyContent = "center";
         integrationIconPlacementContainer.style.alignItems = "center";
-        integrationIconPlacementContainer.style.marginTop = "25px";
+        integrationIconPlacementContainer.style.marginTop = "37.5px";
         integrationIconPlacementContainer.style.marginBottom = "25px";
         let integrationIconContainer = document.createElement("div");
         integrationIconContainer.style.display = "flex";
@@ -492,7 +492,7 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
         integrationIconPlacementContainer.style.display = "flex";
         integrationIconPlacementContainer.style.justifyContent = "center";
         integrationIconPlacementContainer.style.alignItems = "center";
-        integrationIconPlacementContainer.style.marginTop = "25px";
+        integrationIconPlacementContainer.style.marginTop = "37.5px";
         integrationIconPlacementContainer.style.marginBottom = "25px";
         let integrationIconContainer = document.createElement("div");
         integrationIconContainer.style.display = "flex";
@@ -542,8 +542,8 @@ document.getElementById("connectToDiscordBotButton").addEventListener("click", (
     ...JSON.parse(localStorage.getItem("discordBots") || "[]") || [],
     ...[
       [
-        "Discord Bot",
         discordBotId,
+        "Discord Bot",
         {
           TOKEN: "YOUR TOKEN",
           CLIENT_ID: "YOUR CLIENT ID"
@@ -620,7 +620,7 @@ document.getElementById("connectToDiscordBotButton").addEventListener("click", (
   discordBotContainerInviteButton.style.marginRight = "5px";
   discordBotContainerInviteButton.style.textAlign = "center";
   discordBotContainerInviteButton.addEventListener("click", () => {
-    shell.openExternal("https://discord.com/oauth2/authorize?client_id=" + (JSON.parse((localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].CLIENT_ID || "") + "&permissions=8&scope=bot");
+    shell.openExternal("https://discord.com/oauth2/authorize?client_id=" + (JSON.parse((localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[1] === discordBotId)[2].CLIENT_ID || "") + "&permissions=8&scope=bot");
   });
   let discordBotContainerInviteButtonText = document.createElement("p");
   discordBotContainerInviteButtonText.style.fontSize = "15.25px";
@@ -656,7 +656,7 @@ document.getElementById("connectToDiscordBotButton").addEventListener("click", (
         integrationIconPlacementContainer.style.display = "flex";
         integrationIconPlacementContainer.style.justifyContent = "center";
         integrationIconPlacementContainer.style.alignItems = "center";
-        integrationIconPlacementContainer.style.marginTop = "25px";
+        integrationIconPlacementContainer.style.marginTop = "37.5px";
         integrationIconPlacementContainer.style.marginBottom = "25px";
         let integrationIconContainer = document.createElement("div");
         integrationIconContainer.style.display = "flex";
