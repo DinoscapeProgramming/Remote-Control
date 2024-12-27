@@ -383,7 +383,7 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
   throwAwayPasswordContainer.style.borderRadius = "7.5px";
   throwAwayPasswordContainer.style.fontFamily = "system-ui";
   let throwAwayPasswordContainerCode = document.createElement("input");
-  throwAwayPasswordContainerCode.value = "Throw-Away Password";
+  throwAwayPasswordContainerCode.value = throwAwayPasswordCode;
   throwAwayPasswordContainerCode.style.marginLeft = "6.5px";
   throwAwayPasswordContainerCode.style.fontSize = "15px";
   throwAwayPasswordContainerCode.style.fontWeight = "400";
