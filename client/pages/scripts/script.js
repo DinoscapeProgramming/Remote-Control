@@ -57,10 +57,8 @@ document.styleSheets[1].media.appendMedium("(prefers-color-scheme: " + (((JSON.p
   scriptContainerName.addEventListener("change", ({ target }) => {
     if (!target.value) return;
     localStorage.setItem("scripts", JSON.stringify((JSON.parse(localStorage.getItem("scripts")) || []).map((script) => [
-      [
-        script[0],
-        (script[0] === scriptId) ? target.value : script[1]
-      ]
+      script[0],
+      (script[0] === scriptId) ? target.value : script[1]
     ])));
   });
   let scriptContainerButtonBox = document.createElement("div");

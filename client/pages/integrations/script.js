@@ -57,10 +57,8 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   throwAwayPasswordContainerCode.addEventListener("change", ({ target }) => {
     if (!target.value) return;
     localStorage.setItem("throwAwayPasswords", JSON.stringify((JSON.parse(localStorage.getItem("throwAwayPasswords") || "[]") || []).map((throwAwayPassword) => [
-      [
-        (throwAwayPassword[0] === throwAwayPasswordCode) ? target.value : throwAwayPassword[0],
-        throwAwayPassword[1]
-      ]
+      (throwAwayPassword[0] === throwAwayPasswordCode) ? target.value : throwAwayPassword[0],
+      throwAwayPassword[1]
     ])));
     throwAwayPasswordCode = target.value;
   });
@@ -101,10 +99,8 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   throwAwayPasswordContainerUseDisplayInput.addEventListener("change", ({ target }) => {
     if (!target.value) return;
     localStorage.setItem("throwAwayPasswords", JSON.stringify((JSON.parse(localStorage.getItem("throwAwayPasswords") || "[]") || []).map((throwAwayPassword) => [
-      [
-        throwAwayPassword[0],
-        (throwAwayPassword[0] === throwAwayPasswordCode) ? Number(target.value) : throwAwayPassword[1]
-      ]
+      throwAwayPassword[0],
+      (throwAwayPassword[0] === throwAwayPasswordCode) ? Number(target.value) : throwAwayPassword[1]
     ])));
   });
   let throwAwayPasswordContainerUseDisplayText = document.createElement("span");
@@ -233,11 +229,9 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   discordBotContainerName.addEventListener("change", ({ target }) => {
     if (!target.value) return;
     localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => [
-      [
-        discordBot[0],
-        (discordBot[0] === discordBotId) ? target.value : discordBot[1],
-        discordBot[2]
-      ]
+      discordBot[0],
+      (discordBot[0] === discordBotId) ? target.value : discordBot[1],
+      discordBot[2]
     ])));
   });
   let discordBotContainerButtonBox = document.createElement("div");
@@ -397,10 +391,8 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
   throwAwayPasswordContainerCode.addEventListener("change", ({ target }) => {
     if (!target.value) return;
     localStorage.setItem("throwAwayPasswords", JSON.stringify((JSON.parse(localStorage.getItem("throwAwayPasswords") || "[]") || []).map((throwAwayPassword) => [
-      [
-        (throwAwayPassword[0] === throwAwayPasswordCode) ? target.value : throwAwayPassword[0],
-        throwAwayPassword[1]
-      ]
+      (throwAwayPassword[0] === throwAwayPasswordCode) ? target.value : throwAwayPassword[0],
+      throwAwayPassword[1]
     ])));
     throwAwayPasswordCode = target.value;
   });
@@ -441,10 +433,8 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
   throwAwayPasswordContainerUseDisplayInput.addEventListener("change", ({ target }) => {
     if (!target.value) return;
     localStorage.setItem("throwAwayPasswords", JSON.stringify((JSON.parse(localStorage.getItem("throwAwayPasswords") || "[]") || []).map((throwAwayPassword) => [
-      [
-        throwAwayPassword[0],
-        (throwAwayPassword[0] === throwAwayPasswordCode) ? Number(target.value) : throwAwayPassword[1]
-      ]
+      throwAwayPassword[0],
+      (throwAwayPassword[0] === throwAwayPasswordCode) ? Number(target.value) : throwAwayPassword[1]
     ])));
   });
   let throwAwayPasswordContainerUseDisplayText = document.createElement("span");
@@ -588,11 +578,9 @@ document.getElementById("connectToDiscordBotButton").addEventListener("click", (
   discordBotContainerName.addEventListener("change", ({ target }) => {
     if (!target.value) return;
     localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => [
-      [
-        discordBot[0],
-        (discordBot[0] === discordBotId) ? target.value : discordBot[1],
-        discordBot[2]
-      ]
+      discordBot[0],
+      (discordBot[0] === discordBotId) ? target.value : discordBot[1],
+      discordBot[2]
     ])));
   });
   let discordBotContainerButtonBox = document.createElement("div");
