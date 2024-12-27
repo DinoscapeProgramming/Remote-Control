@@ -364,7 +364,7 @@ document.getElementById("createThrowAwayPasswordButton").addEventListener("click
     ...[
       [
         throwAwayPasswordCode,
-        0
+        1
       ]
     ]
   ]));
