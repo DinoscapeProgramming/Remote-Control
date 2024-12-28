@@ -308,6 +308,7 @@
           "></h3>
         </div>
         <table
+          id="discordBotEditorContainerSecrets"
           class="discordBotEditorContainerSecrets"
           style="
             font-family: system-ui;
@@ -331,15 +332,18 @@
               ">
                 Value
               </th>
-            </tr>
-            <tr>
-              <td style="
+              <th style="
                 border: 1px solid #dddddd;
                 text-align: left;
-              ">
+                padding: 8px;
+              "></th>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #dddddd;">
                 <input
                   value="CLIENT_ID"
                   style="
+                    width: calc(100% - 15px);
                     border: none;
                     background-color: transparent;
                     padding: 8px;
@@ -347,29 +351,51 @@
                   "
                 >
               </td>
-              <td style="
-                border: 1px solid #dddddd;
-                text-align: left;
-              ">
+              <td style="border: 1px solid #dddddd;">
                 <input
                   value="YOUR CLIENT ID"
                   style="
+                    width: calc(100% - 15px);
                     border: none;
                     background-color: transparent;
                     padding: 8px;
                     font-family: system-ui;
                   "
                 >
+              </td>
+              <td style="
+                cursor: pointer;
+                border: 1px solid #dddddd;
+              ">
+                <i
+                  class="fa fa-trash"
+                  aria-hidden="true"
+                  style="
+                    width: 6.5px;
+                    font-size: 20px;
+                    margin-left: 7.5px;
+                  "
+                ></i>
               </td>
             </tr>
             <tr>
-              <td style="
-                border: 1px solid #dddddd;
-                text-align: left;
-              ">
+              <td style="border: 1px solid #dddddd;">
                 <input
                   value="TOKEN"
                   style="
+                    width: calc(100% - 15px);
+                    border: none;
+                    background-color: transparent;
+                    padding: 8px;
+                    font-family: system-ui;
+                  "
+                >
+              </td>
+              <td style="border: 1px solid #dddddd;">
+                <input
+                  value="YOUR TOKEN"
+                  style="
+                    width: calc(100% - 15px);
                     border: none;
                     background-color: transparent;
                     padding: 8px;
@@ -378,18 +404,18 @@
                 >
               </td>
               <td style="
+                cursor: pointer;
                 border: 1px solid #dddddd;
-                text-align: left;
               ">
-                <input
-                  value="YOUR TOKEN"
+                <i
+                  class="fa fa-trash"
+                  aria-hidden="true"
                   style="
-                    border: none;
-                    background-color: transparent;
-                    padding: 8px;
-                    font-family: system-ui;
+                    width: 6.5px;
+                    font-size: 20px;
+                    margin-left: 7.5px;
                   "
-                >
+                ></i>
               </td>
             </tr>
           </tbody>
