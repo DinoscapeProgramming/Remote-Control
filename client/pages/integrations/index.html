@@ -22,7 +22,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <style>
-      .createThrowAwayPasswordButton:hover, .connectToDiscordBotButton:hover {
+      .createThrowAwayPasswordButton:hover, .connectToDiscordBotButton:hover, .discordBotEditorContainerRunButton:hover {
         background-color: #155ce1f2 !important;
       }
 
@@ -306,6 +306,26 @@
             color: #000000cc;
             margin: 12.25px 10px 14.5px;
           "></h3>
+          <div
+            id="discordBotEditorContainerRunButton"
+            class="discordBotEditorContainerRunButton"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              right: 38.5px;
+              width: 30px;
+              height: 30px;
+              margin-top: 0.25px;
+              border-radius: 5px;
+              background-color: #155de1;
+              border: 0.25px solid transparent;
+              cursor: pointer;
+            "
+          >
+            <i id="discordBotEditorContainerRunButtonIcon" class="fa fa-play" aria-hidden="true" style="color: white; margin-bottom: 1px; margin-left: 2.5px; font-size: 15px;"></i>
+          </div>
         </div>
         <table
           id="discordBotEditorContainerSecrets"

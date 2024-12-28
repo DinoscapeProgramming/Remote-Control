@@ -867,6 +867,15 @@ document.getElementById("discordBotEditorContainerBackButton").addEventListener(
   document.getElementById("integrationContainer").style.display = "block";
 });
 
+document.getElementById("discordBotEditorContainerRunButton").addEventListener("click", () => {
+  document.getElementById("discordBotEditorContainerRunButtonIcon").className = (document.getElementById("discordBotEditorContainerRunButtonIcon").className === "fa fa-play") ? "fa fa-stop-circle" : "fa fa-play";
+  parent.postMessage({
+    type: (document.getElementById("discordBotEditorContainerRunButtonIcon").className === "fa fa-play") ? "stopDiscordBot" : "runDiscordBot",
+    discordBotId: document.getElementById("discordBotEditorContainer").dataset.id,
+    immediateExecution: true
+  });
+});
+
 Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).forEach((discordBotEditorContainerSecret, discordBotSecretIndex) => {
   if (!discordBotSecretIndex) return;
   discordBotEditorContainerSecret.children[0].addEventListener("change", ({ target }) => {
@@ -900,5 +909,15 @@ Array.from(document.getElementById("discordBotEditorContainerSecrets").children[
         [accumulator[0]]: accumulator[1]
       }
     }), {}) : discordBotItem) : discordBot)));
+  });
+});
+
+window.addEventListener("beforeunload", () => {
+  (JSON.parse(localStorage.getItem("discordBots") || "[]") || []).forEach(([discordBotId]) => {
+    parent.postMessage({
+      type: "runDiscordBot",
+      discordBotId: document.getElementById("discordBotEditorContainer").dataset.id,
+      immediateExecution: false
+    });
   });
 });

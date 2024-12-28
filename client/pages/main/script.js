@@ -17,6 +17,8 @@ let peer = new Peer(null, {
   secure: ((Object.keys(JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8"))).length) ? JSON.parse(fs.readFileSync(path.join(process.resourcesPath, "customServer.json"), "utf8")).peerProtocol : process.env.DEFAULT_PEER_SERVER_PROTOCOL) === "wss:"
 });
 let systemUsageData = {};
+let discordBotLogs = {};
+let discordBotStoppageScripts = {};
 let debugLogs = [];
 let devToolsOpenedOnDebugMode = false;
 window.installingRemotePrintDriver = false;
@@ -319,7 +321,7 @@ window.addEventListener("click", ({ target }) => {
   };
 });
 
-window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageData } }) => {
+window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageData, discordBotId, immediateExecution } = {} } = {}) => {
   if (type === "connectionData") {
     systemUsageData = {
       ...systemUsageData || {},
@@ -346,6 +348,142 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
       type: "connectionData",
       deviceList: Object.keys(systemUsageData).map((deviceId) => [deviceId, systemUsageData[deviceId]])
     });
+  } else if (type === "runDiscordBot") {
+    with ({
+      ...{
+        electron: require("electron"),
+        robotjs: require("@jitsi/robotjs"),
+        log: (logInput) => {
+          if (!document.getElementById("pageEmbed").src.endsWith("/integrations/index.html")) return (discordBotLogs[discordBotId] = [
+            ...discordBotLogs[discordBotId] || [],
+            ...[
+              logInput
+            ]
+          ]);
+          document.getElementById("pageEmbed").contentWindow.postMessage({
+            type: "log",
+            log: logInput
+          });
+        },
+        prompt: (body, options) => {
+          return new Promise((resolve, reject) => {
+            childProcess.spawn(({
+              win32: "cscript",
+              darwin: "osascript",
+              linux: "bash"
+            })[process.platform], [path.join(process.resourcesPath, "nativePrompts/" + ({
+              win32: "win32.vbs",
+              darwin: "darwin.scpt",
+              linux: "linux.sh"
+            })[process.platform]), (options || {}).title || require(path.join(process.resourcesPath, "app.asar/package.json")).productName, body, (options || {}).defaultText || ((typeof options === "string") ? options : "")]).stdout.on('data', (promptData) => {
+              if (!promptData.toString().startsWith("RETURN")) return;
+              resolve(promptData.toString().substring(6, promptData.toString().length - 2));
+            });
+          });
+        },
+        runPython: (pythonCode) => {
+          let pythonProcess = require("child_process").spawn("python", ["-c", pythonCode]);
+          pythonProcess.stdout.on("data", (chunk) => {
+            console.log(chunk.toString());
+          });
+          pythonProcess.stderr.on("data", (err) => {
+            console.error(err.toString());
+            ipcRenderer.send("scriptError", {
+              language: "python",
+              err: err.toString()
+            });
+          });
+          return pythonProcess;
+        },
+        executeInMainProcess: (func) => ipcRenderer.send("executeDebugCode", "(" + func.toString() + ")();"),
+        createAppStartupCodeFile: (func) => {
+          let appStartupCodeFileId = crypto.randomBytes(4).toString("hex");
+          fs.writeFileSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"), func.toString(), "utf8");
+          if (immediateExecution ?? true) eval("(async () => (" + func.toString() + ")())();");
+          return appStartupCodeFileId;
+        },
+        deleteAppStartupCodeFile: (appStartupCodeFileId) => {
+          try {
+            fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"));
+          } catch {};
+        },
+        registerStoppageScript: (discordBotStoppageScript) => {
+          if (typeof discordBotStoppageScript !== "function") return;
+          discordBotStoppageScripts[discordBotId] = discordBotStoppageScript;
+        }
+      },
+      ...(JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]
+    }) {
+      eval("(async () => {" + fs.readFileSync(path.join(process.resourcesPath, "discordBots/" + discordBotId + ".js"), "utf8") + "})();");
+    };
+  } else if (type === "stopDiscordBot") {
+    with ({
+      ...{
+        electron: require("electron"),
+        robotjs: require("@jitsi/robotjs"),
+        log: (logInput) => {
+          if (!document.getElementById("pageEmbed").src.endsWith("/integrations/index.html")) return (discordBotLogs[discordBotId] = [
+            ...discordBotLogs[discordBotId] || [],
+            ...[
+              logInput
+            ]
+          ]);
+          document.getElementById("pageEmbed").contentWindow.postMessage({
+            type: "log",
+            log: logInput
+          });
+        },
+        prompt: (body, options) => {
+          return new Promise((resolve, reject) => {
+            childProcess.spawn(({
+              win32: "cscript",
+              darwin: "osascript",
+              linux: "bash"
+            })[process.platform], [path.join(process.resourcesPath, "nativePrompts/" + ({
+              win32: "win32.vbs",
+              darwin: "darwin.scpt",
+              linux: "linux.sh"
+            })[process.platform]), (options || {}).title || require(path.join(process.resourcesPath, "app.asar/package.json")).productName, body, (options || {}).defaultText || ((typeof options === "string") ? options : "")]).stdout.on('data', (promptData) => {
+              if (!promptData.toString().startsWith("RETURN")) return;
+              resolve(promptData.toString().substring(6, promptData.toString().length - 2));
+            });
+          });
+        },
+        runPython: (pythonCode) => {
+          let pythonProcess = require("child_process").spawn("python", ["-c", pythonCode]);
+          pythonProcess.stdout.on("data", (chunk) => {
+            console.log(chunk.toString());
+          });
+          pythonProcess.stderr.on("data", (err) => {
+            console.error(err.toString());
+            ipcRenderer.send("scriptError", {
+              language: "python",
+              err: err.toString()
+            });
+          });
+          return pythonProcess;
+        },
+        executeInMainProcess: (func) => ipcRenderer.send("executeDebugCode", "(" + func.toString() + ")();"),
+        createAppStartupCodeFile: (func) => {
+          let appStartupCodeFileId = crypto.randomBytes(4).toString("hex");
+          fs.writeFileSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"), func.toString(), "utf8");
+          if (immediateExecution ?? true) eval("(async () => (" + func.toString() + ")())();");
+          return appStartupCodeFileId;
+        },
+        deleteAppStartupCodeFile: (appStartupCodeFileId) => {
+          try {
+            fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"));
+          } catch {};
+        },
+        registerStoppageScript: (discordBotStoppageScript) => {
+          if (typeof discordBotStoppageScript !== "function") return;
+          discordBotStoppageScripts[discordBotId] = discordBotStoppageScript;
+        }
+      },
+      ...(JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]
+    }) {
+      eval("(async () => { (" + discordBotStoppageScripts[discordBotId].toString() + ")(); })();");
+    };
   } else if (type === "requestDebugLogs") {
     document.getElementById("pageEmbed").contentWindow.postMessage({
       type: "debugLogs",
