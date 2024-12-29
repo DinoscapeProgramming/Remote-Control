@@ -927,7 +927,7 @@ window.addEventListener("beforeunload", () => {
   (JSON.parse(localStorage.getItem("discordBots") || "[]") || []).forEach(([discordBotId]) => {
     parent.postMessage({
       type: "runDiscordBot",
-      discordBotId: document.getElementById("discordBotEditorContainer").dataset.id,
+      discordBotId,
       immediateExecution: false
     });
   });
