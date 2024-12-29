@@ -254,7 +254,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
     document.getElementById("discordBotEditorContainerName").innerText = (discordBotContainerName.value.split(" ").join("")) ? discordBotContainerName.value : " ";
     if (Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]).length < document.getElementById("discordBotEditorContainerSecrets").children[0].children.length) {
       Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).forEach((discordBotEditorContainerSecret, index) => {
-        if (!index || (index > Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]).length)) return discordBotEditorContainerSecret.remove();
+        if (!index || (index > Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]).length)) return ((index) ? discordBotEditorContainerSecret.remove() : null);
         discordBotEditorContainerSecret.children[0].children[0].value = Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
         discordBotEditorContainerSecret.children[1].children[0].value = Object.values((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
       });
@@ -878,7 +878,7 @@ document.getElementById("discordBotEditorContainerRunButton").addEventListener("
 
 Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).forEach((discordBotEditorContainerSecret, discordBotSecretIndex) => {
   if (!discordBotSecretIndex) return;
-  discordBotEditorContainerSecret.children[0].addEventListener("change", ({ target }) => {
+  discordBotEditorContainerSecret.children[0].children[0].addEventListener("change", ({ target }) => {
     localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).map((discordBotSecret, index) => (index === discordBotSecretIndex) ? [
       target.value,
       discordBotSecret[1]
@@ -889,7 +889,7 @@ Array.from(document.getElementById("discordBotEditorContainerSecrets").children[
       }
     }), {}) : discordBotItem) : discordBot)));
   });
-  discordBotEditorContainerSecret.children[1].addEventListener("change", ({ target }) => {
+  discordBotEditorContainerSecret.children[1].children[0].addEventListener("change", ({ target }) => {
     localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).map((discordBotSecret) => (discordBotSecret[0] === discordBotEditorContainerSecret.children[0].value) ? [
       target.value,
       discordBotSecret[1]
