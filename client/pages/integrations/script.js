@@ -252,14 +252,14 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
   discordBotContainerEditButton.addEventListener("click", () => {
     document.getElementById("discordBotEditorContainer").dataset.id = discordBotId;
     document.getElementById("discordBotEditorContainerName").innerText = (discordBotContainerName.value.split(" ").join("")) ? discordBotContainerName.value : " ";
-    if (Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]).length < document.getElementById("discordBotEditorContainerSecrets").children[0].children.length) {
-      Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).forEach((discordBotEditorContainerSecret, index) => {
+    if (Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]).length < (document.getElementById("discordBotEditorContainerSecrets").children[0].children.length) - 1) {
+      Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).slice(0, -1).forEach((discordBotEditorContainerSecret, index) => {
         if (!index || (index > Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]).length)) return ((index) ? discordBotEditorContainerSecret.remove() : null);
         discordBotEditorContainerSecret.children[0].children[0].value = Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
         discordBotEditorContainerSecret.children[1].children[0].value = Object.values((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
       });
     } else {
-      Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).forEach((discordBotEditorContainerSecret, index) => {
+      Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).slice(0, -1).forEach((discordBotEditorContainerSecret, index) => {
         if (!index) return;
         discordBotEditorContainerSecret.children[0].children[0].value = Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
         discordBotEditorContainerSecret.children[1].children[0].value = Object.values((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
@@ -683,14 +683,14 @@ document.getElementById("connectToDiscordBotButton").addEventListener("click", (
   discordBotContainerEditButton.addEventListener("click", () => {
     document.getElementById("discordBotEditorContainer").dataset.id = discordBotId;
     document.getElementById("discordBotEditorContainerName").innerText = (discordBotContainerName.value.split(" ").join("")) ? discordBotContainerName.value : " ";
-    if (Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]).length < document.getElementById("discordBotEditorContainerSecrets").children[0].children.length) {
-      Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).forEach((discordBotEditorContainerSecret, index) => {
+    if (Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]).length < (document.getElementById("discordBotEditorContainerSecrets").children[0].children.length - 1)) {
+      Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).slice(0, -1).forEach((discordBotEditorContainerSecret, index) => {
         if (!index || (index > Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]).length)) return ((index) ? discordBotEditorContainerSecret.remove() : null);
         discordBotEditorContainerSecret.children[0].children[0].value = Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
         discordBotEditorContainerSecret.children[1].children[0].value = Object.values((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
       });
     } else {
-      Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).forEach((discordBotEditorContainerSecret, index) => {
+      Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).slice(0, -1).forEach((discordBotEditorContainerSecret, index) => {
         if (!index) return;
         discordBotEditorContainerSecret.children[0].children[0].value = Object.keys((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
         discordBotEditorContainerSecret.children[1].children[0].value = Object.values((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2])[index - 1];
@@ -876,7 +876,7 @@ document.getElementById("discordBotEditorContainerRunButton").addEventListener("
   });
 });
 
-Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).forEach((discordBotEditorContainerSecret, discordBotSecretIndex) => {
+Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).slice(0, -1).forEach((discordBotEditorContainerSecret, discordBotSecretIndex) => {
   if (!discordBotSecretIndex) return;
   discordBotEditorContainerSecret.children[0].children[0].addEventListener("change", ({ target }) => {
     localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).map((discordBotSecret, index) => (index === (discordBotSecretIndex - 1)) ? [
@@ -909,6 +909,17 @@ Array.from(document.getElementById("discordBotEditorContainerSecrets").children[
         [accumulator[0]]: accumulator[1]
       }
     }), {}) : discordBotItem) : discordBot)));
+  });
+});
+
+Array.from(Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).at(-1).children).forEach((newSecretDataCell, index) => {
+  newSecretDataCell.children[0].addEventListener((index === 2) ? "click" : "focus", () => {
+    let clonedNewSecretDataCell = Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).at(-1).cloneNode(true);
+    Array.from(clonedNewSecretDataCell.children).forEach((clonedNewSecretDataCellChild) => {
+      clonedNewSecretDataCellChild.children[0].style.removeProperty("color");
+    });
+    document.getElementById("discordBotEditorContainerSecrets").children[0].insertBefore(clonedNewSecretDataCell, Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).at(-1));
+    Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).at(-2).children[index].children[0][(index === 2) ? "click" : "focus"]();
   });
 });
 
