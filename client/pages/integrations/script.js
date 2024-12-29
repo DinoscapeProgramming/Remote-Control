@@ -276,7 +276,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
         discordBotEditorContainerSecretNameInput.style.padding = "8px";
         discordBotEditorContainerSecretNameInput.style.fontFamily = "system-ui";
         discordBotEditorContainerSecretNameInput.addEventListener("change", ({ target }) => {
-          localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).map((discordBotSecret, index) => (index === Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).indexOf(discordBotEditorContainerSecret)) ? [
+          localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).map((discordBotSecret, index) => (index === (Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).indexOf(discordBotEditorContainerSecret) - 1)) ? [
             target.value,
             discordBotSecret[1]
           ] : discordBotSecret).reduce((data, accumulator) => ({
@@ -879,7 +879,7 @@ document.getElementById("discordBotEditorContainerRunButton").addEventListener("
 Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).forEach((discordBotEditorContainerSecret, discordBotSecretIndex) => {
   if (!discordBotSecretIndex) return;
   discordBotEditorContainerSecret.children[0].children[0].addEventListener("change", ({ target }) => {
-    localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).map((discordBotSecret, index) => (index === discordBotSecretIndex) ? [
+    localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).map((discordBotSecret, index) => (index === (discordBotSecretIndex - 1)) ? [
       target.value,
       discordBotSecret[1]
     ] : discordBotSecret).reduce((data, accumulator) => ({
@@ -890,7 +890,7 @@ Array.from(document.getElementById("discordBotEditorContainerSecrets").children[
     }), {}) : discordBotItem) : discordBot)));
   });
   discordBotEditorContainerSecret.children[1].children[0].addEventListener("change", ({ target }) => {
-    localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).map((discordBotSecret) => (discordBotSecret[0] === discordBotEditorContainerSecret.children[0].value) ? [
+    localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).map((discordBotSecret) => (discordBotSecret[0] === discordBotEditorContainerSecret.children[0].children[0].value) ? [
       target.value,
       discordBotSecret[1]
     ] : discordBotSecret).reduce((data, accumulator) => ({
@@ -903,7 +903,7 @@ Array.from(document.getElementById("discordBotEditorContainerSecrets").children[
   discordBotEditorContainerSecret.children[2].addEventListener("click", () => {
     if (!confirm("Are you sure you want to irreversibly delete this secret containing its value?")) return;
     discordBotEditorContainerSecret.remove();
-    localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).filter((discordBotSecret) => discordBotSecret[0] !== discordBotEditorContainerSecret.children[0].value).reduce((data, accumulator) => ({
+    localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? Object.entries(discordBotItem).filter((discordBotSecret) => discordBotSecret[0] !== discordBotEditorContainerSecret.children[0].children[0].value).reduce((data, accumulator) => ({
       ...data,
       ...{
         [accumulator[0]]: accumulator[1]
