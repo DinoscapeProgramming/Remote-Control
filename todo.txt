@@ -2,9 +2,9 @@
 - Add Wake on LAN
 - Finish Admin portal
 - Add App Portal
-- Tokens
 - Web Client
 - Discord Connection
+- Store Discord Bot secrets as arrays and convert to object afterwards
 - Write Documentation 🙄🙄🙄
 - Code sign my app (can't afford it yet)
 - Get people to donate so I can upgrade my jsonbin subscription

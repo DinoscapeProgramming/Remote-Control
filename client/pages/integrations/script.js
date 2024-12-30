@@ -916,6 +916,16 @@ let addEventListenersToNewSecretDataCell; (addEventListenersToNewSecretDataCell 
   let abortController = new AbortController();
   Array.from(Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).at(-1).children).forEach((newSecretDataCell, index) => {
     newSecretDataCell.children[0].addEventListener((index === 2) ? "click" : "focus", () => {
+      localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? [
+        discordBotItem[0],
+        discordBotItem[1],
+        {
+          ...discordBotItem[2] || {},
+          ...{
+            ["New Secret"]: "New Value"
+          }
+        }
+      ] : discordBotItem) : discordBot)));
       document.getElementById("discordBotEditorContainerSecrets").children[0].appendChild(Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).at(-1).cloneNode(true));
       addEventListenersToNewSecretDataCell();
       abortController.abort();
