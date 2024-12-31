@@ -5,7 +5,6 @@
 - Web Client
 - Discord Connection
 - Store Discord Bot secrets as arrays and convert to object afterwards
-- Fix Discord Bot secret deletion bug when using new secret delete button
 - Write Documentation 🙄🙄🙄
 - Code sign my app (can't afford it yet)
 - Get people to donate so I can upgrade my jsonbin subscription

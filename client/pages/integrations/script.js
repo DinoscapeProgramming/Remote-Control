@@ -331,7 +331,7 @@ if (!fs.readdirSync(parent.process.resourcesPath).includes("discordBots")) fs.mk
         discordBotEditorContainerSecret.appendChild(discordBotEditorContainerSecretName);
         discordBotEditorContainerSecret.appendChild(discordBotEditorContainerSecretValue);
         discordBotEditorContainerSecret.appendChild(discordBotEditorContainerSecretDeleteButton);
-        document.getElementById("discordBotEditorContainerSecrets").children[0].appendChild(discordBotEditorContainerSecret);
+        document.getElementById("discordBotEditorContainerSecrets").children[0].insertBefore(discordBotEditorContainerSecret, Array.from(document.getElementById("discordBotEditorContainerSecrets").children).at(-1));
       });
     };
     discordBotEditor.setValue(fs.readFileSync(path.join(parent.process.resourcesPath, "discordBots/" + discordBotId + ".js"), "utf8"));
@@ -762,7 +762,7 @@ document.getElementById("connectToDiscordBotButton").addEventListener("click", (
         discordBotEditorContainerSecret.appendChild(discordBotEditorContainerSecretName);
         discordBotEditorContainerSecret.appendChild(discordBotEditorContainerSecretValue);
         discordBotEditorContainerSecret.appendChild(discordBotEditorContainerSecretDeleteButton);
-        document.getElementById("discordBotEditorContainerSecrets").children[0].appendChild(discordBotEditorContainerSecret);
+        document.getElementById("discordBotEditorContainerSecrets").children[0].insertBefore(discordBotEditorContainerSecret, Array.from(document.getElementById("discordBotEditorContainerSecrets").children).at(-1));
       });
     };
     discordBotEditor.setValue(fs.readFileSync(path.join(parent.process.resourcesPath, "discordBots/" + discordBotId + ".js"), "utf8"));
@@ -915,7 +915,7 @@ Array.from(document.getElementById("discordBotEditorContainerSecrets").children[
 let addEventListenersToNewSecretDataCell; (addEventListenersToNewSecretDataCell = () => {
   let abortController = new AbortController();
   Array.from(Array.from(document.getElementById("discordBotEditorContainerSecrets").children[0].children).at(-1).children).forEach((newSecretDataCell, index) => {
-    newSecretDataCell.children[0].addEventListener((index === 2) ? "click" : "focus", () => {
+    ((index === 2) ? newSecretDataCell : newSecretDataCell.children[0]).addEventListener((index === 2) ? "click" : "focus", () => {
       localStorage.setItem("discordBots", JSON.stringify((JSON.parse(localStorage.getItem("discordBots") || "[]") || []).map((discordBot) => (discordBot[0] === document.getElementById("discordBotEditorContainer").dataset.id) ? discordBot.map((discordBotItem, index) => (index === 2) ? {
         ...discordBotItem || {},
         ...{
