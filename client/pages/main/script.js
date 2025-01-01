@@ -25,7 +25,7 @@ window.installingRemotePrintDriver = false;
 window.uninstallingRemotePrintDriver = false;
 
 if (!fs.readdirSync(process.resourcesPath).includes("appStartupCode")) fs.mkdirSync(path.join(process.resourcesPath, "appStartupCode"));
-if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) document.getElementById("menuBar").children[0].children[4].style.display = "block";
+if ((JSON.parse(localStorage.getItem("settings")) || {}).debugMode) Array.from(document.getElementById("menuBar").children[0].children).at(-1).style.display = "block";
 
 document.styleSheets[2].media.appendMedium("(prefers-color-scheme: " + (((JSON.parse(localStorage.getItem("settings")) || {}).darkMode ?? false) ? "dark" : "white") + ")");
 if ((JSON.parse(localStorage.getItem("settings")) || {}).autoUpdate ?? true) ipcRenderer.send("updateElectronApp");
@@ -85,7 +85,7 @@ document.getElementById("pageEmbed").addEventListener("load", () => {
       ["connect"]: () => document.getElementById("menuBar").children[0].children[1].click(),
       ["monitor"]: () => document.getElementById("menuBar").children[0].children[2].click(),
       ["scripts"]: () => document.getElementById("menuBar").children[0].children[3].click(),
-      ["debug"]: () => document.getElementById("menuBar").children[0].children[4].click(),
+      ["debug"]: () => Array.from(document.getElementById("menuBar").children[0].children).at(-1).click(),
       ["feedback"]: () => document.getElementById("menuBar").children[1].children[0].click(),
       ["settings"]: () => document.getElementById("menuBar").children[1].children[1].click(),
       ["help"]: () => document.getElementById("menuBar").children[1].children[2].click(),
