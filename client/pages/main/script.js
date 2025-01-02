@@ -412,7 +412,12 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
           discordBotStoppageScripts[discordBotId] = discordBotStoppageScript;
         }
       },
-      ...(JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]
+      ...(JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].reduce((data, accumulator) => ({
+        ...data,
+        ...{
+          [accumulator[0]]: accumulator[1]
+        }
+      }), {})
     }) {
       eval("(async () => {" + fs.readFileSync(path.join(process.resourcesPath, "discordBots/" + discordBotId + ".js"), "utf8") + "})();");
     };
@@ -480,7 +485,12 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
           discordBotStoppageScripts[discordBotId] = discordBotStoppageScript;
         }
       },
-      ...(JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2]
+      ...(JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].reduce((data, accumulator) => ({
+        ...data,
+        ...{
+          [accumulator[0]]: accumulator[1]
+        }
+      }), {})
     }) {
       eval("(async () => { (" + discordBotStoppageScripts[discordBotId].toString() + ")(); })();");
     };
