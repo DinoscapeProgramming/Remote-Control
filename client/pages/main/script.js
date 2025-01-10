@@ -148,10 +148,8 @@ ipcRenderer.on("checkPassword", (_, { roomId, password } = {}) => {
   } else if ((JSON.parse(localStorage.getItem("throwAwayPasswords") || "[]") || []).map(([throwAwayPassword]) => crypto.createHash("sha256").update(throwAwayPassword).digest("hex")).includes(password)) {
     ipcRenderer.send("validPassword", roomId);
     localStorage.setItem("throwAwayPasswords", JSON.stringify((JSON.parse(localStorage.getItem("throwAwayPasswords")) || []).map((throwAwayPassword) => [
-      [
-        throwAwayPassword[0],
-        throwAwayPassword[1] - Number(password === crypto.createHash("sha256").update(throwAwayPassword[0]).digest("hex"))
-      ]
+      throwAwayPassword[0],
+      throwAwayPassword[1] - Number(password === crypto.createHash("sha256").update(throwAwayPassword[0]).digest("hex"))
     ]).filter((throwAwayPassword) => throwAwayPassword[1] > 0)));
     if (document.getElementById("pageEmbed").src.endsWith("/integrations/index.html")) Array.from(document.getElementById("pageEmbed").contentWindow.document.getElementById("throwAwayPasswordContainer").children).forEach((throwAwayPasswordContainer) => {
       if ((JSON.parse(localStorage.getItem("throwAwayPasswords")) || []).map(([throwAwayPassword]) => throwAwayPassword).includes(throwAwayPasswordContainer.dataset.id)) return;
