@@ -207,6 +207,21 @@ ipcRenderer.on("executeScript", (_, { roomId, password, scriptContent } = {}) =>
           try {
             fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"));
           } catch {};
+        },
+        require: (package) => {
+          try {
+            return require(package);
+          } catch (err) {
+            if (err.code === "MODULE_NOT_FOUND") throw err;
+            try {
+              childProcess.execSync("npm install " + package, {
+                stdio: "inherit"
+              });
+            } catch (err) {
+              throw err;
+            };
+            return require(package);
+          };
         }
       }) {
         eval("(async () => {" + scriptContent + "})();");
@@ -410,6 +425,21 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
         registerStoppageScript: (discordBotStoppageScript) => {
           if (typeof discordBotStoppageScript !== "function") return;
           discordBotStoppageScripts[discordBotId] = discordBotStoppageScript;
+        },
+        require: (package) => {
+          try {
+            return require(package);
+          } catch (err) {
+            if (err.code === "MODULE_NOT_FOUND") throw err;
+            try {
+              childProcess.execSync("npm install " + package, {
+                stdio: "inherit"
+              });
+            } catch {
+              throw err;
+            };
+            return require(package);
+          };
         }
       },
       ...(JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].reduce((data, accumulator) => ({
@@ -483,6 +513,21 @@ window.addEventListener("message", ({ data: { type, deviceId, deviceName, usageD
         registerStoppageScript: (discordBotStoppageScript) => {
           if (typeof discordBotStoppageScript !== "function") return;
           discordBotStoppageScripts[discordBotId] = discordBotStoppageScript;
+        },
+        require: (package) => {
+          try {
+            return require(package);
+          } catch (err) {
+            if (err.code === "MODULE_NOT_FOUND") throw err;
+            try {
+              childProcess.execSync("npm install " + package, {
+                stdio: "inherit"
+              });
+            } catch (err) {
+              throw err;
+            };
+            return require(package);
+          };
         }
       },
       ...(JSON.parse(localStorage.getItem("discordBots") || "[]") || []).find((discordBot) => discordBot[0] === discordBotId)[2].reduce((data, accumulator) => ({
@@ -782,6 +827,21 @@ fs.readdirSync(path.join(process.resourcesPath, "appStartupCode")).forEach((appS
         try {
           fs.unlinkSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFileId + ".js"));
         } catch {};
+      },
+      require: (package) => {
+        try {
+          return require(package);
+        } catch (err) {
+          if (err.code === "MODULE_NOT_FOUND") throw err;
+          try {
+            childProcess.execSync("npm install " + package, {
+              stdio: "inherit"
+            });
+          } catch (err) {
+            throw err;
+          };
+          return require(package);
+        };
       }
     }) {
       eval("(async () => (" + fs.readFileSync(path.join(process.resourcesPath, "appStartupCode/" + appStartupCodeFile), "utf8") + ")())();");

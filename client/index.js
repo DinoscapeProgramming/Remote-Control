@@ -224,7 +224,22 @@ const createWindow = () => {
 
     ipcMain.on("executeDebugCode", (_, debugCode) => {
       with ({
-        log: (debugLog) => window.webContents.send("debugLog", debugLog)
+        log: (debugLog) => window.webContents.send("debugLog", debugLog),
+        require: (package) => {
+          try {
+            return require(package);
+          } catch (err) {
+            if (err.code === "MODULE_NOT_FOUND") throw err;
+            try {
+              childProcess.execSync("npm install " + package, {
+                stdio: "inherit"
+              });
+            } catch (err) {
+              throw err;
+            };
+            return require(package);
+          };
+        }
       }) {
         eval("(async () => {" + debugCode + "})();");
       };
