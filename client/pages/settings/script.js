@@ -166,7 +166,7 @@ Array.from(document.getElementsByClassName("slider")).forEach((slider) => {
           debugMode: !slider.previousElementSibling.checked
         }
       }));
-      parent.Array.from(document.getElementById("menuBar").children[0].children).at(-1).style.display = (slider.previousElementSibling.checked) ? "none" : "block";
+      Array.from(parent.document.getElementById("menuBar").children[0].children).at(-1).style.display = (slider.previousElementSibling.checked) ? "none" : "block";
     };
   });
 });
