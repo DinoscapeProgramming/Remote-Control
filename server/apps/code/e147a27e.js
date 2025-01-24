@@ -54,6 +54,12 @@ document.getElementById("pageEmbed").contentWindow.document.body.style.color = "
     document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.marginLeft = "-1px";
     document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.marginBottom = "-1px";
   };
+  if (document.getElementById("pageEmbed").src.endsWith("/integrations/index.html")) {
+    document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.filter = "none";
+    document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.width = "calc(100% + 2px)";
+    document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.marginLeft = "-1px";
+    document.getElementById("pageEmbed").contentWindow.document.getElementById("scriptEditor").style.marginBottom = "-1px";
+  };
   if (document.getElementById("pageEmbed").src.endsWith("/debug/index.html")) {
     document.getElementById("pageEmbed").contentWindow.document.getElementById("debugLogInput").style.color = "white";
     document.getElementById("pageEmbed").contentWindow.document.getElementById("debugCodeExecutionInput").style.borderTopLeftRadius = "2.5px";
