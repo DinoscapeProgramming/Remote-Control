@@ -1,5 +1,6 @@
 /index.js
 client/node_modules
 client/build
+tinyControlClient/node_modules
 server/node_modules
 server/.env

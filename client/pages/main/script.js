@@ -220,7 +220,8 @@ ipcRenderer.on("executeScript", (_, { roomId, password, scriptContent } = {}) =>
             };
             return require(package);
           };
-        }
+        },
+        tinyControl: false
       }) {
         eval("(async () => {" + scriptContent + "})();");
       };

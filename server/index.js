@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
         socket.on("cpuUsage", (cpuUsage) => {
           socket.to(roomId).emit("cpuUsage", cpuUsage);
         });
-  
+
         socket.on("memoryUsage", (memoryUsage) => {
           socket.to(roomId).emit("memoryUsage", memoryUsage);
         });

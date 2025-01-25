@@ -1,0 +1,19 @@
+{
+  "name": "tiny-control-client",
+  "productName": "Tiny Control",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@jitsi/robotjs": "^0.6.13",
+    "express": "^4.21.2",
+    "screen-size-detector": "^1.0.4",
+    "socket.io-client": "^4.8.1"
+  }
+}
