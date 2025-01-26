@@ -13,7 +13,7 @@ if (!require("fs").readdirSync(process.resourcesPath).includes("prompt.vbs")) {
     require("fs").writeFileSync(require("path").join(process.resourcesPath, "nativePrompts/linux.sh"), `zenity --entry --title="$1" --text="$2" --entry-text="$3" ""`, "utf8");
   });
 };
-const { app, BrowserWindow, ipcMain, screen, dialog, clipboard, nativeImage, Tray, Menu, autoUpdater } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, clipboard, nativeImage, Tray, Menu, autoUpdater } = require("electron");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
@@ -111,15 +111,15 @@ const createWindow = () => {
     ipcMain.on("validPassword", (_, roomId) => {
       socket.emit("validPassword", {
         deviceName: os.hostname(),
-        screenWidth: screen.getPrimaryDisplay().workAreaSize.width,
-        screenHeight: screen.getPrimaryDisplay().workAreaSize.height
+        screenWidth: robot.getScreenSize().width,
+        screenHeight: robot.getScreenSize().height
       });
 
       socket.on("peerId", (peerId) => {
         window.webContents.send("peerId", {
           peerId,
-          screenWidth: screen.getPrimaryDisplay().workAreaSize.width,
-          screenHeight: screen.getPrimaryDisplay().workAreaSize.height
+          screenWidth: robot.getScreenSize().width,
+          screenHeight: robot.getScreenSize().height
         });
       });
 

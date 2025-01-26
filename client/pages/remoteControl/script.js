@@ -48,7 +48,7 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       .addEventListener("mousemove", ({ pageX, pageY, target }) => {
         socket.emit("mouseMove", {
           x: ((pageX - target.offsetLeft) / target.getBoundingClientRect().width) * screenWidth,
-          y: ((pageY - target.offsetTop) / target.getBoundingClientRect().height) * (screenHeight + 40)
+          y: ((pageY - target.offsetTop) / target.getBoundingClientRect().height) * screenHeight
         });
       });
 
