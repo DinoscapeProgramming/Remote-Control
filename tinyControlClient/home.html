@@ -8,7 +8,7 @@
     if (!localStorage.getItem("loginDetails")) {
       localStorage.setItem("loginDetails", JSON.stringify([
         Array.apply(null, Array(9)).map(() => Math.floor(Math.random() * 10)).join(""),
-        crypto.randomBytes(8).toString("hex")
+        Array.from(crypto.getRandomValues(new Uint8Array(8))).map((byte) => byte.toString(16).padStart(2, "0")).join("")
       ]));
     };
     document.getElementById("containerCardId").innerText = JSON.parse(localStorage.getItem("loginDetails"))[0].split("").map((character, index) => (((index + 1) % 3) === 0) ? character + " " : character).join("").substring(0, JSON.parse(localStorage.getItem("loginDetails"))[0].split("").map((character, index) => (((index + 1) % 3) === 0) ? character + " " : character).join("").length - 1);
@@ -92,11 +92,11 @@
       <h1>Login details</h1>
       <div class="containerCardItem">
         <label>Your ID</label>
-        <div id="containerCardId" class="containerCardItemValue">USER123456</div>
+        <div id="containerCardId" class="containerCardItemValue"></div>
       </div>
       <div class="containerCardItem">
         <label>Your password</label>
-        <div id="containerCardPassword" class="containerCardItemValue">SecurePass789!</div>
+        <div id="containerCardPassword" class="containerCardItemValue"></div>
       </div>
     </div>
   </div>

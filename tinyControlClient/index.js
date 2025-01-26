@@ -6,8 +6,6 @@ const robot = require("@jitsi/robotjs");
 const os = require("os");
 const crypto = require("crypto");
 const childProcess = require("child_process");
-const ScreenSizeDetector = require("screen-size-detector");
-const screen = new ScreenSizeDetector();
 let connectionId;
 let connectionPassword;
 let systemUsageDataIntervals = {};
@@ -16,23 +14,23 @@ socket.on("checkPassword", ({ roomId, password } = {}) => {
   if (password !== crypto.createHash("sha256").update(connectionPassword).digest("hex")) return;
   socket.emit("validPassword", {
     deviceName: os.hostname(),
-    screenWidth: screen.width,
-    screenHeight: screen.height
+    screenWidth: robot.getScreenSize().width,
+    screenHeight: robot.getScreenSize().height
   });
-});
-
-socket.on("mouseMove", ({ x, y }) => {
-  try {
-    robot.moveMouse(x, y);
-  } catch {};
-});
-
-socket.on("mouseClick", () => {
-  robot.mouseClick();
-});
-
-socket.on("keyTap", (key) => {
-  robot.keyTap(key);
+  
+  socket.on("mouseMove", ({ x, y }) => {
+    try {
+      robot.moveMouse(x, y);
+    } catch {};
+  });
+  
+  socket.on("mouseClick", () => {
+    robot.mouseClick();
+  });
+  
+  socket.on("keyTap", (key) => {
+    robot.keyTap(key);
+  });
 });
 
 socket.on("executeScript", ({ roomId, password, scriptContent } = {}) => {
