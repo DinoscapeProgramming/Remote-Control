@@ -23,24 +23,6 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
     });
   });
 
-  peer.on("connection", (connection) => {
-    connection.on("data", (data) => {
-      let image = new Image();
-      image.src = URL.createObjectURL(new Blob([
-        data
-      ], {
-        type: "image/png"
-      }));
-      image.decode().then(() => {
-        let canvas = document.createElement("canvas");
-        canvas.width = image.width;
-        canvas.height = image.height;
-        canvas.getContext("2d").drawImage(image, 0, 0);
-        document.getElementById("screenVideo").srcObject = canvas.captureStream();
-      });
-    });
-  });
-
   socket.emit("joinRoom", {
     type: "server",
     roomId,
@@ -93,6 +75,23 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
         ]
       ]));
     };
+
+    socket.on("screenImage", (data) => {
+      console.log("data", data);
+      let image = new Image();
+      image.src = URL.createObjectURL(new Blob([
+        data
+      ], {
+        type: "image/png"
+      }));
+      image.decode().then(() => {
+        let canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        document.getElementById("screenVideo").srcObject = canvas.captureStream();
+      });
+    });
 
     socket.on("cpuUsage", (cpuUsage) => {
       opener.parent.postMessage({

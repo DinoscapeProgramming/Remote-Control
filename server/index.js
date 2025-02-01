@@ -34,6 +34,11 @@ io.on("connection", (socket) => {
       socket.on("validPassword", ({ deviceName, screenWidth, screenHeight } = {}) => {
         socket.to(roomId).emit("validPassword", { deviceName, screenWidth, screenHeight });
 
+        socket.on("screenImage", (screenImage) => {
+          if (!Buffer.isBuffer(screenImage)) return;
+          socket.to(roomId).emit("screenImage", screenImage);
+        });
+
         socket.on("cpuUsage", (cpuUsage) => {
           socket.to(roomId).emit("cpuUsage", cpuUsage);
         });

@@ -1,23 +1,91 @@
-global.window = global;
+/*global.window = global;
+global.window.postMessage = () => {};
+global.window.navigator = {
+  userAgent: require("os").hostname()
+};
 global.XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-global.RTCPeerConnection = require("electron-webrtc").RTCPeerConnection;
-global.RTCSessionDescription = require("electron-webrtc").RTCSessionDescription;
-global.RTCIceCandidate = require("electron-webrtc").RTCIceCandidate;
+global.RTCPeerConnection = require("electron-webrtc")().RTCPeerConnection;
+global.RTCSessionDescription = require("electron-webrtc")().RTCSessionDescription;
+global.RTCIceCandidate = require("electron-webrtc")().RTCIceCandidate;
+global.RTCDataChannel = require("electron-webrtc")().RTCDataChannel;
 global.WebSocket = require("ws");
 global.location = {
   protocol: "http"
 };
+global.File = class {
+  constructor(buffer, name, options = {}) {
+    this.buffer = buffer;
+    this.name = name;
+    this.size = buffer.length;
+    this.type = options.type || "";
+    this.lastModified = options.lastModified || Date.now();
+  };
+
+  async text() {
+    return this.buffer.toString("utf-8");
+  };
+
+  async arrayBuffer() {
+    return this.buffer.buffer.slice(this.buffer.byteOffset, this.buffer.byteOffset + this.buffer.byteLength);
+  };
+
+  async stream() {
+    const { Readable } = require("stream");
+    return Readable.from(this.buffer);
+  };
+
+  async slice(start = 0, end = this.size, contentType = this.type) {
+    return new File(this.buffer.slice(start, end), this.name, { type: contentType });
+  };
+};
+global.FileReader = class {
+  constructor() {
+    this.result = null;
+    this.onload = null;
+    this.onerror = null;
+  };
+
+  readAsText(file) {
+    try {
+      this.result = file.buffer.toString("utf-8");
+      console.log(this.result);
+      if (this.onload) this.onload({ target: this });
+    } catch (err) {
+      if (this.onerror) this.onerror(err);
+    };
+  };
+
+  readAsArrayBuffer(file) {
+    try {
+      this.result = file.buffer.buffer.slice(file.buffer.byteOffset, file.buffer.byteOffset + file.buffer.byteLength);
+      console.log(this.result);
+      if (this.onload) this.onload({ target: this });
+    } catch (err) {
+      if (this.onerror) this.onerror(err);
+    };
+  };
+
+  readAsDataURL(file) {
+    try {
+      this.result = `data:${file.type};base64,${file.buffer.toString("base64")}`;
+      console.log(this.result);
+      if (this.onload) this.onload({ target: this });
+    } catch (err) {
+      if (this.onerror) this.onerror(err);
+    };
+  };
+};*/
 const express = require("express");
 const app = express();
 const { io } = require("socket.io-client");
 const socket = io("wss://remote-control-cnp2.onrender.com");
-const { Peer } = require("peerjs");
+/*const { Peer } = require("@its-forked/peerjs-on-node");
 const peer = new Peer(null, {
   host: "remote-control-cnp2.onrender.com",
   port: 443,
   path: "/peer",
   secure: true
-});
+});*/
 const robot = require("@jitsi/robotjs");
 const os = require("os");
 const zlib = require("zlib");
@@ -35,67 +103,66 @@ socket.on("checkPassword", ({ password } = {}) => {
     screenHeight: robot.getScreenSize().height
   });
 
-  socket.on("peerId", (peerId) => {
-    let connection = peer.connect(peerId);
-    connection.on("open", (connection) => {
-      let rawPixelData = robot.captureScreen().image;
-      let filteredData = Buffer.alloc(((robot.getScreenSize().width * 4) + 1) * robot.getScreenSize().height);
-      for (let i = 0; i < robot.getScreenSize().height; i++) {
-        filteredData[i * ((robot.getScreenSize().width * bytesPerPixel) + 1)] = 0;
-        rawPixelData.copy(filteredData, (i * ((robot.getScreenSize().width * bytesPerPixel)) + 1) + 1, i * robot.getScreenSize().width * 4, (i + 1) * robot.getScreenSize().width * 4);
-      };
-      let ihdrData = Buffer.alloc(13);
-      ihdrData.writeUInt32BE(robot.getScreenSize().width, 0);
-      ihdrData.writeUInt32BE(robot.getScreenSize().height, 4);
-      ihdrData.writeUInt8(8, 8);
-      ihdrData.writeUInt8(6, 9);
-      ihdrData.writeUInt8(0, 10);
-      ihdrData.writeUInt8(0, 11);
-      ihdrData.writeUInt8(0, 12);
-      let createChunk = (type, data) => {
-        let crc32 = 0xffffffff;
-        let buffer = Buffer.concat([
-          Buffer.from(type, "ascii"),
-          data
-        ]);
-        for (let i = 0; i < buffer.length; i++) {
-          crc ^= buffer[i];
-          for (let j = 0; j < 8; j++) {
-            if (crc & 1) {
-              crc = (crc >>> 1) ^ 0xedb88320;
-            } else {
-              crc >>>= 1;
-            };
+  setInterval(() => {
+    let rawPixelData = robot.captureScreen().image;
+    let filteredData = Buffer.alloc(((robot.getScreenSize().width * 4) + 1) * robot.getScreenSize().height);
+    for (let i = 0; i < robot.getScreenSize().height; i++) {
+      filteredData[i * ((robot.getScreenSize().width * 4) + 1)] = 0;
+      rawPixelData.copy(filteredData, (i * ((robot.getScreenSize().width * 4)) + 1) + 1, i * robot.getScreenSize().width * 4, (i + 1) * robot.getScreenSize().width * 4);
+    };
+    let ihdrData = Buffer.alloc(13);
+    ihdrData.writeUInt32BE(robot.getScreenSize().width, 0);
+    ihdrData.writeUInt32BE(robot.getScreenSize().height, 4);
+    ihdrData.writeUInt8(8, 8);
+    ihdrData.writeUInt8(6, 9);
+    ihdrData.writeUInt8(0, 10);
+    ihdrData.writeUInt8(0, 11);
+    ihdrData.writeUInt8(0, 12);
+    let createChunk = (type, data) => {
+      let length = Buffer.alloc(4);
+      length.writeUint32BE(data.length, 0);
+      let crc32 = 0xffffffff;
+      let buffer = Buffer.concat([
+        Buffer.from(type, "ascii"),
+        data
+      ]);
+      for (let i = 0; i < buffer.length; i++) {
+        crc32 ^= buffer[i];
+        for (let j = 0; j < 8; j++) {
+          if (crc32 & 1) {
+            crc32 = (crc32 >>> 1) ^ 0xedb88320;
+          } else {
+            crc32 >>>= 1;
           };
         };
-        return Buffer.concat([
-          Buffer.alloc(4).writeUint32BE(data.length, 0),
-          Buffer.from(type, "ascii"),
-          data,
-          Buffer.from([
-            (crc32 ^ 0xffffffff) >>> 24,
-            (crc32 ^ 0xffffffff) >>> 16,
-            (crc32 ^ 0xffffffff) >>> 8,
-            (crc32 ^ 0xffffffff) & 0xff
-          ])
-        ]);
       };
-      connection.send(Buffer.concat([
+      return Buffer.concat([
+        length,
+        Buffer.from(type, "ascii"),
+        data,
         Buffer.from([
-          137,
-          80,
-          78,
-          71,
-          13,
-          10,
-          26,
-          10
-        ]),
-        createChunk("IHDR", ihdrData),
-        createChunk("IDAT", zlib.deflateSync(filteredData)),
-        createChunk("IEND", Buffer.alloc(0))
-      ]));
-    });
+          (crc32 ^ 0xffffffff) >>> 24,
+          (crc32 ^ 0xffffffff) >>> 16,
+          (crc32 ^ 0xffffffff) >>> 8,
+          (crc32 ^ 0xffffffff) & 0xff
+        ])
+      ]);
+    };
+    socket.emit("screenImage", Buffer.concat([
+      Buffer.from([
+        137,
+        80,
+        78,
+        71,
+        13,
+        10,
+        26,
+        10
+      ]),
+      createChunk("IHDR", ihdrData),
+      createChunk("IDAT", zlib.deflateSync(filteredData)),
+      createChunk("IEND", Buffer.alloc(0))
+    ]));
   });
   
   socket.on("mouseMove", ({ x, y }) => {
