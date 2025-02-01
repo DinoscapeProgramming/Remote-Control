@@ -167,7 +167,7 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
       let canvas = document.createElement("canvas");
       canvas.width = (screenWidth / (screenHeight + 40)) * 1080;
       canvas.height = 1080;
-      canvas.getContext('2d').drawImage(document.getElementById("screenVideo"), 0, 0, canvas.width, canvas.height);
+      canvas.getContext("2d").drawImage(document.getElementById("screenVideo"), 0, 0, canvas.width, canvas.height);
       let link = document.createElement("a");
       link.href = canvas.toDataURL();
       link.download = "Screenshot-" + Date.now() + ".png";
