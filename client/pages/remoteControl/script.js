@@ -1,6 +1,5 @@
 window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
   const fs = require("fs");
-  const os = require("os");
   const path = require("path");
   const crypto = require("crypto");
   const { ipcRenderer } = require("electron");
@@ -21,6 +20,24 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
     call.answer(new MediaStream());
     call.on("stream", (videoStream) => {
       document.getElementById("screenVideo").srcObject = videoStream;
+    });
+  });
+
+  peer.on("connection", (connection) => {
+    connection.on("data", (data) => {
+      let image = new Image();
+      image.src = URL.createObjectURL(new Blob([
+        data
+      ], {
+        type: "image/png"
+      }));
+      image.decode().then(() => {
+        let canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        document.getElementById("screenVideo").srcObject = canvas.captureStream();
+      });
     });
   });
 

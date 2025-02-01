@@ -130,11 +130,15 @@ const createWindow = () => {
       });
 
       socket.on("mouseClick", () => {
-        robot.mouseClick();
+        try {
+          robot.mouseClick();
+        } catch {};
       });
 
       socket.on("keyTap", (key) => {
-        robot.keyTap(key);
+        try {
+          robot.keyTap(key);
+        } catch {};
       });
 
       systemUsageDataIntervals = {
@@ -178,7 +182,7 @@ const createWindow = () => {
                 socket.emit("memoryUsage", (
                   os.freemem() / os.totalmem()
                 ) * 100);
-                childProcess.exec('netstat -e', (err, stdout, stderr) => {
+                childProcess.exec("netstat -e", (err, stdout, stderr) => {
                   if (err) return;
                   socket.emit("wlanUsage", {
                     sent: Number(stdout.split(/[\r\n]+/g)[2].split(" ").filter((character) => character)[1]) * 8 / 1000,

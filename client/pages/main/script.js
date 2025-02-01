@@ -241,8 +241,8 @@ ipcRenderer.on("peerId", (_, { peerId, screenWidth, screenHeight }) => {
       mandatory: {
         chromeMediaSource: "desktop",
         chromeMediaSourceId: "screen:0:0",
-        minWidth: (screenWidth / (screenHeight + 40)) * 1080,
-        maxWidth: (screenWidth / (screenHeight + 40)) * 1080,
+        minWidth: (screenWidth / screenHeight) * 1080,
+        maxWidth: (screenWidth / screenHeight) * 1080,
         minHeight: 1080,
         maxHeight: 1080
       }
