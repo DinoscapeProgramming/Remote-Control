@@ -1,12 +1,11 @@
-global.window = {
-  XMLHttpRequest: require("xmlhttprequest").XMLHttpRequest,
-  RTCPeerConnection: require("electron-webrtc").RTCPeerConnection,
-  RTCSessionDescription: require("electron-webrtc").RTCSessionDescription,
-  RTCIceCandidate: require("electron-webrtc").RTCIceCandidate,
-  WebSocket: require("ws"),
-  location: {
-    protocol: 'http'
-  }
+global.window = global;
+global.XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+global.RTCPeerConnection = require("electron-webrtc").RTCPeerConnection;
+global.RTCSessionDescription = require("electron-webrtc").RTCSessionDescription;
+global.RTCIceCandidate = require("electron-webrtc").RTCIceCandidate;
+global.WebSocket = require("ws");
+global.location = {
+  protocol: "http"
 };
 const express = require("express");
 const app = express();
