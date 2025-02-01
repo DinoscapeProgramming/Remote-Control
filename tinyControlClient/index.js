@@ -1,3 +1,13 @@
+global.window = {
+  XMLHttpRequest: require("xmlhttprequest").XMLHttpRequest,
+  RTCPeerConnection: require("electron-webrtc").RTCPeerConnection,
+  RTCSessionDescription: require("electron-webrtc").RTCSessionDescription,
+  RTCIceCandidate: require("electron-webrtc").RTCIceCandidate,
+  WebSocket: require("ws"),
+  location: {
+    protocol: 'http'
+  }
+};
 const express = require("express");
 const app = express();
 const { io } = require("socket.io-client");
@@ -18,7 +28,7 @@ let connectionId;
 let connectionPassword;
 let systemUsageDataIntervals = {};
 
-socket.on("checkPassword", ({ roomId, password } = {}) => {
+socket.on("checkPassword", ({ password } = {}) => {
   if (password !== crypto.createHash("sha256").update(connectionPassword).digest("hex")) return;
   socket.emit("validPassword", {
     deviceName: os.hostname(),
