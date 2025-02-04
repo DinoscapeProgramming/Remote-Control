@@ -1,41 +1,41 @@
-name: Repeat Publish
-
-on:
-  schedule:
-    - cron: '0 */1 * * *'
-  workflow_dispatch:
-
-jobs:
-  repeat_publish:
-    runs-on: ubuntu-latest
-    
-    permissions:
-      contents: write
-
-    steps:
-      - name: Record start time
-        run: echo "start_time=$(date +%s)" >> $GITHUB_ENV
-
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22.11.0'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Repeat publish 5 versions
-        run: npm -- run rp -- --amount=15
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-      - name: Commit version bump
-        uses: devops-infra/action-commit-push@master
-        with:
-          github_token: "${{ secrets.GITHUB_TOKEN }}"
-          commit_message: "Changed npm package version"
-
-      - name: Calculate and display duration
-        run: |
-          echo "Duration: $((($(date +%s) - $start_time) / 60)) minute(s) and $((($(date +%s) - $start_time) % 60)) second(s)"
+# name: Repeat Publish
+# 
+# on:
+#   schedule:
+#     - cron: '0 */1 * * *'
+#   workflow_dispatch:
+# 
+# jobs:
+#   repeat_publish:
+#     runs-on: ubuntu-latest
+#     
+#     permissions:
+#       contents: write
+# 
+#     steps:
+#       - name: Record start time
+#         run: echo "start_time=$(date +%s)" >> $GITHUB_ENV
+# 
+#       - name: Check out repository
+#         uses: actions/checkout@v3
+# 
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '22.11.0'
+#           registry-url: 'https://registry.npmjs.org'
+# 
+#       - name: Repeat publish 5 versions
+#         run: npm -- run rp -- --amount=15
+#         env:
+#           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+# 
+#       - name: Commit version bump
+#         uses: devops-infra/action-commit-push@master
+#         with:
+#           github_token: "${{ secrets.GITHUB_TOKEN }}"
+#           commit_message: "Changed npm package version"
+# 
+#       - name: Calculate and display duration
+#         run: |
+#           echo "Duration: $((($(date +%s) - $start_time) / 60)) minute(s) and $((($(date +%s) - $start_time) % 60)) second(s)"

@@ -79,11 +79,8 @@ window.addEventListener("message", ({ data: { roomId, password } = {} }) => {
     socket.on("screenImage", (data) => {
       console.log("data", data);
       let image = new Image();
-      image.src = URL.createObjectURL(new Blob([
-        data
-      ], {
-        type: "image/png"
-      }));
+      image.src = "data:image/png;base64," + Buffer.from(data).toString("base64");
+      console.log(image.src);
       image.decode().then(() => {
         let canvas = document.createElement("canvas");
         canvas.width = image.width;
